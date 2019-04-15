@@ -1,0 +1,16 @@
+{
+  "name": "income-tax-calculator",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Šarūnas Dubinskas <sarunas.dubinskas@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "lodash": "^4.17.11",
+    "moment": "^2.24.0",
+    "node-fetch": "^2.3.0"
+  }
+}
