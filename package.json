@@ -4,6 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "calc": "node index.js",
+    "calc:split": "npm run calc split-gain",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Šarūnas Dubinskas <sarunas.dubinskas@gmail.com>",
