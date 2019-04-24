@@ -10,7 +10,7 @@
 2. Run `npm install`
 3. Copy issued shares report data to `shares-issued.txt`
 4. Copy sold shares report data to `shares-sold.txt`
-5. Run `node index.js`, run `node index.js split-gain` if wanna split gain with partner
+5. Run `npm run calc`, run `npm run calc:split` if wanna split gain with partner
 6. Fill tax declaration
 6. Enjoy!
 
