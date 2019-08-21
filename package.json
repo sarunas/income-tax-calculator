@@ -1,10 +1,10 @@
 {
-  "name": "income-tax-calculator",
+  "name": "income-tax-calculator-modified",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "calc": "node index.js",
+    "calc": "node terminal.js",
     "calc:split": "npm run calc split-gain",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
