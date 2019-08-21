@@ -1,6 +1,5 @@
 const fs = require('fs');
 const _ = require('lodash');
-const { round } = require('./lib/round');
 const { parseIssuedShares } = require('./lib/parse-issued-shares');
 const { parseSoldShares } = require('./lib/parse-sold-shares');
 const { generateReport } = require('./lib/generate-report');
