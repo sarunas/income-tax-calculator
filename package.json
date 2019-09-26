@@ -8,7 +8,7 @@
     "calc:split": "npm run calc split-gain",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Kotryna Bulikaitė <kotrynab@wix.com>",
+  "author": "Šarūnas Dubinskas <sarunas.dubinskas@gmail.com>",
   "license": "MIT",
   "dependencies": {
     "lodash": "^4.17.11",
