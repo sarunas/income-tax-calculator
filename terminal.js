@@ -1,11 +1,9 @@
 const fs = require('fs');
-const _ = require('lodash');
 const { parseIssuedShares } = require('./lib/parse-issued-shares');
 const { parseSoldShares } = require('./lib/parse-sold-shares');
 const { generateReport } = require('./lib/generate-report');
-const { fetchExchangeRate } = require('./lib/currency-exchange');
 const { generateTaxFillInstructionsData } = require('./lib/generate-tax-fill-instructions-data');
-const fetchExchangeRateMemoized = _.memoize(fetchExchangeRate);
+const { fetchExchangeRate } = require('./lib/fetch-exchange-rate-cached')
 
 const outputInstructionsToConsole = (instructions) => {
     const years = Object.keys(instructions);
@@ -28,7 +26,7 @@ const outputInstructionsToConsole = (instructions) => {
 const issuedShares = parseIssuedShares(fs.readFileSync('./shares-issued.txt').toString());
 const soldShares = parseSoldShares(fs.readFileSync('./shares-sold.txt').toString());
 
-generateReport(issuedShares, soldShares, fetchExchangeRateMemoized).then(report => {
+generateReport(issuedShares, soldShares, fetchExchangeRate).then(report => {
   const data = generateTaxFillInstructionsData(report, process.argv.includes('split-gain'));
   outputInstructionsToConsole(data);
 });
