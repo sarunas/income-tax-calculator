@@ -8,7 +8,7 @@
     "calc:split": "npm run calc split-gain",
     "test": "echo \"Error: no test specified\" && exit 1",
     "fetch-rates": "TZ=utc node generateExchangeHistory.js",
-    "build": "parcel build ./client/index.html ",
+    "build": "parcel build ./client/index.html --public-url ./",
     "start": "parcel ./client/index.html"
   },
   "author": "Šarūnas Dubinskas <sarunas.dubinskas@gmail.com>",
