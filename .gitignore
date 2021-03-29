@@ -66,3 +66,4 @@ typings/
 # Data files
 /shares-issued.txt
 /shares-sold.txt
+/.cache/
