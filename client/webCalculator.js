@@ -29,7 +29,7 @@ const renderReport = (data) => {
     report.append(h("h2", heading));
     fields.forEach(({ name, value, subfields }) => {
       report.append(h("h3", `${name}: `));
-      if (value) {
+      if (value !== undefined) {
         report.append(h("div", value));
       } else {
         subfields.forEach(({ name, value }) =>
