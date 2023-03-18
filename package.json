@@ -19,7 +19,7 @@
     "lodash": "^4.17.11",
     "moment": "^2.24.0",
     "node-fetch": "^2.3.0",
-    "parcel": "1.12.3"
+    "parcel": "2.8.3"
   },
   "browserslist": [
     "last 1 Chrome versions"
