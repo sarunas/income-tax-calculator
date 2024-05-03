@@ -1,5 +1,6 @@
 const fs = require('fs');
 const { parseIssuedShares } = require('./lib/parse-issued-shares');
+const { parseSameDayShares } = require("./lib/parse-same-day-shares");
 const { parseSoldShares } = require('./lib/parse-sold-shares');
 const { generateReport } = require('./lib/generate-report');
 const { generateTaxFillInstructionsData } = require('./lib/generate-tax-fill-instructions-data');
@@ -23,10 +24,23 @@ const outputInstructionsToConsole = (instructions) => {
     }
 }
 
+const soldSharesTxt = fs.readFileSync('./shares-sold.txt').toString();
+const soldShares = parseSoldShares(soldSharesTxt);
+const sameDayShares = parseSameDayShares(soldSharesTxt);
 const issuedShares = parseIssuedShares(fs.readFileSync('./shares-issued.txt').toString());
-const soldShares = parseSoldShares(fs.readFileSync('./shares-sold.txt').toString());
+sameDayShares.forEach(entry => issuedShares.push({
+    grantDate: entry.grantDate,
+    grantNumber: entry.grantNumber,
+    grantType: entry.grantType,
+    vestingDate: entry.orderDate,
+    vestedShares: entry.sharesSold,
+    stockPrice: entry.salePrice,
+    exercisePrice: entry.exercisePrice,
+}));
+
+const shouldSplit = process.argv.includes('split-gain');
 
 generateReport(issuedShares, soldShares, fetchExchangeRate).then(report => {
-  const data = generateTaxFillInstructionsData(report, process.argv.includes('split-gain'));
+  const data = generateTaxFillInstructionsData(report, shouldSplit);
   outputInstructionsToConsole(data);
 });
