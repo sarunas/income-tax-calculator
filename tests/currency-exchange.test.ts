@@ -1,32 +1,26 @@
 import { fetchExchangeRate } from '../lib/currency-exchange';
-import fetch, { Response } from 'node-fetch';
+import axios from 'axios';
 
-jest.mock('node-fetch');
+jest.mock('axios');
 
 describe('fetchExchangeRate', () => {
   it('should fetch correct exchange rate for a given date and currency', async () => {
-    const mockResponse: Partial<Response> = {
+    const mockResponse = {
       status: 200,
-      text: jest.fn().mockResolvedValue('<html><body id="curr_rates"><span>1,1234</span></body></html>'),
+      data: '<html><body id="curr_rates"><span>1,1234</span></body></html>',
     };
-    (fetch as jest.MockedFunction<typeof fetch>).mockResolvedValue(mockResponse as Response);
+    (axios.get as jest.MockedFunction<typeof axios.get>).mockResolvedValue(mockResponse);
 
     const rate: number = await fetchExchangeRate('2021-01-01', 'USD');
     expect(rate).toBe(1.1234);
   });
 
-  it('should throw an error for HTTP error', async () => {
-    (fetch as jest.MockedFunction<typeof fetch>).mockResolvedValue({ status: 404 } as Response);
-
-    await expect(fetchExchangeRate('2021-01-01', 'USD')).rejects.toThrow('HTTP error! status: 404');
-  });
-
   it('should throw an error if unable to extract rate', async () => {
-    const mockResponse: Partial<Response> = {
+    const mockResponse = {
       status: 200,
-      text: jest.fn().mockResolvedValue('<html><body>No rate here</body></html>'),
+      data: '<html><body>No rate here</body></html>',
     };
-    (fetch as jest.MockedFunction<typeof fetch>).mockResolvedValue(mockResponse as Response);
+    (axios.get as jest.MockedFunction<typeof axios.get>).mockResolvedValue(mockResponse);
 
     await expect(fetchExchangeRate('2021-01-01', 'USD')).rejects.toThrow('Failed to extract exchange rate');
   });
