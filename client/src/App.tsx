@@ -7,7 +7,7 @@ import {generateTaxFillInstructionsData, TaxInstructions} from "../../lib/genera
 import {parseSoldShares} from "../../lib/parse-sold-shares";
 import {parseIssuedShares} from "../../lib/parse-issued-shares";
 import {fetchExchangeRate} from "../../lib/fetch-exchange-rate-cached";
-import {generateReport} from "../../lib/generate-report";
+import {generateReport, Report} from "../../lib/generate-report";
 import {parseSameDayShares} from "../../lib/parse-same-day-shares";
 import {Box, Card, Heading} from "@wix/design-system";
 import instructionImg from "../../client/instruction.png";
@@ -18,6 +18,7 @@ const App: React.FC = () => {
     const [shouldSplit, setShouldSplit] = useState(false);
     const [report, setReport] = useState<TaxInstructions | null>(null);
     const [error, setError] = useState<string | null>(null);
+    const [calculationDetails, setCalculationDetails] = useState<Report['calculationDetails'] | null>(null);
 
     const handleCalculate = useCallback(async () => {
         if (!issuedShares && !soldShares) {
@@ -43,6 +44,7 @@ const App: React.FC = () => {
             const generatedReport = await generateReport(parsedIssuedShares, parsedSoldShares, fetchExchangeRate);
             const taxInstructions = generateTaxFillInstructionsData(generatedReport, shouldSplit);
             setReport(taxInstructions);
+            setCalculationDetails(generatedReport.calculationDetails);
             setError(null);
         } catch (err) {
             setError('An error occurred while generating the report. Please check your inputs and try again.');
@@ -63,7 +65,7 @@ const App: React.FC = () => {
                 <Box marginTop={2} marginBottom={2}><SplitCheckbox checked={shouldSplit} onChange={setShouldSplit}/></Box>
                 <Box><CalculateButton onClick={handleCalculate}/></Box>
                 {error && <Box marginTop={2} className="error">{error}</Box>}
-                {report && <ReportDisplay marginTop={2} report={report}/>}
+                {report && calculationDetails && <ReportDisplay marginTop={2} report={report} calculationDetails={calculationDetails}/>}
                     <Box marginTop={2} marginBottom={2}>
                         <Heading size="medium">How to fill declaration?</Heading>
                     </Box>
@@ -72,9 +74,8 @@ const App: React.FC = () => {
                     </Box>
             </Card.Content>
             <Card.Divider />
-
-</Card>
-)
+        </Card>
+    )
 };
 
 export default App;

@@ -24653,6 +24653,7 @@ const App = ()=>{
     const [shouldSplit, setShouldSplit] = (0, _react.useState)(false);
     const [report, setReport] = (0, _react.useState)(null);
     const [error, setError] = (0, _react.useState)(null);
+    const [calculationDetails, setCalculationDetails] = (0, _react.useState)(null);
     const handleCalculate = (0, _react.useCallback)(async ()=>{
         if (!issuedShares && !soldShares) {
             setError("Please enter issued and sold shares");
@@ -24674,6 +24675,7 @@ const App = ()=>{
             const generatedReport = await (0, _generateReport.generateReport)(parsedIssuedShares, parsedSoldShares, (0, _fetchExchangeRateCached.fetchExchangeRate));
             const taxInstructions = (0, _generateTaxFillInstructionsData.generateTaxFillInstructionsData)(generatedReport, shouldSplit);
             setReport(taxInstructions);
+            setCalculationDetails(generatedReport.calculationDetails);
             setError(null);
         } catch (err) {
             setError("An error occurred while generating the report. Please check your inputs and try again.");
@@ -24690,7 +24692,7 @@ const App = ()=>{
                 title: "Wix Lithuania Tax Calculator"
             }, void 0, false, {
                 fileName: "client/src/App.tsx",
-                lineNumber: 55,
+                lineNumber: 57,
                 columnNumber: 13
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _designSystem.Card).Content, {
@@ -24702,7 +24704,7 @@ const App = ()=>{
                         onSoldSharesChange: setSoldShares
                     }, void 0, false, {
                         fileName: "client/src/App.tsx",
-                        lineNumber: 57,
+                        lineNumber: 59,
                         columnNumber: 17
                     }, undefined),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _designSystem.Box), {
@@ -24713,12 +24715,12 @@ const App = ()=>{
                             onChange: setShouldSplit
                         }, void 0, false, {
                             fileName: "client/src/App.tsx",
-                            lineNumber: 63,
+                            lineNumber: 65,
                             columnNumber: 53
                         }, undefined)
                     }, void 0, false, {
                         fileName: "client/src/App.tsx",
-                        lineNumber: 63,
+                        lineNumber: 65,
                         columnNumber: 17
                     }, undefined),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _designSystem.Box), {
@@ -24726,12 +24728,12 @@ const App = ()=>{
                             onClick: handleCalculate
                         }, void 0, false, {
                             fileName: "client/src/App.tsx",
-                            lineNumber: 64,
+                            lineNumber: 66,
                             columnNumber: 22
                         }, undefined)
                     }, void 0, false, {
                         fileName: "client/src/App.tsx",
-                        lineNumber: 64,
+                        lineNumber: 66,
                         columnNumber: 17
                     }, undefined),
                     error && /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _designSystem.Box), {
@@ -24740,16 +24742,17 @@ const App = ()=>{
                         children: error
                     }, void 0, false, {
                         fileName: "client/src/App.tsx",
-                        lineNumber: 65,
+                        lineNumber: 67,
                         columnNumber: 27
                     }, undefined),
-                    report && /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reportDisplay.ReportDisplay), {
+                    report && calculationDetails && /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reportDisplay.ReportDisplay), {
                         marginTop: 2,
-                        report: report
+                        report: report,
+                        calculationDetails: calculationDetails
                     }, void 0, false, {
                         fileName: "client/src/App.tsx",
-                        lineNumber: 66,
-                        columnNumber: 28
+                        lineNumber: 68,
+                        columnNumber: 50
                     }, undefined),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _designSystem.Box), {
                         marginTop: 2,
@@ -24759,12 +24762,12 @@ const App = ()=>{
                             children: "How to fill declaration?"
                         }, void 0, false, {
                             fileName: "client/src/App.tsx",
-                            lineNumber: 68,
+                            lineNumber: 70,
                             columnNumber: 25
                         }, undefined)
                     }, void 0, false, {
                         fileName: "client/src/App.tsx",
-                        lineNumber: 67,
+                        lineNumber: 69,
                         columnNumber: 21
                     }, undefined),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _designSystem.Box), {
@@ -24773,33 +24776,33 @@ const App = ()=>{
                             width: "100%"
                         }, void 0, false, {
                             fileName: "client/src/App.tsx",
-                            lineNumber: 71,
+                            lineNumber: 73,
                             columnNumber: 25
                         }, undefined)
                     }, void 0, false, {
                         fileName: "client/src/App.tsx",
-                        lineNumber: 70,
+                        lineNumber: 72,
                         columnNumber: 21
                     }, undefined)
                 ]
             }, void 0, true, {
                 fileName: "client/src/App.tsx",
-                lineNumber: 56,
+                lineNumber: 58,
                 columnNumber: 13
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _designSystem.Card).Divider, {}, void 0, false, {
                 fileName: "client/src/App.tsx",
-                lineNumber: 74,
+                lineNumber: 76,
                 columnNumber: 13
             }, undefined)
         ]
     }, void 0, true, {
         fileName: "client/src/App.tsx",
-        lineNumber: 54,
+        lineNumber: 56,
         columnNumber: 9
     }, undefined);
 };
-_s(App, "aa00NNPA/MQ9GukkOOEcOCxuPR4=");
+_s(App, "DlH53LTBAdFB8Jj5tg23zE2RGEg=");
 _c = App;
 exports.default = App;
 var _c;
@@ -25477,7 +25480,7 @@ var _composerButtonDefault = parcelHelpers.interopDefault(_composerButton);
 var _colorTokens = require("./COLOR_TOKENS");
 var _cdnUrls = require("./CDN_URLS");
 
-},{"./PopoverMenu":false,"./AddItem":false,"./AddressInputItem":false,"./AudioPlayer":false,"./FieldSet":false,"./SelectorButton":false,"./Avatar":false,"./Button":"k3KwH","./Input":false,"./InputArea":"6ofu4","./InputWithOptions":false,"./Checkbox":"h82Ab","./ToggleSwitch":false,"./Modal":false,"./ModalSelectorLayout":false,"./SelectorList":false,"./SelectorList/Content":false,"./RadioGroup":false,"./Slider":false,"./GoogleAddressInput":false,"./clients":false,"./MultiSelect":false,"./MultiSelectCheckbox":false,"./Loader":false,"./DatePicker":false,"./Calendar":false,"./TimeInput":false,"./Tooltip":false,"./Page":false,"./SectionHelper":false,"./Page/components/Header":false,"./Popover":false,"./DropdownLayout":false,"./Dropdown":false,"./AutoComplete":false,"./Table":"eSRyH","./Table/components/TableFloatingScrollBar":false,"./TableToolbar":false,"./TableActionCell":false,"./Text":"PEbaS","./Range":false,"./Notification":false,"./Toast":false,"./Breadcrumbs":false,"./ImageViewer":false,"./Badge":false,"./BadgeSelect":false,"./BadgeSelectItem":false,"./EditableSelector":false,"./Card":"jXizi","./ColorPicker":false,"./CounterBadge":false,"./FloatingHelper":false,"./FormField":"9OYT6","./Heading":"5cBTM","./Highlighter":false,"./Search":false,"./Tabs":false,"./Tag":false,"./LinearProgressBar":false,"./CircularProgressBar":false,"./EmptyState":false,"./DragDropContextProvider":false,"./SortableListBase":false,"./NestableListBase":false,"./FilePicker":false,"./Layout":false,"./TextButton":false,"./IconButton":false,"./CloseButton":false,"./ToggleButton":false,"./CardGalleryItem":false,"./Carousel":false,"./CalendarPanel":false,"./Proportion":false,"./DropdownBase":false,"./CalendarPanelFooter":false,"./Box":"e1k7J","./Thumbnail":false,"./SegmentedToggle":false,"./FloatingNotification":false,"./RichTextInputArea":false,"./NumberInput":false,"./ColorInput":false,"./EditableTitle":false,"./Accordion":false,"./SocialPreview":false,"./GooglePreview":false,"./ListItemAction":false,"./ListItemEditable":false,"./Sidebar":false,"./Swatches":false,"./SidebarSectionTitle":false,"./SidebarSectionItem":false,"./Collapse":false,"./SidebarDivider":false,"./SidebarHeader":false,"./ModalPreviewLayout":false,"./StatisticsWidget":false,"./InputWithLabel":false,"./ComposerHeader":false,"./Stepper":false,"./Skeleton":false,"./FillPreview":false,"./FillButton":false,"./BarChart":false,"./AutoCompleteWithLabel":false,"./Divider":false,"./ModalMobileLayout":false,"./MediaOverlay":false,"./TimeTable":false,"./SidebarBackButton":false,"./PreviewWidget":false,"./MobilePreviewWidget":false,"./ListItemSelect":false,"./InfoIcon":false,"./SocialButton":false,"./VerticalTabs":false,"./VerticalTabsItem":false,"./ListItemSection":false,"./BrowserPreviewWidget":false,"./MarketingLayout":false,"./Palette":false,"./VariableInput":false,"./Image":false,"./Selector":false,"./SelectableAccordion":false,"./SidePanel":false,"./StatusIndicator":false,"./CustomModalLayout":false,"./MessageModalLayout":false,"./AnnouncementModalLayout":false,"./Pagination":false,"./CheckToggle":false,"./Timeline":false,"./ComposerSidebar":false,"./SortableGridBase":false,"./dnd-styles":false,"./HorizontalTimeline":false,"./StarsRatingBar":false,"./TagList":false,"./MarketingPageLayout":false,"./FileUpload":false,"./Dropzone":false,"./FacesRatingBar":false,"./ThemeProvider":false,"./TableListItem":false,"./TableListHeader":false,"./TestimonialList":false,"./FeatureList":false,"./MarketingPageLayoutContent":false,"./FunnelChart":false,"./SparklineChart":false,"./AreaChart":false,"./AddressInput":false,"./StackedBarChart":false,"./CardFolderTabs":false,"./Page/components/Footer":false,"./NestableList":false,"./TrendIndicator":false,"./AnalyticsLayout":false,"./Radio":false,"./CopyClipboard":false,"./CarouselWIP":false,"./WixStyleReactMaskingProvider":false,"./AnalyticsSummaryCard":false,"./BounceAnimation":false,"./AvatarGroup":false,"./SkeletonGroup":false,"./SkeletonRectangle":false,"./SkeletonCircle":false,"./SkeletonLine":false,"./PulseAnimation":false,"./Page/components/Section":false,"./WixStyleReactEnvironmentProvider":false,"./RadarChart":false,"./SidebarItemNext":false,"./SidebarNext":false,"./SidebarSubMenuNext":false,"./MessageBoxFunctionalLayout":false,"./MessageBoxMarketerialLayout":false,"./SidebarDividerNext":false,"./Transition":false,"./SidebarTitleItemNext":false,"./SocialPostPreview":false,"./WixStyleReactDefaultsOverrideProvider":false,"./SidebarHeaderNext":false,"./LiveRegion":false,"./WixDesignSystemProvider":"d2eSE","./SectionHeader":false,"./CornerRadiusInput":false,"./ComposerButton":false,"./COLOR_TOKENS":false,"./CDN_URLS":false,"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"k3KwH":[function(require,module,exports) {
+},{"./PopoverMenu":false,"./AddItem":false,"./AddressInputItem":false,"./AudioPlayer":false,"./FieldSet":false,"./SelectorButton":false,"./Avatar":false,"./Button":"k3KwH","./Input":false,"./InputArea":"6ofu4","./InputWithOptions":false,"./Checkbox":"h82Ab","./ToggleSwitch":false,"./Modal":false,"./ModalSelectorLayout":false,"./SelectorList":false,"./SelectorList/Content":false,"./RadioGroup":false,"./Slider":false,"./GoogleAddressInput":false,"./clients":false,"./MultiSelect":false,"./MultiSelectCheckbox":false,"./Loader":false,"./DatePicker":false,"./Calendar":false,"./TimeInput":false,"./Tooltip":false,"./Page":false,"./SectionHelper":false,"./Page/components/Header":false,"./Popover":false,"./DropdownLayout":false,"./Dropdown":false,"./AutoComplete":false,"./Table":"eSRyH","./Table/components/TableFloatingScrollBar":false,"./TableToolbar":false,"./TableActionCell":false,"./Text":"PEbaS","./Range":false,"./Notification":false,"./Toast":false,"./Breadcrumbs":false,"./ImageViewer":false,"./Badge":false,"./BadgeSelect":false,"./BadgeSelectItem":false,"./EditableSelector":false,"./Card":"jXizi","./ColorPicker":false,"./CounterBadge":false,"./FloatingHelper":false,"./FormField":"9OYT6","./Heading":"5cBTM","./Highlighter":false,"./Search":false,"./Tabs":false,"./Tag":false,"./LinearProgressBar":false,"./CircularProgressBar":false,"./EmptyState":false,"./DragDropContextProvider":false,"./SortableListBase":false,"./NestableListBase":false,"./FilePicker":false,"./Layout":false,"./TextButton":false,"./IconButton":false,"./CloseButton":false,"./ToggleButton":false,"./CardGalleryItem":false,"./Carousel":false,"./CalendarPanel":false,"./Proportion":false,"./DropdownBase":false,"./CalendarPanelFooter":false,"./Box":"e1k7J","./Thumbnail":false,"./SegmentedToggle":false,"./FloatingNotification":false,"./RichTextInputArea":false,"./NumberInput":false,"./ColorInput":false,"./EditableTitle":false,"./Accordion":"cXYjP","./SocialPreview":false,"./GooglePreview":false,"./ListItemAction":false,"./ListItemEditable":false,"./Sidebar":false,"./Swatches":false,"./SidebarSectionTitle":false,"./SidebarSectionItem":false,"./Collapse":false,"./SidebarDivider":false,"./SidebarHeader":false,"./ModalPreviewLayout":false,"./StatisticsWidget":false,"./InputWithLabel":false,"./ComposerHeader":false,"./Stepper":false,"./Skeleton":false,"./FillPreview":false,"./FillButton":false,"./BarChart":false,"./AutoCompleteWithLabel":false,"./Divider":false,"./ModalMobileLayout":false,"./MediaOverlay":false,"./TimeTable":false,"./SidebarBackButton":false,"./PreviewWidget":false,"./MobilePreviewWidget":false,"./ListItemSelect":false,"./InfoIcon":false,"./SocialButton":false,"./VerticalTabs":false,"./VerticalTabsItem":false,"./ListItemSection":false,"./BrowserPreviewWidget":false,"./MarketingLayout":false,"./Palette":false,"./VariableInput":false,"./Image":false,"./Selector":false,"./SelectableAccordion":false,"./SidePanel":false,"./StatusIndicator":false,"./CustomModalLayout":false,"./MessageModalLayout":false,"./AnnouncementModalLayout":false,"./Pagination":false,"./CheckToggle":false,"./Timeline":false,"./ComposerSidebar":false,"./SortableGridBase":false,"./dnd-styles":false,"./HorizontalTimeline":false,"./StarsRatingBar":false,"./TagList":false,"./MarketingPageLayout":false,"./FileUpload":false,"./Dropzone":false,"./FacesRatingBar":false,"./ThemeProvider":false,"./TableListItem":false,"./TableListHeader":false,"./TestimonialList":false,"./FeatureList":false,"./MarketingPageLayoutContent":false,"./FunnelChart":false,"./SparklineChart":false,"./AreaChart":false,"./AddressInput":false,"./StackedBarChart":false,"./CardFolderTabs":false,"./Page/components/Footer":false,"./NestableList":false,"./TrendIndicator":false,"./AnalyticsLayout":false,"./Radio":false,"./CopyClipboard":false,"./CarouselWIP":false,"./WixStyleReactMaskingProvider":false,"./AnalyticsSummaryCard":false,"./BounceAnimation":false,"./AvatarGroup":false,"./SkeletonGroup":false,"./SkeletonRectangle":false,"./SkeletonCircle":false,"./SkeletonLine":false,"./PulseAnimation":false,"./Page/components/Section":false,"./WixStyleReactEnvironmentProvider":false,"./RadarChart":false,"./SidebarItemNext":false,"./SidebarNext":false,"./SidebarSubMenuNext":false,"./MessageBoxFunctionalLayout":false,"./MessageBoxMarketerialLayout":false,"./SidebarDividerNext":false,"./Transition":false,"./SidebarTitleItemNext":false,"./SocialPostPreview":false,"./WixStyleReactDefaultsOverrideProvider":false,"./SidebarHeaderNext":false,"./LiveRegion":false,"./WixDesignSystemProvider":"d2eSE","./SectionHeader":false,"./CornerRadiusInput":false,"./ComposerButton":false,"./COLOR_TOKENS":false,"./CDN_URLS":false,"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"k3KwH":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "default", ()=>(0, _buttonDefault.default));
@@ -35596,7 +35599,7 @@ var _toggleOnDefault = parcelHelpers.interopDefault(_toggleOn);
 var _toggleOnSmall = require("./components/ToggleOnSmall");
 var _toggleOnSmallDefault = parcelHelpers.interopDefault(_toggleOnSmall);
 
-},{"./components/AddItemLarge":false,"./components/AddItemMedium":false,"./components/AddItemSmall":false,"./components/AddMedia":false,"./components/Asterisk":"aVgeb","./components/BreadcrumbsChevronRight":false,"./components/CaretDown":false,"./components/CaretRight":false,"./components/CheckboxChecked":"cS7m5","./components/CheckboxIndeterminate":"7dKq2","./components/CircleLoaderCheck":"3koVj","./components/CircleLoaderCheckSmall":"kTC4L","./components/Close":false,"./components/CloseLarge":false,"./components/DragAndDropLarge":false,"./components/DragAndDropLockedLarge":false,"./components/DragAndDropSmall":false,"./components/DropDownArrow":false,"./components/FaceDisapointed30":false,"./components/FaceFrowning30":false,"./components/FaceGrining30":false,"./components/FaceNeutral30":false,"./components/FaceSmiling30":false,"./components/FormFieldError":"dRjGN","./components/FormFieldErrorFilled":"fD9PA","./components/FormFieldErrorSmall":"7QgBB","./components/FormFieldSpinnerDown":false,"./components/FormFieldSpinnerUp":false,"./components/FormFieldSuccessFilled":"eLip1","./components/FormFieldWarningFilled":"4DVRE","./components/Help24":false,"./components/InfoCircle":"jxWP4","./components/Move":false,"./components/MoveLarge":false,"./components/SocialButtonFacebook":false,"./components/SocialButtonInstagram":false,"./components/SocialButtonLinkedIn":false,"./components/SocialButtonPinterest":false,"./components/SocialButtonTwitter":false,"./components/SocialButtonX":false,"./components/SocialButtonYoutube":false,"./components/SortByArrowDown":"iYclE","./components/SortByArrowUp":"1BvyE","./components/StarFilledLarge":false,"./components/StarFilledTiny":false,"./components/StarLarge":false,"./components/TextAreaAlignCenter":false,"./components/TextAreaAlignJustify":false,"./components/TextAreaAlignLeft":false,"./components/TextAreaAlignRight":false,"./components/TextAreaBold":false,"./components/TextAreaBulletList":false,"./components/TextAreaImage":false,"./components/TextAreaItalic":false,"./components/TextAreaLeftToRight":false,"./components/TextAreaLink":false,"./components/TextAreaNumberedList":false,"./components/TextAreaRightToLeft":false,"./components/TextAreaTable":false,"./components/TextAreaTextColor":false,"./components/TextAreaUnderline":false,"./components/ToggleOff":false,"./components/ToggleOffSmall":false,"./components/ToggleOn":"eFTeU","./components/ToggleOnSmall":false,"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"aVgeb":[function(require,module,exports) {
+},{"./components/AddItemLarge":false,"./components/AddItemMedium":false,"./components/AddItemSmall":false,"./components/AddMedia":false,"./components/Asterisk":"aVgeb","./components/BreadcrumbsChevronRight":false,"./components/CaretDown":"6Y8Ns","./components/CaretRight":"kCL1V","./components/CheckboxChecked":"cS7m5","./components/CheckboxIndeterminate":"7dKq2","./components/CircleLoaderCheck":"3koVj","./components/CircleLoaderCheckSmall":"kTC4L","./components/Close":false,"./components/CloseLarge":false,"./components/DragAndDropLarge":false,"./components/DragAndDropLockedLarge":false,"./components/DragAndDropSmall":false,"./components/DropDownArrow":false,"./components/FaceDisapointed30":false,"./components/FaceFrowning30":false,"./components/FaceGrining30":false,"./components/FaceNeutral30":false,"./components/FaceSmiling30":false,"./components/FormFieldError":"dRjGN","./components/FormFieldErrorFilled":"fD9PA","./components/FormFieldErrorSmall":"7QgBB","./components/FormFieldSpinnerDown":false,"./components/FormFieldSpinnerUp":false,"./components/FormFieldSuccessFilled":"eLip1","./components/FormFieldWarningFilled":"4DVRE","./components/Help24":false,"./components/InfoCircle":"jxWP4","./components/Move":false,"./components/MoveLarge":false,"./components/SocialButtonFacebook":false,"./components/SocialButtonInstagram":false,"./components/SocialButtonLinkedIn":false,"./components/SocialButtonPinterest":false,"./components/SocialButtonTwitter":false,"./components/SocialButtonX":false,"./components/SocialButtonYoutube":false,"./components/SortByArrowDown":"iYclE","./components/SortByArrowUp":"1BvyE","./components/StarFilledLarge":false,"./components/StarFilledTiny":false,"./components/StarLarge":false,"./components/TextAreaAlignCenter":false,"./components/TextAreaAlignJustify":false,"./components/TextAreaAlignLeft":false,"./components/TextAreaAlignRight":false,"./components/TextAreaBold":false,"./components/TextAreaBulletList":false,"./components/TextAreaImage":false,"./components/TextAreaItalic":false,"./components/TextAreaLeftToRight":false,"./components/TextAreaLink":false,"./components/TextAreaNumberedList":false,"./components/TextAreaRightToLeft":false,"./components/TextAreaTable":false,"./components/TextAreaTextColor":false,"./components/TextAreaUnderline":false,"./components/ToggleOff":false,"./components/ToggleOffSmall":false,"./components/ToggleOn":"eFTeU","./components/ToggleOnSmall":false,"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"aVgeb":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "default", ()=>i);
@@ -35612,6 +35615,40 @@ const s = ({ size: t, ...r })=>_react.createElement("svg", {
     }));
 s.displayName = "Asterisk";
 var i = s;
+
+},{"react":"21dqq","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"6Y8Ns":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "default", ()=>a);
+var _react = require("react");
+const r = ({ size: t, ...o })=>_react.createElement("svg", {
+        viewBox: "0 0 12 18",
+        fill: "currentColor",
+        width: t || "12",
+        height: t || "18",
+        ...o
+    }, _react.createElement("path", {
+        d: "m6 12 4-6H2l4 6Z"
+    }));
+r.displayName = "CaretDown";
+var a = r;
+
+},{"react":"21dqq","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"kCL1V":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "default", ()=>a);
+var _react = require("react");
+const r = ({ size: t, ...i })=>_react.createElement("svg", {
+        viewBox: "0 0 12 18",
+        fill: "currentColor",
+        width: t || "12",
+        height: t || "18",
+        ...i
+    }, _react.createElement("path", {
+        d: "M9 9 3 5v8l6-4Z"
+    }));
+r.displayName = "CaretRight";
+var a = r;
 
 },{"react":"21dqq","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"cS7m5":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
@@ -46832,7 +46869,954 @@ const FieldSetContext = (0, _reactDefault.default).createContext({
     statusId: null
 });
 
-},{"react":"21dqq","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"fGjJy":[function(require,module,exports) {
+},{"react":"21dqq","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"2Ntsg":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "default", ()=>(0, _textButtonDefault.default));
+var _textButton = require("./TextButton");
+var _textButtonDefault = parcelHelpers.interopDefault(_textButton);
+var _textButtonTypes = require("./TextButton.types");
+parcelHelpers.exportAll(_textButtonTypes, exports);
+
+},{"./TextButton":"gBOra","./TextButton.types":false,"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"gBOra":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _react = require("react");
+var _reactDefault = parcelHelpers.interopDefault(_react);
+var _ellipsis = require("../common/Ellipsis");
+var _ellipsisDefault = parcelHelpers.interopDefault(_ellipsis);
+var _tooltipCommon = require("../common/PropTypes/TooltipCommon");
+var _propTypes = require("prop-types");
+var _propTypesDefault = parcelHelpers.interopDefault(_propTypes);
+var _generateDataAttr = require("../utils/generateDataAttr");
+var _textButtonStCssJs = require("./TextButton.st.css.js");
+var _buttonCore = require("../Button/ButtonCore");
+var _buttonCoreDefault = parcelHelpers.interopDefault(_buttonCore);
+class TextButton extends (0, _react.PureComponent) {
+    constructor(){
+        super(...arguments);
+        this.button = (0, _reactDefault.default).createRef();
+        /**
+         * Sets focus on the element
+         */ this.focus = ()=>{
+            this.button.current && this.button.current.focus();
+        };
+    }
+    render() {
+        const { skin, underline, weight, size, children, className, dataHook, fluid, wrap, ellipsis, showTooltip, tooltipProps, ariaLabel, ariaLabelledBy, ariaHaspopup, ariaExpanded, ...rest } = this.props;
+        return (0, _reactDefault.default).createElement((0, _ellipsisDefault.default), {
+            ellipsis: ellipsis,
+            showTooltip: showTooltip,
+            ...tooltipProps,
+            render: ({ ref, ellipsisClasses })=>(0, _reactDefault.default).createElement((0, _buttonCoreDefault.default), {
+                    "aria-label": ariaLabel,
+                    "aria-labelledby": ariaLabelledBy,
+                    "aria-haspopup": ariaHaspopup,
+                    "aria-expanded": ariaExpanded,
+                    ...rest,
+                    ...(0, _generateDataAttr.generateDataAttr)(this.props, [
+                        "skin",
+                        "size",
+                        "weight",
+                        "underline"
+                    ]),
+                    ref: this.button,
+                    className: (0, _textButtonStCssJs.st)((0, _textButtonStCssJs.classes).root, {
+                        skin,
+                        underline,
+                        weight,
+                        size,
+                        fluid,
+                        wrap,
+                        ellipsis
+                    }, className),
+                    "data-hook": dataHook,
+                    contentClassName: ellipsisClasses(),
+                    contentRef: ref
+                }, children)
+        });
+    }
+}
+TextButton.displayName = "TextButton";
+TextButton.propTypes = {
+    as: (0, _propTypesDefault.default).oneOfType([
+        (0, _propTypesDefault.default).func,
+        (0, _propTypesDefault.default).object,
+        (0, _propTypesDefault.default).string
+    ]),
+    className: (0, _propTypesDefault.default).string,
+    skin: (0, _propTypesDefault.default).oneOf([
+        "standard",
+        "light",
+        "premium",
+        "dark",
+        "destructive",
+        "standard-light"
+    ]),
+    underline: (0, _propTypesDefault.default).oneOf([
+        "none",
+        "onHover",
+        "always"
+    ]),
+    weight: (0, _propTypesDefault.default).oneOf([
+        "thin",
+        "normal",
+        "bold"
+    ]),
+    size: (0, _propTypesDefault.default).oneOf([
+        "tiny",
+        "small",
+        "medium"
+    ]),
+    onClick: (0, _propTypesDefault.default).func,
+    suffixIcon: (0, _propTypesDefault.default).element,
+    prefixIcon: (0, _propTypesDefault.default).element,
+    disabled: (0, _propTypesDefault.default).bool,
+    children: (0, _propTypesDefault.default).node,
+    dataHook: (0, _propTypesDefault.default).string,
+    fluid: (0, _propTypesDefault.default).bool,
+    wrap: (0, _propTypesDefault.default).bool,
+    ellipsis: (0, _propTypesDefault.default).bool,
+    showTooltip: (0, _propTypesDefault.default).bool,
+    tooltipProps: (0, _propTypesDefault.default).shape((0, _tooltipCommon.TooltipCommonProps)),
+    ariaLabel: (0, _propTypesDefault.default).string,
+    ariaLabelledBy: (0, _propTypesDefault.default).string,
+    ariaHaspopup: (0, _propTypesDefault.default).string,
+    ariaExpanded: (0, _propTypesDefault.default).bool
+};
+TextButton.defaultProps = {
+    skin: "standard",
+    underline: "none",
+    size: "medium",
+    disabled: false,
+    fluid: false,
+    wrap: false,
+    tooltipProps: {}
+};
+exports.default = TextButton;
+
+},{"react":"21dqq","../common/Ellipsis":"4G0Jo","../common/PropTypes/TooltipCommon":"h6CCh","prop-types":"7wKI2","../utils/generateDataAttr":"lhroj","./TextButton.st.css.js":"bxOBb","../Button/ButtonCore":"iLAEQ","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"bxOBb":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "cssStates", ()=>cssStates);
+parcelHelpers.export(exports, "style", ()=>style);
+parcelHelpers.export(exports, "st", ()=>st);
+parcelHelpers.export(exports, "namespace", ()=>namespace);
+parcelHelpers.export(exports, "classes", ()=>classes);
+parcelHelpers.export(exports, "keyframes", ()=>keyframes);
+parcelHelpers.export(exports, "layers", ()=>layers);
+parcelHelpers.export(exports, "containers", ()=>containers);
+parcelHelpers.export(exports, "stVars", ()=>stVars);
+parcelHelpers.export(exports, "vars", ()=>vars);
+var _wixDesignSystemProviderStCssJs = require("../WixDesignSystemProvider/WixDesignSystemProvider.st.css.js");
+var _breakpointsStCssJs = require("../Foundation/stylable/breakpoints.st.css.js");
+var _buttonCoreStCssJs = require("../Button/ButtonCore/ButtonCore.st.css.js");
+var _colorsStCssJs = require("../Foundation/stylable/colors.st.css.js");
+var _typographyStCssJs = require("../Foundation/stylable/typography.st.css.js");
+var _easingStCssJs = require("../Foundation/stylable/easing.st.css.js");
+var _stylableEsmRuntimeJs = require("./../stylable-esm-runtime.js");
+var _namespace_ = "wds_1_127_0_TextButton";
+var _style_ = (0, _stylableEsmRuntimeJs.classesRuntime).bind(null, _namespace_);
+var cssStates = (0, _stylableEsmRuntimeJs.statesRuntime).bind(null, _namespace_);
+var style = _style_;
+var st = _style_;
+var namespace = _namespace_;
+var classes = {
+    "root": "wds_1_127_0_TextButton__root",
+    "mobile": "wds_1_127_0_WixDesignSystemProvider__mobile",
+    "text-tiny-thin": "wds_1_127_0_StylableTypography__text-tiny-thin",
+    "text-tiny-normal": "wds_1_127_0_StylableTypography__text-tiny-normal",
+    "text-tiny-bold": "wds_1_127_0_StylableTypography__text-tiny-bold",
+    "text-small-thin": "wds_1_127_0_StylableTypography__text-small-thin",
+    "text-small-normal": "wds_1_127_0_StylableTypography__text-small-normal",
+    "text-small-bold": "wds_1_127_0_StylableTypography__text-small-bold",
+    "text-medium-thin": "wds_1_127_0_StylableTypography__text-medium-thin",
+    "text-medium-normal": "wds_1_127_0_StylableTypography__text-medium-normal",
+    "text-medium-bold": "wds_1_127_0_StylableTypography__text-medium-bold"
+};
+var keyframes = {};
+var layers = {};
+var containers = {};
+var stVars = {};
+var vars = {
+    "wds-space-0": "--wds-space-0",
+    "wds-button-gap-medium": "--wds-button-gap-medium",
+    "wds-button-gap-small": "--wds-button-gap-small",
+    "wds-button-gap-tiny": "--wds-button-gap-tiny",
+    "wds-shadow-focus-standard": "--wds-shadow-focus-standard",
+    "wds-color-fill-standard-primary": "--wds-color-fill-standard-primary",
+    "wds-color-fill-standard-primary-hover": "--wds-color-fill-standard-primary-hover",
+    "wds-color-fill-standard-primary-active": "--wds-color-fill-standard-primary-active",
+    "wds-color-fill-standard-primary-disabled": "--wds-color-fill-standard-primary-disabled",
+    "wds-color-fill-standard-light-primary": "--wds-color-fill-standard-light-primary",
+    "wds-color-fill-standard-light-primary-active": "--wds-color-fill-standard-light-primary-active",
+    "wds-color-fill-standard-light-primary-disabled": "--wds-color-fill-standard-light-primary-disabled",
+    "wds-color-fill-standard-light-primary-hover": "--wds-color-fill-standard-light-primary-hover",
+    "wds-color-fill-light-primary": "--wds-color-fill-light-primary",
+    "wds-color-fill-light-primary-disabled": "--wds-color-fill-light-primary-disabled",
+    "wds-color-fill-premium-primary": "--wds-color-fill-premium-primary",
+    "wds-color-fill-premium-primary-hover": "--wds-color-fill-premium-primary-hover",
+    "wds-color-fill-premium-primary-active": "--wds-color-fill-premium-primary-active",
+    "wds-color-fill-premium-primary-disabled": "--wds-color-fill-premium-primary-disabled",
+    "wds-color-fill-destructive-primary": "--wds-color-fill-destructive-primary",
+    "wds-color-fill-destructive-primary-hover": "--wds-color-fill-destructive-primary-hover",
+    "wds-color-fill-destructive-primary-active": "--wds-color-fill-destructive-primary-active",
+    "wds-color-fill-destructive-primary-disabled": "--wds-color-fill-destructive-primary-disabled",
+    "wds-color-fill-dark-primary": "--wds-color-fill-dark-primary",
+    "wds-color-fill-dark-primary-hover": "--wds-color-fill-dark-primary-hover",
+    "wds-color-fill-dark-primary-active": "--wds-color-fill-dark-primary-active",
+    "wds-color-fill-dark-primary-disabled": "--wds-color-fill-dark-primary-disabled",
+    "wds-font-weight-bold": "--wds-font-weight-bold"
+};
+
+},{"../WixDesignSystemProvider/WixDesignSystemProvider.st.css.js":"1rgMu","../Foundation/stylable/breakpoints.st.css.js":"ahPEL","../Button/ButtonCore/ButtonCore.st.css.js":"92F9f","../Foundation/stylable/colors.st.css.js":"NuJI3","../Foundation/stylable/typography.st.css.js":"3dnud","../Foundation/stylable/easing.st.css.js":"6cmsk","./../stylable-esm-runtime.js":"9riQG","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"1rgMu":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "cssStates", ()=>cssStates);
+parcelHelpers.export(exports, "style", ()=>style);
+parcelHelpers.export(exports, "st", ()=>st);
+parcelHelpers.export(exports, "namespace", ()=>namespace);
+parcelHelpers.export(exports, "classes", ()=>classes);
+parcelHelpers.export(exports, "keyframes", ()=>keyframes);
+parcelHelpers.export(exports, "layers", ()=>layers);
+parcelHelpers.export(exports, "containers", ()=>containers);
+parcelHelpers.export(exports, "stVars", ()=>stVars);
+parcelHelpers.export(exports, "vars", ()=>vars);
+var _stylableEsmRuntimeJs = require("./../stylable-esm-runtime.js");
+var _namespace_ = "wds_1_127_0_WixDesignSystemProvider";
+var _style_ = (0, _stylableEsmRuntimeJs.classesRuntime).bind(null, _namespace_);
+var cssStates = (0, _stylableEsmRuntimeJs.statesRuntime).bind(null, _namespace_);
+var style = _style_;
+var st = _style_;
+var namespace = _namespace_;
+var classes = {
+    "root": "wds_1_127_0_WixDesignSystemProvider__root",
+    "mobile": "wds_1_127_0_WixDesignSystemProvider__mobile"
+};
+var keyframes = {};
+var layers = {};
+var containers = {};
+var stVars = {};
+var vars = {};
+
+},{"./../stylable-esm-runtime.js":"9riQG","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"ahPEL":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "cssStates", ()=>cssStates);
+parcelHelpers.export(exports, "style", ()=>style);
+parcelHelpers.export(exports, "st", ()=>st);
+parcelHelpers.export(exports, "namespace", ()=>namespace);
+parcelHelpers.export(exports, "classes", ()=>classes);
+parcelHelpers.export(exports, "keyframes", ()=>keyframes);
+parcelHelpers.export(exports, "layers", ()=>layers);
+parcelHelpers.export(exports, "containers", ()=>containers);
+parcelHelpers.export(exports, "stVars", ()=>stVars);
+parcelHelpers.export(exports, "vars", ()=>vars);
+var _stylableEsmRuntimeJs = require("./../../stylable-esm-runtime.js");
+var _namespace_ = "wds_1_127_0_breakpoints";
+var _style_ = (0, _stylableEsmRuntimeJs.classesRuntime).bind(null, _namespace_);
+var cssStates = (0, _stylableEsmRuntimeJs.statesRuntime).bind(null, _namespace_);
+var style = _style_;
+var st = _style_;
+var namespace = _namespace_;
+var classes = {
+    "root": "wds_1_127_0_breakpoints__root"
+};
+var keyframes = {};
+var layers = {};
+var containers = {};
+var stVars = {
+    "breakpoint-small": "490px",
+    "breakpoint-medium": "768px",
+    "breakpoint-large": "1186px",
+    "breakpoint-x-large": "1572px"
+};
+var vars = {};
+
+},{"./../../stylable-esm-runtime.js":"9riQG","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"cXYjP":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "default", ()=>(0, _accordionDefault.default));
+parcelHelpers.export(exports, "accordionItemBuilder", ()=>(0, _accordion.accordionItemBuilder));
+parcelHelpers.export(exports, "accordionSectionItemBuilder", ()=>(0, _accordion.accordionSectionItemBuilder));
+var _accordion = require("./Accordion");
+var _accordionDefault = parcelHelpers.interopDefault(_accordion);
+var _accordionTypes = require("./Accordion.types");
+parcelHelpers.exportAll(_accordionTypes, exports);
+
+},{"./Accordion":"8c56B","./Accordion.types":false,"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"8c56B":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "Accordion", ()=>Accordion);
+parcelHelpers.export(exports, "accordionItemBuilder", ()=>accordionItemBuilder);
+parcelHelpers.export(exports, "accordionSectionItemBuilder", ()=>accordionSectionItemBuilder);
+var _react = require("react");
+var _reactDefault = parcelHelpers.interopDefault(_react);
+var _propTypes = require("prop-types");
+var _propTypesDefault = parcelHelpers.interopDefault(_propTypes);
+var _accordionStCssJs = require("./Accordion.st.css.js");
+var _accordionItem = require("./components/AccordionItem");
+var _accordionItemDefault = parcelHelpers.interopDefault(_accordionItem);
+var _constants = require("./constants");
+var _sectionHeader = require("../SectionHeader");
+var _sectionHeaderDefault = parcelHelpers.interopDefault(_sectionHeader);
+class Accordion extends (0, _react.PureComponent) {
+    constructor(props){
+        super(props);
+        this._findOpenIndexes = (items = [], initial = false)=>{
+            return items.map((item, index)=>initial && item.initiallyOpen || item.open ? index : null).filter((index)=>index !== null).flatMap((index)=>!!index || index === 0 ? [
+                    index
+                ] : []);
+        };
+        this._compareOpenItems = (currentItems = [], prevItems = [])=>{
+            if (prevItems.length !== currentItems.length) return false;
+            for(let i = 0; i < prevItems.length; i++){
+                if (prevItems[i].open !== currentItems[i].open) return false;
+            }
+            return true;
+        };
+        this.componentDidUpdate = (prevProps)=>{
+            if (!this._compareOpenItems(this.props.items, prevProps.items)) this.setState({
+                openIndexes: this._findOpenIndexes(this.props.items)
+            });
+        };
+        this._toggle = (index)=>()=>this.setState(({ openIndexes })=>({
+                        openIndexes: openIndexes.includes(index) ? openIndexes.filter((i)=>i !== index) : this.props.multiple ? [
+                            ...openIndexes,
+                            index
+                        ] : [
+                            index
+                        ]
+                    }));
+        this.state = {
+            openIndexes: this._findOpenIndexes(this.props.items, true)
+        };
+    }
+    render() {
+        const { openIndexes } = this.state;
+        const { dataHook, items, skin, hideShadow, size, horizontalPadding, contentPadding, transitionSpeed, onAnimationEnter, onAnimationExit } = this.props;
+        return (0, _reactDefault.default).createElement("div", {
+            "data-hook": dataHook,
+            className: (0, _accordionStCssJs.classes).accordion,
+            "data-transition-speed": transitionSpeed,
+            "data-horizontal-padding": horizontalPadding,
+            "data-content-padding": contentPadding,
+            "data-skin": skin
+        }, items?.map((item, index, allItems)=>{
+            const uncontrolledProps = {
+                onToggle: this._toggle(index),
+                open: openIndexes.includes(index),
+                onAnimationEnter,
+                onAnimationExit
+            };
+            const last = index === allItems.length - 1;
+            const internalProps = {
+                className: (0, _accordionStCssJs.st)((0, _accordionStCssJs.classes).item, {
+                    last
+                }),
+                key: item.key || index,
+                skin,
+                hideShadow,
+                size,
+                horizontalPadding,
+                contentPadding,
+                last,
+                transitionSpeed
+            };
+            if (typeof item.render === "function") return item.render(uncontrolledProps, internalProps);
+            else return (0, _reactDefault.default).createElement((0, _accordionItemDefault.default), {
+                ...uncontrolledProps,
+                ...item,
+                ...internalProps
+            });
+        }));
+    }
+}
+Accordion.displayName = "Accordion";
+Accordion.propTypes = {
+    dataHook: (0, _propTypesDefault.default).string,
+    multiple: (0, _propTypesDefault.default).bool,
+    skin: (0, _propTypesDefault.default).oneOf([
+        "standard",
+        "light",
+        "neutral"
+    ]),
+    hideShadow: (0, _propTypesDefault.default).bool,
+    size: (0, _propTypesDefault.default).oneOf([
+        "tiny",
+        "small",
+        "medium",
+        "large"
+    ]),
+    horizontalPadding: (0, _propTypesDefault.default).oneOf([
+        "none",
+        "tiny",
+        "small",
+        "medium",
+        "large"
+    ]),
+    contentPadding: (0, _propTypesDefault.default).oneOf([
+        "none"
+    ]),
+    transitionSpeed: (0, _propTypesDefault.default).oneOf([
+        "slow",
+        "medium",
+        "fast"
+    ]),
+    onAnimationEnter: (0, _propTypesDefault.default).func,
+    onAnimationExit: (0, _propTypesDefault.default).func,
+    items: (0, _propTypesDefault.default).oneOfType([
+        (0, _propTypesDefault.default).arrayOf((0, _propTypesDefault.default).shape({
+            render: (0, _propTypesDefault.default).func
+        })),
+        (0, _propTypesDefault.default).arrayOf((0, _propTypesDefault.default).shape({
+            title: (0, _propTypesDefault.default).node,
+            subtitle: (0, _propTypesDefault.default).node,
+            icon: (0, _propTypesDefault.default).node,
+            children: (0, _propTypesDefault.default).node,
+            expandLabel: (0, _propTypesDefault.default).node,
+            collapseLabel: (0, _propTypesDefault.default).node,
+            showLabel: (0, _propTypesDefault.default).oneOf([
+                "hover",
+                "always"
+            ]),
+            buttonType: (0, _propTypesDefault.default).oneOf([
+                "textButton",
+                "button",
+                "node"
+            ]),
+            disabled: (0, _propTypesDefault.default).bool,
+            onToggle: (0, _propTypesDefault.default).func,
+            onMouseEnter: (0, _propTypesDefault.default).func,
+            onMouseleave: (0, _propTypesDefault.default).func,
+            open: (0, _propTypesDefault.default).bool,
+            initiallyOpen: (0, _propTypesDefault.default).bool
+        }))
+    ])
+};
+Accordion.defaultProps = {
+    items: [],
+    multiple: false,
+    skin: (0, _constants.skins).standard,
+    horizontalPadding: (0, _constants.horizontalPaddings).large,
+    hideShadow: false,
+    transitionSpeed: "medium",
+    size: "small"
+};
+const accordionItemBuilder = (item)=>{
+    return {
+        ...item,
+        render: (uncontrolledProps, internalProps)=>(0, _reactDefault.default).createElement((0, _accordionItemDefault.default), {
+                ...uncontrolledProps,
+                ...item,
+                ...internalProps
+            })
+    };
+};
+const accordionSectionItemBuilder = (item)=>{
+    return {
+        ...item,
+        render: (_, internalProps)=>(0, _reactDefault.default).createElement((0, _sectionHeaderDefault.default), {
+                title: item.title ?? internalProps.title,
+                skin: "neutral"
+            })
+    };
+};
+exports.default = Accordion;
+
+},{"react":"21dqq","prop-types":"7wKI2","./Accordion.st.css.js":"koaVI","./components/AccordionItem":"4R56D","./constants":"5Mafu","../SectionHeader":"hGn77","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"koaVI":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "cssStates", ()=>cssStates);
+parcelHelpers.export(exports, "style", ()=>style);
+parcelHelpers.export(exports, "st", ()=>st);
+parcelHelpers.export(exports, "namespace", ()=>namespace);
+parcelHelpers.export(exports, "classes", ()=>classes);
+parcelHelpers.export(exports, "keyframes", ()=>keyframes);
+parcelHelpers.export(exports, "layers", ()=>layers);
+parcelHelpers.export(exports, "containers", ()=>containers);
+parcelHelpers.export(exports, "stVars", ()=>stVars);
+parcelHelpers.export(exports, "vars", ()=>vars);
+var _colorsStCssJs = require("../Foundation/stylable/colors.st.css.js");
+var _stylableEsmRuntimeJs = require("./../stylable-esm-runtime.js");
+var _namespace_ = "wds_1_127_0_Accordion";
+var _style_ = (0, _stylableEsmRuntimeJs.classesRuntime).bind(null, _namespace_);
+var cssStates = (0, _stylableEsmRuntimeJs.statesRuntime).bind(null, _namespace_);
+var style = _style_;
+var st = _style_;
+var namespace = _namespace_;
+var classes = {
+    "root": "wds_1_127_0_Accordion__root",
+    "accordion": "wds_1_127_0_Accordion__accordion",
+    "item": "wds_1_127_0_Accordion__item"
+};
+var keyframes = {};
+var layers = {};
+var containers = {};
+var stVars = {};
+var vars = {
+    "wds-color-fill-standard-tertiary": "--wds-color-fill-standard-tertiary",
+    "wds-color-border-dark-secondary": "--wds-color-border-dark-secondary"
+};
+
+},{"../Foundation/stylable/colors.st.css.js":"NuJI3","./../stylable-esm-runtime.js":"9riQG","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"4R56D":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "default", ()=>(0, _accordionItemDefault.default));
+var _accordionItem = require("./AccordionItem");
+var _accordionItemDefault = parcelHelpers.interopDefault(_accordionItem);
+
+},{"./AccordionItem":"6vna6","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"6vna6":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _react = require("react");
+var _reactDefault = parcelHelpers.interopDefault(_react);
+var _text = require("../../../Text");
+var _textDefault = parcelHelpers.interopDefault(_text);
+var _toggle = require("../../../Transition/Toggle");
+var _toggleDefault = parcelHelpers.interopDefault(_toggle);
+var _accordionItemCaret = require("../AccordionItemCaret");
+var _accordionItemCaretDefault = parcelHelpers.interopDefault(_accordionItemCaret);
+var _constants = require("../../../Transition/constants");
+var _constants1 = require("../../constants");
+var _context = require("../../../WixDesignSystemProvider/context");
+var _accordionItemStCssJs = require("./AccordionItem.st.css.js");
+const IconsContainer = ({ position, toggleIconPlacement, icon, iconDataHook, caretProps })=>{
+    const shouldShowToggleIcon = toggleIconPlacement === position;
+    return shouldShowToggleIcon || icon ? (0, _reactDefault.default).createElement("div", {
+        className: (0, _accordionItemStCssJs.classes).iconsContainer
+    }, shouldShowToggleIcon && position === "start" && (0, _reactDefault.default).createElement((0, _accordionItemCaretDefault.default), {
+        ...caretProps
+    }), icon && (0, _reactDefault.default).createElement("div", {
+        className: (0, _accordionItemStCssJs.classes).affix,
+        "data-hook": iconDataHook
+    }, icon), shouldShowToggleIcon && position === "end" && (0, _reactDefault.default).createElement((0, _accordionItemCaretDefault.default), {
+        ...caretProps
+    })) : null;
+};
+function AccordionItem({ icon, prefix, suffix, title, subtitle, open, children, onToggle, onMouseLeave, onMouseEnter, disabled, skin, hideShadow, className, size, horizontalPadding, contentPadding, last, transitionSpeed = "medium", onAnimationEnter, onAnimationExit, buttonType = "textButton", expandLabel, collapseLabel, toggleIconPlacement = "end", showLabel }) {
+    // needed for toggle button label visibility
+    const [hover, setHover] = (0, _react.useState)(false);
+    const caretProps = {
+        hover,
+        buttonType,
+        expandLabel,
+        collapseLabel,
+        showLabel,
+        open,
+        disabled,
+        skin
+    };
+    const _onMouseLeave = (e)=>{
+        setHover(false);
+        !disabled && onMouseLeave && onMouseLeave(e);
+    };
+    const _onMouseEnter = (e)=>{
+        setHover(true);
+        !disabled && onMouseEnter && onMouseEnter(e);
+    };
+    return (0, _reactDefault.default).createElement((0, _context.WixDesignSystemContext).Consumer, null, ({ newColorsBranding })=>(0, _reactDefault.default).createElement("div", {
+            "data-hook": (0, _constants1.dataHooks).item,
+            className: (0, _accordionItemStCssJs.st)((0, _accordionItemStCssJs.classes).root, {
+                disabled,
+                open,
+                skin,
+                hideShadow,
+                size,
+                horizontalPadding,
+                contentPadding,
+                last,
+                newColorsBranding
+            }, className)
+        }, (0, _reactDefault.default).createElement("div", {
+            onClick: !disabled ? onToggle : ()=>{},
+            className: (0, _accordionItemStCssJs.st)((0, _accordionItemStCssJs.classes).header, {
+                size
+            }),
+            "data-hook": (0, _constants1.dataHooks).header,
+            onMouseEnter: _onMouseEnter,
+            onMouseLeave: _onMouseLeave
+        }, (0, _reactDefault.default).createElement(IconsContainer, {
+            position: "start",
+            toggleIconPlacement: toggleIconPlacement,
+            icon: prefix || icon,
+            caretProps: caretProps,
+            iconDataHook: (0, _constants1.dataHooks).prefix
+        }), (0, _reactDefault.default).createElement("div", {
+            className: (0, _accordionItemStCssJs.classes).titleWrapper
+        }, title && (0, _reactDefault.default).createElement("div", {
+            "data-hook": "titleContainer"
+        }, typeof title === "string" ? (0, _reactDefault.default).createElement((0, _textDefault.default), {
+            dataHook: "title",
+            ellipsis: true,
+            weight: "normal"
+        }, title) : title), subtitle && (0, _reactDefault.default).createElement("div", {
+            "data-hook": (0, _constants1.dataHooks).subtitle
+        }, typeof subtitle === "string" ? (0, _reactDefault.default).createElement((0, _textDefault.default), {
+            size: "small"
+        }, subtitle) : subtitle)), (0, _reactDefault.default).createElement(IconsContainer, {
+            position: "end",
+            toggleIconPlacement: toggleIconPlacement,
+            icon: suffix,
+            caretProps: caretProps,
+            iconDataHook: (0, _constants1.dataHooks).suffix
+        })), (0, _reactDefault.default).createElement((0, _toggleDefault.default), {
+            show: open,
+            timeout: (0, _constants.timingMap)[transitionSpeed],
+            onStart: onAnimationEnter,
+            onEnd: onAnimationExit,
+            unmountOnExit: true
+        }, (0, _reactDefault.default).createElement("div", {
+            "data-hook": "children",
+            className: (0, _accordionItemStCssJs.classes).children
+        }, children))));
+}
+exports.default = AccordionItem;
+
+},{"react":"21dqq","../../../Text":"PEbaS","../../../Transition/Toggle":"5Vqaf","../AccordionItemCaret":"jWAA4","../../../Transition/constants":"5qgy3","../../constants":"5Mafu","../../../WixDesignSystemProvider/context":"5nK7f","./AccordionItem.st.css.js":"04VaB","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"jWAA4":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "default", ()=>(0, _accordionItemCaretDefault.default));
+var _accordionItemCaret = require("./AccordionItemCaret");
+var _accordionItemCaretDefault = parcelHelpers.interopDefault(_accordionItemCaret);
+
+},{"./AccordionItemCaret":"eoUbH","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"eoUbH":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _react = require("react");
+var _reactDefault = parcelHelpers.interopDefault(_react);
+var _system = require("@wix/wix-ui-icons-common/system");
+var _button = require("../../../Button");
+var _buttonDefault = parcelHelpers.interopDefault(_button);
+var _textButton = require("../../../TextButton");
+var _textButtonDefault = parcelHelpers.interopDefault(_textButton);
+var _constants = require("../../constants");
+var _accordionItemCaretStCssJs = require("./AccordionItemCaret.st.css.js");
+const AccordionItemCaret = ({ showLabel, buttonType, skin, open, disabled, hover, collapseLabel, expandLabel })=>{
+    const skinProp = skin === (0, _constants.skins).neutral ? "dark" : "standard";
+    const isLabelShown = showLabel === "always" || hover;
+    const label = open ? collapseLabel : expandLabel;
+    if (buttonType === (0, _constants.buttonTypes).node && isLabelShown && label) return (0, _reactDefault.default).createElement("div", {
+        "data-hook": (0, _constants.dataHooks).toggleButton
+    }, label);
+    if (buttonType === (0, _constants.buttonTypes).button && label && // For this buttonType, showLabel default is 'always' if undefined.
+    (showLabel === "hover" ? hover : true)) return (0, _reactDefault.default).createElement((0, _buttonDefault.default), {
+        skin: skinProp,
+        size: "small",
+        priority: open ? "secondary" : "primary",
+        disabled: disabled,
+        dataHook: (0, _constants.dataHooks).toggleButton,
+        children: label
+    });
+    if (buttonType === (0, _constants.buttonTypes).textButton) {
+        const suffixIcon = open ? (0, _reactDefault.default).createElement((0, _system.CaretDown), null) : (0, _reactDefault.default).createElement((0, _system.CaretRight), null);
+        return (0, _reactDefault.default).createElement((0, _textButtonDefault.default), {
+            className: (0, _accordionItemCaretStCssJs.st)((0, _accordionItemCaretStCssJs.classes).textButton, {
+                withLabel: !!(isLabelShown && label)
+            }),
+            skin: skinProp,
+            suffixIcon: suffixIcon,
+            disabled: disabled,
+            dataHook: (0, _constants.dataHooks).toggleButton,
+            children: isLabelShown && label
+        });
+    }
+    return null;
+};
+exports.default = AccordionItemCaret;
+
+},{"react":"21dqq","@wix/wix-ui-icons-common/system":"5zX4m","../../../Button":"k3KwH","../../../TextButton":"2Ntsg","../../constants":"5Mafu","./AccordionItemCaret.st.css.js":"ItTrQ","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"5Mafu":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "buttonTypes", ()=>buttonTypes);
+parcelHelpers.export(exports, "SHOW_LABEL", ()=>SHOW_LABEL);
+parcelHelpers.export(exports, "dataHooks", ()=>dataHooks);
+parcelHelpers.export(exports, "skins", ()=>skins);
+parcelHelpers.export(exports, "SIZES", ()=>SIZES);
+parcelHelpers.export(exports, "horizontalPaddings", ()=>horizontalPaddings);
+parcelHelpers.export(exports, "contentPaddings", ()=>contentPaddings);
+parcelHelpers.export(exports, "transitionSpeeds", ()=>transitionSpeeds);
+const buttonTypes = {
+    textButton: "textButton",
+    button: "button",
+    node: "node"
+};
+const SHOW_LABEL = {
+    hover: "hover",
+    always: "always"
+};
+const dataHooks = {
+    item: "accordion-item",
+    header: "header",
+    toggleButton: "accordion-toggle-button",
+    toggleAccordionWrapper: "toggle-accordion-wrapper",
+    // TODO: mismatch for backwards compat, update when major
+    prefix: "icon",
+    suffix: "suffix",
+    subtitle: "accordion-item-subtitle"
+};
+const skins = {
+    standard: "standard",
+    light: "light",
+    neutral: "neutral"
+};
+const SIZES = {
+    tiny: "tiny",
+    small: "small",
+    medium: "medium",
+    large: "large"
+};
+const horizontalPaddings = {
+    none: "none",
+    tiny: "tiny",
+    small: "small",
+    medium: "medium",
+    large: "large"
+};
+const contentPaddings = {
+    none: "none"
+};
+const transitionSpeeds = {
+    slow: "slow",
+    medium: "medium",
+    fast: "fast"
+};
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"ItTrQ":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "cssStates", ()=>cssStates);
+parcelHelpers.export(exports, "style", ()=>style);
+parcelHelpers.export(exports, "st", ()=>st);
+parcelHelpers.export(exports, "namespace", ()=>namespace);
+parcelHelpers.export(exports, "classes", ()=>classes);
+parcelHelpers.export(exports, "keyframes", ()=>keyframes);
+parcelHelpers.export(exports, "layers", ()=>layers);
+parcelHelpers.export(exports, "containers", ()=>containers);
+parcelHelpers.export(exports, "stVars", ()=>stVars);
+parcelHelpers.export(exports, "vars", ()=>vars);
+var _textButtonStCssJs = require("../../../TextButton/TextButton.st.css.js");
+var _colorsStCssJs = require("../../../Foundation/stylable/colors.st.css.js");
+var _stylableEsmRuntimeJs = require("./../../../stylable-esm-runtime.js");
+var _namespace_ = "wds_1_127_0_AccordionItemCaret";
+var _style_ = (0, _stylableEsmRuntimeJs.classesRuntime).bind(null, _namespace_);
+var cssStates = (0, _stylableEsmRuntimeJs.statesRuntime).bind(null, _namespace_);
+var style = _style_;
+var st = _style_;
+var namespace = _namespace_;
+var classes = {
+    "root": "wds_1_127_0_AccordionItemCaret__root",
+    "textButton": "wds_1_127_0_AccordionItemCaret__textButton"
+};
+var keyframes = {};
+var layers = {};
+var containers = {};
+var stVars = {};
+var vars = {
+    "wds-color-text-standard-secondary": "--wds-color-text-standard-secondary"
+};
+
+},{"../../../TextButton/TextButton.st.css.js":"bxOBb","../../../Foundation/stylable/colors.st.css.js":"NuJI3","./../../../stylable-esm-runtime.js":"9riQG","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"04VaB":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "cssStates", ()=>cssStates);
+parcelHelpers.export(exports, "style", ()=>style);
+parcelHelpers.export(exports, "st", ()=>st);
+parcelHelpers.export(exports, "namespace", ()=>namespace);
+parcelHelpers.export(exports, "classes", ()=>classes);
+parcelHelpers.export(exports, "keyframes", ()=>keyframes);
+parcelHelpers.export(exports, "layers", ()=>layers);
+parcelHelpers.export(exports, "containers", ()=>containers);
+parcelHelpers.export(exports, "stVars", ()=>stVars);
+parcelHelpers.export(exports, "vars", ()=>vars);
+var _colorsStCssJs = require("../../../Foundation/stylable/colors.st.css.js");
+var _shadowsStCssJs = require("../../../Foundation/stylable/shadows.st.css.js");
+var _spacingStCssJs = require("../../../Foundation/stylable/spacing.st.css.js");
+var _stylableEsmRuntimeJs = require("./../../../stylable-esm-runtime.js");
+var _namespace_ = "wds_1_127_0_AccordionItem";
+var _style_ = (0, _stylableEsmRuntimeJs.classesRuntime).bind(null, _namespace_);
+var cssStates = (0, _stylableEsmRuntimeJs.statesRuntime).bind(null, _namespace_);
+var style = _style_;
+var st = _style_;
+var namespace = _namespace_;
+var classes = {
+    "root": "wds_1_127_0_AccordionItem__root",
+    "header": "wds_1_127_0_AccordionItem__header",
+    "iconsContainer": "wds_1_127_0_AccordionItem__iconsContainer",
+    "affix": "wds_1_127_0_AccordionItem__affix",
+    "titleWrapper": "wds_1_127_0_AccordionItem__titleWrapper",
+    "children": "wds_1_127_0_AccordionItem__children"
+};
+var keyframes = {};
+var layers = {};
+var containers = {};
+var stVars = {};
+var vars = {
+    "wds-color-blue-600": "--wds-color-blue-600",
+    "wds-color-border-dark-secondary": "--wds-color-border-dark-secondary",
+    "wds-color-fill-dark-secondary-hover": "--wds-color-fill-dark-secondary-hover",
+    "wds-color-fill-dark-secondary": "--wds-color-fill-dark-secondary",
+    "wds-color-fill-standard-tertiary-hover": "--wds-color-fill-standard-tertiary-hover",
+    "wds-color-fill-standard-tertiary": "--wds-color-fill-standard-tertiary",
+    "wds-color-fill-surface-default": "--wds-color-fill-surface-default",
+    "wds-shadow-inner-300-top": "--wds-shadow-inner-300-top",
+    "wds-shadow-inner-300-vertical": "--wds-shadow-inner-300-vertical",
+    "wds-space-100": "--wds-space-100",
+    "wds-space-200": "--wds-space-200",
+    "wds-space-padding-horizontal-large": "--wds-space-padding-horizontal-large",
+    "wds-space-padding-horizontal-medium": "--wds-space-padding-horizontal-medium",
+    "wds-space-padding-horizontal-small": "--wds-space-padding-horizontal-small",
+    "wds-space-padding-horizontal-tiny": "--wds-space-padding-horizontal-tiny",
+    "wds-space-padding-vertical-large": "--wds-space-padding-vertical-large",
+    "wds-space-padding-vertical-medium": "--wds-space-padding-vertical-medium",
+    "wds-space-padding-vertical-small": "--wds-space-padding-vertical-small",
+    "wds-space-padding-vertical-tiny": "--wds-space-padding-vertical-tiny"
+};
+
+},{"../../../Foundation/stylable/colors.st.css.js":"NuJI3","../../../Foundation/stylable/shadows.st.css.js":"5OW3l","../../../Foundation/stylable/spacing.st.css.js":"9bp3c","./../../../stylable-esm-runtime.js":"9riQG","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"hGn77":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "default", ()=>(0, _sectionHeaderDefault.default));
+var _sectionHeader = require("./SectionHeader");
+var _sectionHeaderDefault = parcelHelpers.interopDefault(_sectionHeader);
+var _sectionHeaderTypes = require("./SectionHeader.types");
+parcelHelpers.exportAll(_sectionHeaderTypes, exports);
+
+},{"./SectionHeader":"cE7lV","./SectionHeader.types":false,"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"cE7lV":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _react = require("react");
+var _reactDefault = parcelHelpers.interopDefault(_react);
+var _propTypes = require("prop-types");
+var _propTypesDefault = parcelHelpers.interopDefault(_propTypes);
+var _text = require("../Text");
+var _textDefault = parcelHelpers.interopDefault(_text);
+var _sectionHeaderStCssJs = require("./SectionHeader.st.css.js");
+const SectionHeader = (0, _react.forwardRef)(({ dataHook, title, suffix, id, "aria-describedby": ariaDescribedBy, as = "span", skin = "standard", size = "medium", align = "start", divider = "default", horizontalPadding = "large" }, ref)=>{
+    return (0, _reactDefault.default).createElement("div", {
+        ref: ref,
+        "data-hook": dataHook,
+        className: (0, _sectionHeaderStCssJs.st)((0, _sectionHeaderStCssJs.classes).root, {
+            skin,
+            horizontalPadding,
+            divider
+        })
+    }, (0, _reactDefault.default).createElement("div", {
+        className: (0, _sectionHeaderStCssJs.st)((0, _sectionHeaderStCssJs.classes).title, {
+            align
+        }),
+        "data-hook": "title-node"
+    }, (0, _react.isValidElement)(title) ? title : (0, _reactDefault.default).createElement((0, _textDefault.default), {
+        id: id,
+        className: (0, _sectionHeaderStCssJs.classes).titleText,
+        "aria-describedby": ariaDescribedBy,
+        tagName: as,
+        size: size,
+        weight: "thin",
+        flip: true,
+        ellipsis: true
+    }, title)), suffix && (0, _reactDefault.default).createElement("div", {
+        className: (0, _sectionHeaderStCssJs.classes).suffix,
+        "data-hook": "suffix-node"
+    }, suffix));
+});
+SectionHeader.displayName = "SectionHeader";
+SectionHeader.propTypes = {
+    title: (0, _propTypesDefault.default).any.isRequired,
+    suffix: (0, _propTypesDefault.default).any,
+    dataHook: (0, _propTypesDefault.default).string,
+    skin: (0, _propTypesDefault.default).oneOf([
+        "standard",
+        "neutral",
+        "light"
+    ]),
+    as: (0, _propTypesDefault.default).oneOf([
+        "span",
+        "h1",
+        "h2",
+        "h3",
+        "h4",
+        "h5",
+        "h6"
+    ]),
+    id: (0, _propTypesDefault.default).string,
+    "aria-describedby": (0, _propTypesDefault.default).string,
+    size: (0, _propTypesDefault.default).oneOf([
+        "small",
+        "medium"
+    ]),
+    align: (0, _propTypesDefault.default).oneOf([
+        "start",
+        "center"
+    ]),
+    divider: (0, _propTypesDefault.default).oneOf([
+        "default",
+        "top",
+        "bottom",
+        "none"
+    ]),
+    horizontalPadding: (0, _propTypesDefault.default).oneOf([
+        "large",
+        "medium",
+        "small",
+        "tiny",
+        "xTiny",
+        "xxTiny"
+    ])
+};
+exports.default = SectionHeader;
+
+},{"react":"21dqq","prop-types":"7wKI2","../Text":"PEbaS","./SectionHeader.st.css.js":"kOe6d","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"kOe6d":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "cssStates", ()=>cssStates);
+parcelHelpers.export(exports, "style", ()=>style);
+parcelHelpers.export(exports, "st", ()=>st);
+parcelHelpers.export(exports, "namespace", ()=>namespace);
+parcelHelpers.export(exports, "classes", ()=>classes);
+parcelHelpers.export(exports, "keyframes", ()=>keyframes);
+parcelHelpers.export(exports, "layers", ()=>layers);
+parcelHelpers.export(exports, "containers", ()=>containers);
+parcelHelpers.export(exports, "stVars", ()=>stVars);
+parcelHelpers.export(exports, "vars", ()=>vars);
+var _colorsStCssJs = require("../Foundation/stylable/colors.st.css.js");
+var _stylableEsmRuntimeJs = require("./../stylable-esm-runtime.js");
+var _namespace_ = "wds_1_127_0_SectionHeader";
+var _style_ = (0, _stylableEsmRuntimeJs.classesRuntime).bind(null, _namespace_);
+var cssStates = (0, _stylableEsmRuntimeJs.statesRuntime).bind(null, _namespace_);
+var style = _style_;
+var st = _style_;
+var namespace = _namespace_;
+var classes = {
+    "root": "wds_1_127_0_SectionHeader__root",
+    "title": "wds_1_127_0_SectionHeader__title",
+    "titleText": "wds_1_127_0_SectionHeader__titleText",
+    "suffix": "wds_1_127_0_SectionHeader__suffix"
+};
+var keyframes = {};
+var layers = {};
+var containers = {};
+var stVars = {};
+var vars = {
+    "wds-color-border-dark-secondary": "--wds-color-border-dark-secondary",
+    "wds-color-border-standard-primary": "--wds-color-border-standard-primary",
+    "wds-color-fill-standard-secondary": "--wds-color-fill-standard-secondary",
+    "wds-color-fill-surface-neutral": "--wds-color-fill-surface-neutral",
+    "wds-color-fill-surface-standard": "--wds-color-fill-surface-standard",
+    "wds-color-fill-surface-default": "--wds-color-fill-surface-default",
+    "wds-list-item-padding-horizontal-large": "--wds-list-item-padding-horizontal-large",
+    "wds-list-item-padding-horizontal-medium": "--wds-list-item-padding-horizontal-medium",
+    "wds-list-item-padding-horizontal-small": "--wds-list-item-padding-horizontal-small",
+    "wds-list-item-padding-horizontal-tiny": "--wds-list-item-padding-horizontal-tiny",
+    "wds-list-item-padding-horizontal-x-tiny": "--wds-list-item-padding-horizontal-x-tiny",
+    "wds-list-item-padding-horizontal-xx-tiny": "--wds-list-item-padding-horizontal-xx-tiny",
+    "wds-section-header-padding-vertical": "--wds-section-header-padding-vertical",
+    "wds-space-200": "--wds-space-200",
+    "color-bg": "--wds_1_127_0_SectionHeader-color-bg",
+    "color-border": "--wds_1_127_0_SectionHeader-color-border"
+};
+
+},{"../Foundation/stylable/colors.st.css.js":"NuJI3","./../stylable-esm-runtime.js":"9riQG","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"fGjJy":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "default", ()=>(0, _wixStyleReactEnvironmentProviderDefault.default));
@@ -46979,36 +47963,6 @@ var vars = {
     "wix-font-weight-bold": "--wix-font-weight-bold",
     "wix-font-weight-xbold": "--wix-font-weight-xbold"
 };
-
-},{"./../stylable-esm-runtime.js":"9riQG","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"1rgMu":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "cssStates", ()=>cssStates);
-parcelHelpers.export(exports, "style", ()=>style);
-parcelHelpers.export(exports, "st", ()=>st);
-parcelHelpers.export(exports, "namespace", ()=>namespace);
-parcelHelpers.export(exports, "classes", ()=>classes);
-parcelHelpers.export(exports, "keyframes", ()=>keyframes);
-parcelHelpers.export(exports, "layers", ()=>layers);
-parcelHelpers.export(exports, "containers", ()=>containers);
-parcelHelpers.export(exports, "stVars", ()=>stVars);
-parcelHelpers.export(exports, "vars", ()=>vars);
-var _stylableEsmRuntimeJs = require("./../stylable-esm-runtime.js");
-var _namespace_ = "wds_1_127_0_WixDesignSystemProvider";
-var _style_ = (0, _stylableEsmRuntimeJs.classesRuntime).bind(null, _namespace_);
-var cssStates = (0, _stylableEsmRuntimeJs.statesRuntime).bind(null, _namespace_);
-var style = _style_;
-var st = _style_;
-var namespace = _namespace_;
-var classes = {
-    "root": "wds_1_127_0_WixDesignSystemProvider__root",
-    "mobile": "wds_1_127_0_WixDesignSystemProvider__mobile"
-};
-var keyframes = {};
-var layers = {};
-var containers = {};
-var stVars = {};
-var vars = {};
 
 },{"./../stylable-esm-runtime.js":"9riQG","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"km3Ru":[function(require,module,exports) {
 "use strict";
@@ -47225,69 +48179,109 @@ var _jsxDevRuntime = require("react/jsx-dev-runtime");
 var _react = require("react");
 var _reactDefault = parcelHelpers.interopDefault(_react);
 var _designSystem = require("@wix/design-system");
-const ReportDisplay = ({ report })=>/*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _jsxDevRuntime.Fragment), {
+const ReportDisplay = ({ report, calculationDetails })=>/*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _jsxDevRuntime.Fragment), {
         children: Object.entries(report).map(([year, { heading, fields }])=>/*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _designSystem.Card), {
                 children: [
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _designSystem.Card).Header, {
                         title: heading
                     }, void 0, false, {
                         fileName: "client/src/components/ReportDisplay.tsx",
-                        lineNumber: 13,
+                        lineNumber: 15,
                         columnNumber: 17
                     }, undefined),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _designSystem.Card).Content, {
-                        children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _designSystem.Table), {
-                            data: fields,
-                            columns: [
-                                {
-                                    title: "Field",
-                                    render: (row)=>row.name
-                                },
-                                {
-                                    title: "Value",
-                                    render: (row)=>{
-                                        if (row.value !== undefined) return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _designSystem.Text), {
-                                            children: row.value
-                                        }, void 0, false, {
-                                            fileName: "client/src/components/ReportDisplay.tsx",
-                                            lineNumber: 23,
-                                            columnNumber: 44
-                                        }, void 0);
-                                        else if (row.subfields) return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _designSystem.Table), {
-                                            data: row.subfields,
+                        children: [
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _designSystem.Table), {
+                                data: fields,
+                                columns: [
+                                    {
+                                        title: "Field",
+                                        render: (row)=>row.name
+                                    },
+                                    {
+                                        title: "Value",
+                                        render: (row)=>{
+                                            if (row.value !== undefined) return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _designSystem.Text), {
+                                                children: row.value
+                                            }, void 0, false, {
+                                                fileName: "client/src/components/ReportDisplay.tsx",
+                                                lineNumber: 25,
+                                                columnNumber: 44
+                                            }, void 0);
+                                            else if (row.subfields) return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _designSystem.Table), {
+                                                data: row.subfields,
+                                                columns: [
+                                                    {
+                                                        title: "Subfield",
+                                                        render: (subfield)=>subfield.name
+                                                    },
+                                                    {
+                                                        title: "Value",
+                                                        render: (subfield)=>subfield.value
+                                                    }
+                                                ]
+                                            }, void 0, false, {
+                                                fileName: "client/src/components/ReportDisplay.tsx",
+                                                lineNumber: 28,
+                                                columnNumber: 41
+                                            }, void 0);
+                                            return null;
+                                        }
+                                    }
+                                ]
+                            }, void 0, false, {
+                                fileName: "client/src/components/ReportDisplay.tsx",
+                                lineNumber: 17,
+                                columnNumber: 17
+                            }, undefined),
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _designSystem.Accordion), {
+                                items: [
+                                    {
+                                        title: "Show Your Work",
+                                        children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _designSystem.Table), {
+                                            rowVerticalPadding: "tiny",
+                                            data: calculationDetails[parseInt(year)],
                                             columns: [
                                                 {
-                                                    title: "Subfield",
-                                                    render: (subfield)=>subfield.name
+                                                    title: "Description",
+                                                    render: (row)=>row.description
                                                 },
                                                 {
-                                                    title: "Value",
-                                                    render: (subfield)=>subfield.value
+                                                    title: "Calculation",
+                                                    render: (row)=>row.calculation
+                                                },
+                                                {
+                                                    title: "Result",
+                                                    render: (row)=>row.result
                                                 }
-                                            ]
+                                            ],
+                                            children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _designSystem.Table).Content, {}, void 0, false, {
+                                                fileName: "client/src/components/ReportDisplay.tsx",
+                                                lineNumber: 55,
+                                                columnNumber: 33
+                                            }, void 0)
                                         }, void 0, false, {
                                             fileName: "client/src/components/ReportDisplay.tsx",
-                                            lineNumber: 26,
-                                            columnNumber: 41
-                                        }, void 0);
-                                        return null;
+                                            lineNumber: 46,
+                                            columnNumber: 29
+                                        }, void 0)
                                     }
-                                }
-                            ]
-                        }, void 0, false, {
-                            fileName: "client/src/components/ReportDisplay.tsx",
-                            lineNumber: 15,
-                            columnNumber: 17
-                        }, undefined)
-                    }, void 0, false, {
+                                ]
+                            }, void 0, false, {
+                                fileName: "client/src/components/ReportDisplay.tsx",
+                                lineNumber: 42,
+                                columnNumber: 17
+                            }, undefined)
+                        ]
+                    }, void 0, true, {
                         fileName: "client/src/components/ReportDisplay.tsx",
-                        lineNumber: 14,
+                        lineNumber: 16,
                         columnNumber: 17
                     }, undefined)
                 ]
             }, year, true, {
                 fileName: "client/src/components/ReportDisplay.tsx",
-                lineNumber: 12,
+                lineNumber: 14,
                 columnNumber: 13
             }, undefined))
     }, void 0, false);
@@ -47301,7 +48295,6 @@ $RefreshReg$(_c, "ReportDisplay");
   window.$RefreshSig$ = prevRefreshSig;
 }
 },{"react/jsx-dev-runtime":"iTorj","react":"21dqq","@wix/design-system":"lWbTc","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"g7uR3":[function(require,module,exports) {
-// lib/generate-tax-fill-instructions-data.ts
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "generateTaxFillInstructionsData", ()=>generateTaxFillInstructionsData);
@@ -65286,7 +66279,6 @@ const fetchExchangeRate = (date)=>{
 module.exports = JSON.parse('{"2016-01-01":1.0887,"2016-01-02":1.0887,"2016-01-03":1.0887,"2016-01-04":1.0898,"2016-01-05":1.0746,"2016-01-06":1.0742,"2016-01-07":1.0868,"2016-01-08":1.0861,"2016-01-09":1.0861,"2016-01-10":1.0861,"2016-01-11":1.0888,"2016-01-12":1.0836,"2016-01-13":1.0816,"2016-01-14":1.0893,"2016-01-15":1.0914,"2016-01-16":1.0914,"2016-01-17":1.0914,"2016-01-18":1.0892,"2016-01-19":1.0868,"2016-01-20":1.0907,"2016-01-21":1.0893,"2016-01-22":1.0808,"2016-01-23":1.0808,"2016-01-24":1.0808,"2016-01-25":1.0815,"2016-01-26":1.0837,"2016-01-27":1.0888,"2016-01-28":1.0903,"2016-01-29":1.092,"2016-01-30":1.092,"2016-01-31":1.092,"2016-02-01":1.0884,"2016-02-02":1.0919,"2016-02-03":1.0933,"2016-02-04":1.1206,"2016-02-05":1.1202,"2016-02-06":1.1202,"2016-02-07":1.1202,"2016-02-08":1.1101,"2016-02-09":1.1236,"2016-02-10":1.1257,"2016-02-11":1.1347,"2016-02-12":1.1275,"2016-02-13":1.1275,"2016-02-14":1.1275,"2016-02-15":1.118,"2016-02-16":1.1166,"2016-02-17":1.1136,"2016-02-18":1.1084,"2016-02-19":1.1096,"2016-02-20":1.1096,"2016-02-21":1.1096,"2016-02-22":1.1026,"2016-02-23":1.1002,"2016-02-24":1.0981,"2016-02-25":1.1027,"2016-02-26":1.1006,"2016-02-27":1.1006,"2016-02-28":1.1006,"2016-02-29":1.0888,"2016-03-01":1.0872,"2016-03-02":1.0856,"2016-03-03":1.0901,"2016-03-04":1.097,"2016-03-05":1.097,"2016-03-06":1.097,"2016-03-07":1.0953,"2016-03-08":1.1028,"2016-03-09":1.0973,"2016-03-10":1.0857,"2016-03-11":1.109,"2016-03-12":1.109,"2016-03-13":1.109,"2016-03-14":1.1119,"2016-03-15":1.1109,"2016-03-16":1.1064,"2016-03-17":1.1311,"2016-03-18":1.1279,"2016-03-19":1.1279,"2016-03-20":1.1279,"2016-03-21":1.1271,"2016-03-22":1.1212,"2016-03-23":1.1171,"2016-03-24":1.1154,"2016-03-25":1.1154,"2016-03-26":1.1154,"2016-03-27":1.1154,"2016-03-28":1.1154,"2016-03-29":1.1194,"2016-03-30":1.1324,"2016-03-31":1.1385,"2016-04-01":1.1432,"2016-04-02":1.1432,"2016-04-03":1.1432,"2016-04-04":1.138,"2016-04-05":1.1367,"2016-04-06":1.1336,"2016-04-07":1.1364,"2016-04-08":1.1363,"2016-04-09":1.1363,"2016-04-10":1.1363,"2016-04-11":1.139,"2016-04-12":1.1396,"2016-04-13":1.1298,"2016-04-14":1.1252,"2016-04-15":1.1284,"2016-04-16":1.1284,"2016-04-17":1.1284,"2016-04-18":1.1306,"2016-04-19":1.1343,"2016-04-20":1.1379,"2016-04-21":1.1355,"2016-04-22":1.1263,"2016-04-23":1.1263,"2016-04-24":1.1263,"2016-04-25":1.1264,"2016-04-26":1.1287,"2016-04-27":1.1303,"2016-04-28":1.1358,"2016-04-29":1.1403,"2016-04-30":1.1403,"2016-05-01":1.1403,"2016-05-02":1.1493,"2016-05-03":1.1569,"2016-05-04":1.1505,"2016-05-05":1.1439,"2016-05-06":1.1427,"2016-05-07":1.1427,"2016-05-08":1.1427,"2016-05-09":1.1395,"2016-05-10":1.1375,"2016-05-11":1.1409,"2016-05-12":1.1389,"2016-05-13":1.1348,"2016-05-14":1.1348,"2016-05-15":1.1348,"2016-05-16":1.1324,"2016-05-17":1.1318,"2016-05-18":1.1279,"2016-05-19":1.1197,"2016-05-20":1.1219,"2016-05-21":1.1219,"2016-05-22":1.1219,"2016-05-23":1.1215,"2016-05-24":1.1168,"2016-05-25":1.1146,"2016-05-26":1.1168,"2016-05-27":1.1168,"2016-05-28":1.1168,"2016-05-29":1.1168,"2016-05-30":1.1139,"2016-05-31":1.1154,"2016-06-01":1.1174,"2016-06-02":1.1188,"2016-06-03":1.1154,"2016-06-04":1.1154,"2016-06-05":1.1154,"2016-06-06":1.1349,"2016-06-07":1.1348,"2016-06-08":1.1378,"2016-06-09":1.1343,"2016-06-10":1.1304,"2016-06-11":1.1304,"2016-06-12":1.1304,"2016-06-13":1.1268,"2016-06-14":1.1225,"2016-06-15":1.123,"2016-06-16":1.1174,"2016-06-17":1.1254,"2016-06-18":1.1254,"2016-06-19":1.1254,"2016-06-20":1.1332,"2016-06-21":1.1314,"2016-06-22":1.1283,"2016-06-23":1.1389,"2016-06-24":1.1066,"2016-06-25":1.1066,"2016-06-26":1.1066,"2016-06-27":1.0998,"2016-06-28":1.1073,"2016-06-29":1.109,"2016-06-30":1.1102,"2016-07-01":1.1135,"2016-07-02":1.1135,"2016-07-03":1.1135,"2016-07-04":1.1138,"2016-07-05":1.1146,"2016-07-06":1.1069,"2016-07-07":1.108,"2016-07-08":1.107,"2016-07-09":1.107,"2016-07-10":1.107,"2016-07-11":1.1049,"2016-07-12":1.1092,"2016-07-13":1.1072,"2016-07-14":1.1157,"2016-07-15":1.1128,"2016-07-16":1.1128,"2016-07-17":1.1128,"2016-07-18":1.1053,"2016-07-19":1.1035,"2016-07-20":1.1013,"2016-07-21":1.1015,"2016-07-22":1.1014,"2016-07-23":1.1014,"2016-07-24":1.1014,"2016-07-25":1.0982,"2016-07-26":1.0997,"2016-07-27":1.0991,"2016-07-28":1.109,"2016-07-29":1.1113,"2016-07-30":1.1113,"2016-07-31":1.1113,"2016-08-01":1.1164,"2016-08-02":1.1193,"2016-08-03":1.12,"2016-08-04":1.1136,"2016-08-05":1.1156,"2016-08-06":1.1156,"2016-08-07":1.1156,"2016-08-08":1.1087,"2016-08-09":1.1078,"2016-08-10":1.1184,"2016-08-11":1.1153,"2016-08-12":1.1158,"2016-08-13":1.1158,"2016-08-14":1.1158,"2016-08-15":1.118,"2016-08-16":1.1295,"2016-08-17":1.1276,"2016-08-18":1.1321,"2016-08-19":1.1326,"2016-08-20":1.1326,"2016-08-21":1.1326,"2016-08-22":1.1306,"2016-08-23":1.1339,"2016-08-24":1.1268,"2016-08-25":1.129,"2016-08-26":1.129,"2016-08-27":1.129,"2016-08-28":1.129,"2016-08-29":1.117,"2016-08-30":1.1168,"2016-08-31":1.1132,"2016-09-01":1.1146,"2016-09-02":1.1193,"2016-09-03":1.1193,"2016-09-04":1.1193,"2016-09-05":1.1156,"2016-09-06":1.1159,"2016-09-07":1.1237,"2016-09-08":1.1296,"2016-09-09":1.1268,"2016-09-10":1.1268,"2016-09-11":1.1268,"2016-09-12":1.1226,"2016-09-13":1.1247,"2016-09-14":1.1218,"2016-09-15":1.1254,"2016-09-16":1.1226,"2016-09-17":1.1226,"2016-09-18":1.1226,"2016-09-19":1.1165,"2016-09-20":1.1184,"2016-09-21":1.115,"2016-09-22":1.1238,"2016-09-23":1.1214,"2016-09-24":1.1214,"2016-09-25":1.1214,"2016-09-26":1.1262,"2016-09-27":1.122,"2016-09-28":1.1225,"2016-09-29":1.1221,"2016-09-30":1.1161,"2016-10-01":1.1161,"2016-10-02":1.1161,"2016-10-03":1.1236,"2016-10-04":1.1161,"2016-10-05":1.1211,"2016-10-06":1.1185,"2016-10-07":1.114,"2016-10-08":1.114,"2016-10-09":1.114,"2016-10-10":1.116,"2016-10-11":1.1079,"2016-10-12":1.102,"2016-10-13":1.1038,"2016-10-14":1.1002,"2016-10-15":1.1002,"2016-10-16":1.1002,"2016-10-17":1.0994,"2016-10-18":1.0993,"2016-10-19":1.0979,"2016-10-20":1.098,"2016-10-21":1.0886,"2016-10-22":1.0886,"2016-10-23":1.0886,"2016-10-24":1.0891,"2016-10-25":1.0872,"2016-10-26":1.0925,"2016-10-27":1.0927,"2016-10-28":1.0922,"2016-10-29":1.0922,"2016-10-30":1.0922,"2016-10-31":1.0946,"2016-11-01":1.1025,"2016-11-02":1.1095,"2016-11-03":1.1064,"2016-11-04":1.1093,"2016-11-05":1.1093,"2016-11-06":1.1093,"2016-11-07":1.1062,"2016-11-08":1.1038,"2016-11-09":1.1022,"2016-11-10":1.0895,"2016-11-11":1.0904,"2016-11-12":1.0904,"2016-11-13":1.0904,"2016-11-14":1.0777,"2016-11-15":1.0765,"2016-11-16":1.0702,"2016-11-17":1.0717,"2016-11-18":1.0629,"2016-11-19":1.0629,"2016-11-20":1.0629,"2016-11-21":1.0631,"2016-11-22":1.0617,"2016-11-23":1.0602,"2016-11-24":1.0548,"2016-11-25":1.0592,"2016-11-26":1.0592,"2016-11-27":1.0592,"2016-11-28":1.0588,"2016-11-29":1.0576,"2016-11-30":1.0635,"2016-12-01":1.0627,"2016-12-02":1.0642,"2016-12-03":1.0642,"2016-12-04":1.0642,"2016-12-05":1.0702,"2016-12-06":1.0734,"2016-12-07":1.073,"2016-12-08":1.0762,"2016-12-09":1.0559,"2016-12-10":1.0559,"2016-12-11":1.0559,"2016-12-12":1.0596,"2016-12-13":1.061,"2016-12-14":1.0644,"2016-12-15":1.0419,"2016-12-16":1.0439,"2016-12-17":1.0439,"2016-12-18":1.0439,"2016-12-19":1.0422,"2016-12-20":1.0364,"2016-12-21":1.0421,"2016-12-22":1.0444,"2016-12-23":1.0446,"2016-12-24":1.0446,"2016-12-25":1.0446,"2016-12-26":1.0446,"2016-12-27":1.0445,"2016-12-28":1.0401,"2016-12-29":1.0453,"2016-12-30":1.0541,"2016-12-31":1.0541,"2017-01-01":1.0541,"2017-01-02":1.0465,"2017-01-03":1.0385,"2017-01-04":1.0437,"2017-01-05":1.0501,"2017-01-06":1.0589,"2017-01-07":1.0589,"2017-01-08":1.0589,"2017-01-09":1.0516,"2017-01-10":1.0567,"2017-01-11":1.0503,"2017-01-12":1.0679,"2017-01-13":1.0661,"2017-01-14":1.0661,"2017-01-15":1.0661,"2017-01-16":1.0594,"2017-01-17":1.0684,"2017-01-18":1.0664,"2017-01-19":1.0668,"2017-01-20":1.0632,"2017-01-21":1.0632,"2017-01-22":1.0632,"2017-01-23":1.0715,"2017-01-24":1.0748,"2017-01-25":1.0743,"2017-01-26":1.07,"2017-01-27":1.0681,"2017-01-28":1.0681,"2017-01-29":1.0681,"2017-01-30":1.063,"2017-01-31":1.0755,"2017-02-01":1.079,"2017-02-02":1.0808,"2017-02-03":1.0741,"2017-02-04":1.0741,"2017-02-05":1.0741,"2017-02-06":1.0712,"2017-02-07":1.0675,"2017-02-08":1.0665,"2017-02-09":1.0692,"2017-02-10":1.0629,"2017-02-11":1.0629,"2017-02-12":1.0629,"2017-02-13":1.0629,"2017-02-14":1.0623,"2017-02-15":1.0555,"2017-02-16":1.0652,"2017-02-17":1.065,"2017-02-18":1.065,"2017-02-19":1.065,"2017-02-20":1.0616,"2017-02-21":1.0537,"2017-02-22":1.0513,"2017-02-23":1.0573,"2017-02-24":1.0609,"2017-02-25":1.0609,"2017-02-26":1.0609,"2017-02-27":1.0587,"2017-02-28":1.0597,"2017-03-01":1.0533,"2017-03-02":1.0514,"2017-03-03":1.0565,"2017-03-04":1.0565,"2017-03-05":1.0565,"2017-03-06":1.0592,"2017-03-07":1.0576,"2017-03-08":1.0556,"2017-03-09":1.0551,"2017-03-10":1.0606,"2017-03-11":1.0606,"2017-03-12":1.0606,"2017-03-13":1.0663,"2017-03-14":1.0631,"2017-03-15":1.0622,"2017-03-16":1.0726,"2017-03-17":1.0737,"2017-03-18":1.0737,"2017-03-19":1.0737,"2017-03-20":1.0752,"2017-03-21":1.0802,"2017-03-22":1.0807,"2017-03-23":1.0786,"2017-03-24":1.0805,"2017-03-25":1.0805,"2017-03-26":1.0805,"2017-03-27":1.0889,"2017-03-28":1.0859,"2017-03-29":1.0748,"2017-03-30":1.0737,"2017-03-31":1.0691,"2017-04-01":1.0691,"2017-04-02":1.0691,"2017-04-03":1.0661,"2017-04-04":1.0651,"2017-04-05":1.0678,"2017-04-06":1.0666,"2017-04-07":1.063,"2017-04-08":1.063,"2017-04-09":1.063,"2017-04-10":1.0578,"2017-04-11":1.0616,"2017-04-12":1.0605,"2017-04-13":1.063,"2017-04-14":1.063,"2017-04-15":1.063,"2017-04-16":1.063,"2017-04-17":1.063,"2017-04-18":1.0682,"2017-04-19":1.0725,"2017-04-20":1.0745,"2017-04-21":1.0698,"2017-04-22":1.0698,"2017-04-23":1.0698,"2017-04-24":1.0848,"2017-04-25":1.0891,"2017-04-26":1.0893,"2017-04-27":1.0881,"2017-04-28":1.093,"2017-04-29":1.093,"2017-04-30":1.093,"2017-05-01":1.093,"2017-05-02":1.0915,"2017-05-03":1.0919,"2017-05-04":1.0927,"2017-05-05":1.0961,"2017-05-06":1.0961,"2017-05-07":1.0961,"2017-05-08":1.0938,"2017-05-09":1.0888,"2017-05-10":1.0882,"2017-05-11":1.086,"2017-05-12":1.0876,"2017-05-13":1.0876,"2017-05-14":1.0876,"2017-05-15":1.0972,"2017-05-16":1.1059,"2017-05-17":1.1117,"2017-05-18":1.1129,"2017-05-19":1.1179,"2017-05-20":1.1179,"2017-05-21":1.1179,"2017-05-22":1.1243,"2017-05-23":1.1215,"2017-05-24":1.1193,"2017-05-25":1.1214,"2017-05-26":1.1196,"2017-05-27":1.1196,"2017-05-28":1.1196,"2017-05-29":1.1188,"2017-05-30":1.1173,"2017-05-31":1.1221,"2017-06-01":1.1219,"2017-06-02":1.1217,"2017-06-03":1.1217,"2017-06-04":1.1217,"2017-06-05":1.1249,"2017-06-06":1.1258,"2017-06-07":1.1217,"2017-06-08":1.1229,"2017-06-09":1.1176,"2017-06-10":1.1176,"2017-06-11":1.1176,"2017-06-12":1.1221,"2017-06-13":1.1217,"2017-06-14":1.1203,"2017-06-15":1.1166,"2017-06-16":1.1167,"2017-06-17":1.1167,"2017-06-18":1.1167,"2017-06-19":1.1199,"2017-06-20":1.1156,"2017-06-21":1.1147,"2017-06-22":1.1169,"2017-06-23":1.1173,"2017-06-24":1.1173,"2017-06-25":1.1173,"2017-06-26":1.1187,"2017-06-27":1.1278,"2017-06-28":1.1375,"2017-06-29":1.1413,"2017-06-30":1.1412,"2017-07-01":1.1412,"2017-07-02":1.1412,"2017-07-03":1.1369,"2017-07-04":1.1353,"2017-07-05":1.1329,"2017-07-06":1.1385,"2017-07-07":1.1412,"2017-07-08":1.1412,"2017-07-09":1.1412,"2017-07-10":1.1387,"2017-07-11":1.1405,"2017-07-12":1.1449,"2017-07-13":1.1417,"2017-07-14":1.1415,"2017-07-15":1.1415,"2017-07-16":1.1415,"2017-07-17":1.1462,"2017-07-18":1.1555,"2017-07-19":1.1533,"2017-07-20":1.1485,"2017-07-21":1.1642,"2017-07-22":1.1642,"2017-07-23":1.1642,"2017-07-24":1.1648,"2017-07-25":1.1694,"2017-07-26":1.1644,"2017-07-27":1.1694,"2017-07-28":1.1729,"2017-07-29":1.1729,"2017-07-30":1.1729,"2017-07-31":1.1727,"2017-08-01":1.1812,"2017-08-02":1.1829,"2017-08-03":1.186,"2017-08-04":1.1868,"2017-08-05":1.1868,"2017-08-06":1.1868,"2017-08-07":1.1797,"2017-08-08":1.1814,"2017-08-09":1.1731,"2017-08-10":1.1732,"2017-08-11":1.1765,"2017-08-12":1.1765,"2017-08-13":1.1765,"2017-08-14":1.1797,"2017-08-15":1.1744,"2017-08-16":1.171,"2017-08-17":1.1697,"2017-08-18":1.174,"2017-08-19":1.174,"2017-08-20":1.174,"2017-08-21":1.1761,"2017-08-22":1.1771,"2017-08-23":1.1799,"2017-08-24":1.1806,"2017-08-25":1.1808,"2017-08-26":1.1808,"2017-08-27":1.1808,"2017-08-28":1.1925,"2017-08-29":1.2048,"2017-08-30":1.1916,"2017-08-31":1.1825,"2017-09-01":1.192,"2017-09-02":1.192,"2017-09-03":1.192,"2017-09-04":1.1905,"2017-09-05":1.189,"2017-09-06":1.1931,"2017-09-07":1.1971,"2017-09-08":1.206,"2017-09-09":1.206,"2017-09-10":1.206,"2017-09-11":1.1997,"2017-09-12":1.1933,"2017-09-13":1.1979,"2017-09-14":1.1885,"2017-09-15":1.1963,"2017-09-16":1.1963,"2017-09-17":1.1963,"2017-09-18":1.1948,"2017-09-19":1.1972,"2017-09-20":1.2007,"2017-09-21":1.1905,"2017-09-22":1.1961,"2017-09-23":1.1961,"2017-09-24":1.1961,"2017-09-25":1.1867,"2017-09-26":1.1787,"2017-09-27":1.1741,"2017-09-28":1.1778,"2017-09-29":1.1806,"2017-09-30":1.1806,"2017-10-01":1.1806,"2017-10-02":1.1744,"2017-10-03":1.1753,"2017-10-04":1.1787,"2017-10-05":1.1742,"2017-10-06":1.1707,"2017-10-07":1.1707,"2017-10-08":1.1707,"2017-10-09":1.1746,"2017-10-10":1.1797,"2017-10-11":1.183,"2017-10-12":1.1856,"2017-10-13":1.181,"2017-10-14":1.181,"2017-10-15":1.181,"2017-10-16":1.1803,"2017-10-17":1.1759,"2017-10-18":1.1749,"2017-10-19":1.1834,"2017-10-20":1.1818,"2017-10-21":1.1818,"2017-10-22":1.1818,"2017-10-23":1.174,"2017-10-24":1.1761,"2017-10-25":1.1785,"2017-10-26":1.1753,"2017-10-27":1.1605,"2017-10-28":1.1605,"2017-10-29":1.1605,"2017-10-30":1.1612,"2017-10-31":1.1638,"2017-11-01":1.1612,"2017-11-02":1.1645,"2017-11-03":1.1657,"2017-11-04":1.1657,"2017-11-05":1.1657,"2017-11-06":1.159,"2017-11-07":1.1562,"2017-11-08":1.159,"2017-11-09":1.163,"2017-11-10":1.1654,"2017-11-11":1.1654,"2017-11-12":1.1654,"2017-11-13":1.1656,"2017-11-14":1.1745,"2017-11-15":1.184,"2017-11-16":1.1771,"2017-11-17":1.1795,"2017-11-18":1.1795,"2017-11-19":1.1795,"2017-11-20":1.1781,"2017-11-21":1.1718,"2017-11-22":1.1749,"2017-11-23":1.1848,"2017-11-24":1.1877,"2017-11-25":1.1877,"2017-11-26":1.1877,"2017-11-27":1.1952,"2017-11-28":1.1888,"2017-11-29":1.1827,"2017-11-30":1.1849,"2017-12-01":1.1885,"2017-12-02":1.1885,"2017-12-03":1.1885,"2017-12-04":1.1865,"2017-12-05":1.1847,"2017-12-06":1.1817,"2017-12-07":1.1786,"2017-12-08":1.1742,"2017-12-09":1.1742,"2017-12-10":1.1742,"2017-12-11":1.1796,"2017-12-12":1.1766,"2017-12-13":1.1736,"2017-12-14":1.1845,"2017-12-15":1.1806,"2017-12-16":1.1806,"2017-12-17":1.1806,"2017-12-18":1.1795,"2017-12-19":1.1823,"2017-12-20":1.1845,"2017-12-21":1.1859,"2017-12-22":1.1853,"2017-12-23":1.1853,"2017-12-24":1.1853,"2017-12-25":1.1853,"2017-12-26":1.1853,"2017-12-27":1.1895,"2017-12-28":1.1934,"2017-12-29":1.1993,"2017-12-30":1.1993,"2017-12-31":1.1993,"2018-01-01":1.1993,"2018-01-02":1.2065,"2018-01-03":1.2023,"2018-01-04":1.2065,"2018-01-05":1.2045,"2018-01-06":1.2045,"2018-01-07":1.2045,"2018-01-08":1.1973,"2018-01-09":1.1932,"2018-01-10":1.1992,"2018-01-11":1.2017,"2018-01-12":1.2137,"2018-01-13":1.2137,"2018-01-14":1.2137,"2018-01-15":1.2277,"2018-01-16":1.223,"2018-01-17":1.2203,"2018-01-18":1.2235,"2018-01-19":1.2255,"2018-01-20":1.2255,"2018-01-21":1.2255,"2018-01-22":1.2239,"2018-01-23":1.2249,"2018-01-24":1.2352,"2018-01-25":1.2407,"2018-01-26":1.2436,"2018-01-27":1.2436,"2018-01-28":1.2436,"2018-01-29":1.2379,"2018-01-30":1.2421,"2018-01-31":1.2457,"2018-02-01":1.2459,"2018-02-02":1.2492,"2018-02-03":1.2492,"2018-02-04":1.2492,"2018-02-05":1.244,"2018-02-06":1.2329,"2018-02-07":1.2338,"2018-02-08":1.2252,"2018-02-09":1.2273,"2018-02-10":1.2273,"2018-02-11":1.2273,"2018-02-12":1.2263,"2018-02-13":1.2333,"2018-02-14":1.2348,"2018-02-15":1.2493,"2018-02-16":1.2464,"2018-02-17":1.2464,"2018-02-18":1.2464,"2018-02-19":1.241,"2018-02-20":1.234,"2018-02-21":1.2312,"2018-02-22":1.2276,"2018-02-23":1.2299,"2018-02-24":1.2299,"2018-02-25":1.2299,"2018-02-26":1.232,"2018-02-27":1.2301,"2018-02-28":1.2214,"2018-03-01":1.2171,"2018-03-02":1.2312,"2018-03-03":1.2312,"2018-03-04":1.2312,"2018-03-05":1.2307,"2018-03-06":1.2411,"2018-03-07":1.2417,"2018-03-08":1.2421,"2018-03-09":1.2291,"2018-03-10":1.2291,"2018-03-11":1.2291,"2018-03-12":1.2302,"2018-03-13":1.2378,"2018-03-14":1.2369,"2018-03-15":1.2341,"2018-03-16":1.2301,"2018-03-17":1.2301,"2018-03-18":1.2301,"2018-03-19":1.2309,"2018-03-20":1.2276,"2018-03-21":1.2286,"2018-03-22":1.2316,"2018-03-23":1.2346,"2018-03-24":1.2346,"2018-03-25":1.2346,"2018-03-26":1.2411,"2018-03-27":1.2376,"2018-03-28":1.2398,"2018-03-29":1.2321,"2018-03-30":1.2321,"2018-03-31":1.2321,"2018-04-01":1.2321,"2018-04-02":1.2321,"2018-04-03":1.2308,"2018-04-04":1.2276,"2018-04-05":1.226,"2018-04-06":1.2234,"2018-04-07":1.2234,"2018-04-08":1.2234,"2018-04-09":1.2304,"2018-04-10":1.2361,"2018-04-11":1.2384,"2018-04-12":1.2323,"2018-04-13":1.2317,"2018-04-14":1.2317,"2018-04-15":1.2317,"2018-04-16":1.237,"2018-04-17":1.2357,"2018-04-18":1.2388,"2018-04-19":1.2382,"2018-04-20":1.2309,"2018-04-21":1.2309,"2018-04-22":1.2309,"2018-04-23":1.2238,"2018-04-24":1.2213,"2018-04-25":1.2185,"2018-04-26":1.2168,"2018-04-27":1.207,"2018-04-28":1.207,"2018-04-29":1.207,"2018-04-30":1.2079,"2018-05-01":1.2079,"2018-05-02":1.2007,"2018-05-03":1.1992,"2018-05-04":1.1969,"2018-05-05":1.1969,"2018-05-06":1.1969,"2018-05-07":1.1902,"2018-05-08":1.187,"2018-05-09":1.1879,"2018-05-10":1.1878,"2018-05-11":1.1934,"2018-05-12":1.1934,"2018-05-13":1.1934,"2018-05-14":1.1988,"2018-05-15":1.1883,"2018-05-16":1.1784,"2018-05-17":1.1805,"2018-05-18":1.1781,"2018-05-19":1.1781,"2018-05-20":1.1781,"2018-05-21":1.1759,"2018-05-22":1.1794,"2018-05-23":1.1708,"2018-05-24":1.1728,"2018-05-25":1.1675,"2018-05-26":1.1675,"2018-05-27":1.1675,"2018-05-28":1.1644,"2018-05-29":1.1558,"2018-05-30":1.1632,"2018-05-31":1.1699,"2018-06-01":1.1669,"2018-06-02":1.1669,"2018-06-03":1.1669,"2018-06-04":1.1737,"2018-06-05":1.1675,"2018-06-06":1.1765,"2018-06-07":1.1836,"2018-06-08":1.1754,"2018-06-09":1.1754,"2018-06-10":1.1754,"2018-06-11":1.179,"2018-06-12":1.1788,"2018-06-13":1.1764,"2018-06-14":1.173,"2018-06-15":1.1596,"2018-06-16":1.1596,"2018-06-17":1.1596,"2018-06-18":1.1613,"2018-06-19":1.1534,"2018-06-20":1.1578,"2018-06-21":1.1538,"2018-06-22":1.1648,"2018-06-23":1.1648,"2018-06-24":1.1648,"2018-06-25":1.17,"2018-06-26":1.1672,"2018-06-27":1.1616,"2018-06-28":1.1583,"2018-06-29":1.1658,"2018-06-30":1.1658,"2018-07-01":1.1658,"2018-07-02":1.1639,"2018-07-03":1.1665,"2018-07-04":1.1642,"2018-07-05":1.1709,"2018-07-06":1.1724,"2018-07-07":1.1724,"2018-07-08":1.1724,"2018-07-09":1.1789,"2018-07-10":1.1713,"2018-07-11":1.1735,"2018-07-12":1.1658,"2018-07-13":1.1643,"2018-07-14":1.1643,"2018-07-15":1.1643,"2018-07-16":1.172,"2018-07-17":1.1707,"2018-07-18":1.1611,"2018-07-19":1.1588,"2018-07-20":1.167,"2018-07-21":1.167,"2018-07-22":1.167,"2018-07-23":1.1716,"2018-07-24":1.1706,"2018-07-25":1.169,"2018-07-26":1.1716,"2018-07-27":1.1625,"2018-07-28":1.1625,"2018-07-29":1.1625,"2018-07-30":1.1684,"2018-07-31":1.1736,"2018-08-01":1.1696,"2018-08-02":1.1617,"2018-08-03":1.1588,"2018-08-04":1.1588,"2018-08-05":1.1588,"2018-08-06":1.1543,"2018-08-07":1.1602,"2018-08-08":1.1589,"2018-08-09":1.1593,"2018-08-10":1.1456,"2018-08-11":1.1456,"2018-08-12":1.1456,"2018-08-13":1.1403,"2018-08-14":1.1406,"2018-08-15":1.1321,"2018-08-16":1.137,"2018-08-17":1.1391,"2018-08-18":1.1391,"2018-08-19":1.1391,"2018-08-20":1.142,"2018-08-21":1.1502,"2018-08-22":1.1616,"2018-08-23":1.1579,"2018-08-24":1.1588,"2018-08-25":1.1588,"2018-08-26":1.1588,"2018-08-27":1.1633,"2018-08-28":1.171,"2018-08-29":1.166,"2018-08-30":1.1692,"2018-08-31":1.1651,"2018-09-01":1.1651,"2018-09-02":1.1651,"2018-09-03":1.1609,"2018-09-04":1.1562,"2018-09-05":1.1582,"2018-09-06":1.1634,"2018-09-07":1.1615,"2018-09-08":1.1615,"2018-09-09":1.1615,"2018-09-10":1.1571,"2018-09-11":1.1574,"2018-09-12":1.1585,"2018-09-13":1.162,"2018-09-14":1.1689,"2018-09-15":1.1689,"2018-09-16":1.1689,"2018-09-17":1.1671,"2018-09-18":1.1697,"2018-09-19":1.1667,"2018-09-20":1.1769,"2018-09-21":1.1759,"2018-09-22":1.1759,"2018-09-23":1.1759,"2018-09-24":1.1773,"2018-09-25":1.1777,"2018-09-26":1.1737,"2018-09-27":1.1707,"2018-09-28":1.1576,"2018-09-29":1.1576,"2018-09-30":1.1576,"2018-10-01":1.1606,"2018-10-02":1.1543,"2018-10-03":1.1548,"2018-10-04":1.1502,"2018-10-05":1.1506,"2018-10-06":1.1506,"2018-10-07":1.1506,"2018-10-08":1.1478,"2018-10-09":1.1435,"2018-10-10":1.15,"2018-10-11":1.1575,"2018-10-12":1.1574,"2018-10-13":1.1574,"2018-10-14":1.1574,"2018-10-15":1.1581,"2018-10-16":1.1587,"2018-10-17":1.153,"2018-10-18":1.1505,"2018-10-19":1.147,"2018-10-20":1.147,"2018-10-21":1.147,"2018-10-22":1.1494,"2018-10-23":1.1478,"2018-10-24":1.1389,"2018-10-25":1.1416,"2018-10-26":1.1345,"2018-10-27":1.1345,"2018-10-28":1.1345,"2018-10-29":1.1381,"2018-10-30":1.1372,"2018-10-31":1.1318,"2018-11-01":1.1393,"2018-11-02":1.1417,"2018-11-03":1.1417,"2018-11-04":1.1417,"2018-11-05":1.137,"2018-11-06":1.1428,"2018-11-07":1.1487,"2018-11-08":1.1424,"2018-11-09":1.1346,"2018-11-10":1.1346,"2018-11-11":1.1346,"2018-11-12":1.1265,"2018-11-13":1.1261,"2018-11-14":1.1296,"2018-11-15":1.1305,"2018-11-16":1.1346,"2018-11-17":1.1346,"2018-11-18":1.1346,"2018-11-19":1.1427,"2018-11-20":1.1421,"2018-11-21":1.1409,"2018-11-22":1.1403,"2018-11-23":1.1352,"2018-11-24":1.1352,"2018-11-25":1.1352,"2018-11-26":1.1363,"2018-11-27":1.1328,"2018-11-28":1.1284,"2018-11-29":1.1387,"2018-11-30":1.1359,"2018-12-01":1.1359,"2018-12-02":1.1359,"2018-12-03":1.1332,"2018-12-04":1.1409,"2018-12-05":1.1354,"2018-12-06":1.1351,"2018-12-07":1.1371,"2018-12-08":1.1371,"2018-12-09":1.1371,"2018-12-10":1.1425,"2018-12-11":1.1379,"2018-12-12":1.1346,"2018-12-13":1.1371,"2018-12-14":1.1285,"2018-12-15":1.1285,"2018-12-16":1.1285,"2018-12-17":1.1341,"2018-12-18":1.1377,"2018-12-19":1.1405,"2018-12-20":1.1451,"2018-12-21":1.1414,"2018-12-22":1.1414,"2018-12-23":1.1414,"2018-12-24":1.1408,"2018-12-25":1.1408,"2018-12-26":1.1408,"2018-12-27":1.1377,"2018-12-28":1.1454,"2018-12-29":1.1454,"2018-12-30":1.1454,"2018-12-31":1.145,"2019-01-01":1.145,"2019-01-02":1.1397,"2019-01-03":1.1348,"2019-01-04":1.1403,"2019-01-05":1.1403,"2019-01-06":1.1403,"2019-01-07":1.1445,"2019-01-08":1.144,"2019-01-09":1.1455,"2019-01-10":1.1535,"2019-01-11":1.1533,"2019-01-12":1.1533,"2019-01-13":1.1533,"2019-01-14":1.1467,"2019-01-15":1.1424,"2019-01-16":1.1389,"2019-01-17":1.1396,"2019-01-18":1.1402,"2019-01-19":1.1402,"2019-01-20":1.1402,"2019-01-21":1.1362,"2019-01-22":1.1354,"2019-01-23":1.1367,"2019-01-24":1.1341,"2019-01-25":1.1346,"2019-01-26":1.1346,"2019-01-27":1.1346,"2019-01-28":1.1418,"2019-01-29":1.1422,"2019-01-30":1.1429,"2019-01-31":1.1488,"2019-02-01":1.1471,"2019-02-02":1.1471,"2019-02-03":1.1471,"2019-02-04":1.1445,"2019-02-05":1.1423,"2019-02-06":1.1394,"2019-02-07":1.1345,"2019-02-08":1.1346,"2019-02-09":1.1346,"2019-02-10":1.1346,"2019-02-11":1.1309,"2019-02-12":1.1296,"2019-02-13":1.1305,"2019-02-14":1.1268,"2019-02-15":1.126,"2019-02-16":1.126,"2019-02-17":1.126,"2019-02-18":1.1328,"2019-02-19":1.1294,"2019-02-20":1.1342,"2019-02-21":1.1354,"2019-02-22":1.1325,"2019-02-23":1.1325,"2019-02-24":1.1325,"2019-02-25":1.1355,"2019-02-26":1.1361,"2019-02-27":1.1386,"2019-02-28":1.1416,"2019-03-01":1.1383,"2019-03-02":1.1383,"2019-03-03":1.1383,"2019-03-04":1.1337,"2019-03-05":1.1329,"2019-03-06":1.1305,"2019-03-07":1.1271,"2019-03-08":1.1222,"2019-03-09":1.1222,"2019-03-10":1.1222,"2019-03-11":1.1244,"2019-03-12":1.1275,"2019-03-13":1.1303,"2019-03-14":1.1295,"2019-03-15":1.1308,"2019-03-16":1.1308,"2019-03-17":1.1308,"2019-03-18":1.1349,"2019-03-19":1.1358,"2019-03-20":1.1354,"2019-03-21":1.1387,"2019-03-22":1.1302,"2019-03-23":1.1302,"2019-03-24":1.1302,"2019-03-25":1.1325,"2019-03-26":1.1291,"2019-03-27":1.1261,"2019-03-28":1.1218,"2019-03-29":1.1235,"2019-03-30":1.1235,"2019-03-31":1.1235,"2019-04-01":1.1236,"2019-04-02":1.12,"2019-04-03":1.1243,"2019-04-04":1.1219,"2019-04-05":1.1233,"2019-04-06":1.1233,"2019-04-07":1.1233,"2019-04-08":1.1246,"2019-04-09":1.1277,"2019-04-10":1.1279,"2019-04-11":1.1264,"2019-04-12":1.1321,"2019-04-13":1.1321,"2019-04-14":1.1321,"2019-04-15":1.1313,"2019-04-16":1.1305,"2019-04-17":1.1301,"2019-04-18":1.125,"2019-04-19":1.125,"2019-04-20":1.125,"2019-04-21":1.125,"2019-04-22":1.125,"2019-04-23":1.1245,"2019-04-24":1.1209,"2019-04-25":1.1123,"2019-04-26":1.1133,"2019-04-27":1.1133,"2019-04-28":1.1133,"2019-04-29":1.115,"2019-04-30":1.1218,"2019-05-01":1.1218,"2019-05-02":1.1212,"2019-05-03":1.1155,"2019-05-04":1.1155,"2019-05-05":1.1155,"2019-05-06":1.1199,"2019-05-07":1.1185,"2019-05-08":1.1202,"2019-05-09":1.1193,"2019-05-10":1.123,"2019-05-11":1.123,"2019-05-12":1.123,"2019-05-13":1.1245,"2019-05-14":1.1226,"2019-05-15":1.1183,"2019-05-16":1.1203,"2019-05-17":1.1172,"2019-05-18":1.1172,"2019-05-19":1.1172,"2019-05-20":1.1167,"2019-05-21":1.1161,"2019-05-22":1.1171,"2019-05-23":1.1139,"2019-05-24":1.1187,"2019-05-25":1.1187,"2019-05-26":1.1187,"2019-05-27":1.1198,"2019-05-28":1.1192,"2019-05-29":1.1156,"2019-05-30":1.1134,"2019-05-31":1.1151,"2019-06-01":1.1151,"2019-06-02":1.1151,"2019-06-03":1.1185,"2019-06-04":1.1244,"2019-06-05":1.1257,"2019-06-06":1.1266,"2019-06-07":1.1273,"2019-06-08":1.1273,"2019-06-09":1.1273,"2019-06-10":1.1301,"2019-06-11":1.132,"2019-06-12":1.1323,"2019-06-13":1.1289,"2019-06-14":1.1265,"2019-06-15":1.1265,"2019-06-16":1.1265,"2019-06-17":1.1234,"2019-06-18":1.1187,"2019-06-19":1.1207,"2019-06-20":1.1307,"2019-06-21":1.1316,"2019-06-22":1.1316,"2019-06-23":1.1316,"2019-06-24":1.1394,"2019-06-25":1.1388,"2019-06-26":1.1362,"2019-06-27":1.137,"2019-06-28":1.138,"2019-06-29":1.138,"2019-06-30":1.138,"2019-07-01":1.1349,"2019-07-02":1.1301,"2019-07-03":1.1293,"2019-07-04":1.1288,"2019-07-05":1.126,"2019-07-06":1.126,"2019-07-07":1.126,"2019-07-08":1.1215,"2019-07-09":1.1205,"2019-07-10":1.122,"2019-07-11":1.1285,"2019-07-12":1.1253,"2019-07-13":1.1253,"2019-07-14":1.1253,"2019-07-15":1.1269,"2019-07-16":1.1223,"2019-07-17":1.1215,"2019-07-18":1.1216,"2019-07-19":1.1226,"2019-07-20":1.1226,"2019-07-21":1.1226,"2019-07-22":1.1215,"2019-07-23":1.1173,"2019-07-24":1.114,"2019-07-25":1.1115,"2019-07-26":1.1138,"2019-07-27":1.1138,"2019-07-28":1.1138,"2019-07-29":1.1119,"2019-07-30":1.1154,"2019-07-31":1.1151,"2019-08-01":1.1037,"2019-08-02":1.1106,"2019-08-03":1.1106,"2019-08-04":1.1106,"2019-08-05":1.1182,"2019-08-06":1.1187,"2019-08-07":1.1202,"2019-08-08":1.1193,"2019-08-09":1.1198,"2019-08-10":1.1198,"2019-08-11":1.1198,"2019-08-12":1.1194,"2019-08-13":1.1222,"2019-08-14":1.1188,"2019-08-15":1.115,"2019-08-16":1.1076,"2019-08-17":1.1076,"2019-08-18":1.1076,"2019-08-19":1.1103,"2019-08-20":1.1076,"2019-08-21":1.1104,"2019-08-22":1.1083,"2019-08-23":1.1065,"2019-08-24":1.1065,"2019-08-25":1.1065,"2019-08-26":1.1116,"2019-08-27":1.1104,"2019-08-28":1.1083,"2019-08-29":1.1072,"2019-08-30":1.1036,"2019-08-31":1.1036,"2019-09-01":1.1036,"2019-09-02":1.0968,"2019-09-03":1.0937,"2019-09-04":1.1018,"2019-09-05":1.1058,"2019-09-06":1.1027,"2019-09-07":1.1027,"2019-09-08":1.1027,"2019-09-09":1.1033,"2019-09-10":1.104,"2019-09-11":1.1003,"2019-09-12":1.0963,"2019-09-13":1.1096,"2019-09-14":1.1096,"2019-09-15":1.1096,"2019-09-16":1.1031,"2019-09-17":1.1026,"2019-09-18":1.1053,"2019-09-19":1.1067,"2019-09-20":1.103,"2019-09-21":1.103,"2019-09-22":1.103,"2019-09-23":1.0985,"2019-09-24":1.1003,"2019-09-25":1.0982,"2019-09-26":1.0938,"2019-09-27":1.0935,"2019-09-28":1.0935,"2019-09-29":1.0935,"2019-09-30":1.0889,"2019-10-01":1.0898,"2019-10-02":1.0925,"2019-10-03":1.0951,"2019-10-04":1.0979,"2019-10-05":1.0979,"2019-10-06":1.0979,"2019-10-07":1.0993,"2019-10-08":1.0986,"2019-10-09":1.0981,"2019-10-10":1.103,"2019-10-11":1.1043,"2019-10-12":1.1043,"2019-10-13":1.1043,"2019-10-14":1.1031,"2019-10-15":1.1007,"2019-10-16":1.1025,"2019-10-17":1.1113,"2019-10-18":1.1144,"2019-10-19":1.1144,"2019-10-20":1.1144,"2019-10-21":1.1173,"2019-10-22":1.113,"2019-10-23":1.1123,"2019-10-24":1.1128,"2019-10-25":1.1107,"2019-10-26":1.1107,"2019-10-27":1.1107,"2019-10-28":1.1087,"2019-10-29":1.1095,"2019-10-30":1.1106,"2019-10-31":1.1154,"2019-11-01":1.1139,"2019-11-02":1.1139,"2019-11-03":1.1139,"2019-11-04":1.1158,"2019-11-05":1.1109,"2019-11-06":1.109,"2019-11-07":1.1077,"2019-11-08":1.1034,"2019-11-09":1.1034,"2019-11-10":1.1034,"2019-11-11":1.1041,"2019-11-12":1.1015,"2019-11-13":1.1006,"2019-11-14":1.0997,"2019-11-15":1.1034,"2019-11-16":1.1034,"2019-11-17":1.1034,"2019-11-18":1.1061,"2019-11-19":1.1077,"2019-11-20":1.1059,"2019-11-21":1.1091,"2019-11-22":1.1058,"2019-11-23":1.1058,"2019-11-24":1.1058,"2019-11-25":1.1008,"2019-11-26":1.102,"2019-11-27":1.1009,"2019-11-28":1.1005,"2019-11-29":1.0982,"2019-11-30":1.0982,"2019-12-01":1.0982,"2019-12-02":1.1023,"2019-12-03":1.1071,"2019-12-04":1.1081,"2019-12-05":1.1094,"2019-12-06":1.1094,"2019-12-07":1.1094,"2019-12-08":1.1094,"2019-12-09":1.1075,"2019-12-10":1.1077,"2019-12-11":1.1075,"2019-12-12":1.1137,"2019-12-13":1.1174,"2019-12-14":1.1174,"2019-12-15":1.1174,"2019-12-16":1.1146,"2019-12-17":1.1162,"2019-12-18":1.1115,"2019-12-19":1.1117,"2019-12-20":1.1097,"2019-12-21":1.1097,"2019-12-22":1.1097,"2019-12-23":1.1075,"2019-12-24":1.108,"2019-12-25":1.108,"2019-12-26":1.108,"2019-12-27":1.1153,"2019-12-28":1.1153,"2019-12-29":1.1153,"2019-12-30":1.1189,"2019-12-31":1.1234,"2020-01-01":1.1234,"2020-01-02":1.1193,"2020-01-03":1.1147,"2020-01-04":1.1147,"2020-01-05":1.1147,"2020-01-06":1.1194,"2020-01-07":1.1172,"2020-01-08":1.1115,"2020-01-09":1.111,"2020-01-10":1.1091,"2020-01-11":1.1091,"2020-01-12":1.1091,"2020-01-13":1.1126,"2020-01-14":1.1115,"2020-01-15":1.1142,"2020-01-16":1.1169,"2020-01-17":1.1108,"2020-01-18":1.1108,"2020-01-19":1.1108,"2020-01-20":1.1085,"2020-01-21":1.1115,"2020-01-22":1.1088,"2020-01-23":1.1091,"2020-01-24":1.1035,"2020-01-25":1.1035,"2020-01-26":1.1035,"2020-01-27":1.1025,"2020-01-28":1.1005,"2020-01-29":1.1001,"2020-01-30":1.1029,"2020-01-31":1.1052,"2020-02-01":1.1052,"2020-02-02":1.1052,"2020-02-03":1.1066,"2020-02-04":1.1048,"2020-02-05":1.1023,"2020-02-06":1.1003,"2020-02-07":1.0969,"2020-02-08":1.0969,"2020-02-09":1.0969,"2020-02-10":1.0951,"2020-02-11":1.0901,"2020-02-12":1.0914,"2020-02-13":1.0867,"2020-02-14":1.0842,"2020-02-15":1.0842,"2020-02-16":1.0842,"2020-02-17":1.0835,"2020-02-18":1.0816,"2020-02-19":1.08,"2020-02-20":1.079,"2020-02-21":1.0801,"2020-02-22":1.0801,"2020-02-23":1.0801,"2020-02-24":1.0818,"2020-02-25":1.084,"2020-02-26":1.0875,"2020-02-27":1.0964,"2020-02-28":1.0977,"2020-02-29":1.0977,"2020-03-01":1.0977,"2020-03-02":1.1122,"2020-03-03":1.1117,"2020-03-04":1.1125,"2020-03-05":1.1187,"2020-03-06":1.1336,"2020-03-07":1.1336,"2020-03-08":1.1336,"2020-03-09":1.1456,"2020-03-10":1.139,"2020-03-11":1.1336,"2020-03-12":1.124,"2020-03-13":1.1104,"2020-03-14":1.1104,"2020-03-15":1.1104,"2020-03-16":1.1157,"2020-03-17":1.0982,"2020-03-18":1.0934,"2020-03-19":1.0801,"2020-03-20":1.0707,"2020-03-21":1.0707,"2020-03-22":1.0707,"2020-03-23":1.0783,"2020-03-24":1.0843,"2020-03-25":1.0827,"2020-03-26":1.0981,"2020-03-27":1.0977,"2020-03-28":1.0977,"2020-03-29":1.0977,"2020-03-30":1.1034,"2020-03-31":1.0956,"2020-04-01":1.0936,"2020-04-02":1.0906,"2020-04-03":1.0785,"2020-04-04":1.0785,"2020-04-05":1.0785,"2020-04-06":1.0791,"2020-04-07":1.0885,"2020-04-08":1.0871,"2020-04-09":1.0867,"2020-04-10":1.0867,"2020-04-11":1.0867,"2020-04-12":1.0867,"2020-04-13":1.0867,"2020-04-14":1.0963,"2020-04-15":1.0903,"2020-04-16":1.0888,"2020-04-17":1.086,"2020-04-18":1.086,"2020-04-19":1.086,"2020-04-20":1.086,"2020-04-21":1.0837,"2020-04-22":1.0867,"2020-04-23":1.0772,"2020-04-24":1.08,"2020-04-25":1.08,"2020-04-26":1.08,"2020-04-27":1.0852,"2020-04-28":1.0877,"2020-04-29":1.0842,"2020-04-30":1.0876,"2020-05-01":1.0876,"2020-05-02":1.0876,"2020-05-03":1.0876,"2020-05-04":1.0942,"2020-05-05":1.0843,"2020-05-06":1.0807,"2020-05-07":1.0783,"2020-05-08":1.0843,"2020-05-09":1.0843,"2020-05-10":1.0843,"2020-05-11":1.0824,"2020-05-12":1.0858,"2020-05-13":1.0875,"2020-05-14":1.0792,"2020-05-15":1.0798,"2020-05-16":1.0798,"2020-05-17":1.0798,"2020-05-18":1.0832,"2020-05-19":1.095,"2020-05-20":1.0958,"2020-05-21":1.1,"2020-05-22":1.0904,"2020-05-23":1.0904,"2020-05-24":1.0904,"2020-05-25":1.091,"2020-05-26":1.0975,"2020-05-27":1.0991,"2020-05-28":1.1016,"2020-05-29":1.1136,"2020-05-30":1.1136,"2020-05-31":1.1136,"2020-06-01":1.1116,"2020-06-02":1.1174,"2020-06-03":1.1194,"2020-06-04":1.125,"2020-06-05":1.133,"2020-06-06":1.133,"2020-06-07":1.133,"2020-06-08":1.1285,"2020-06-09":1.1294,"2020-06-10":1.1375,"2020-06-11":1.1348,"2020-06-12":1.1304,"2020-06-13":1.1304,"2020-06-14":1.1304,"2020-06-15":1.1253,"2020-06-16":1.1308,"2020-06-17":1.1232,"2020-06-18":1.1222,"2020-06-19":1.121,"2020-06-20":1.121,"2020-06-21":1.121,"2020-06-22":1.1213,"2020-06-23":1.1318,"2020-06-24":1.128,"2020-06-25":1.12,"2020-06-26":1.1213,"2020-06-27":1.1213,"2020-06-28":1.1213,"2020-06-29":1.1284,"2020-06-30":1.1198,"2020-07-01":1.12,"2020-07-02":1.1286,"2020-07-03":1.1224,"2020-07-04":1.1224,"2020-07-05":1.1224,"2020-07-06":1.1325,"2020-07-07":1.129,"2020-07-08":1.1286,"2020-07-09":1.1342,"2020-07-10":1.1276,"2020-07-11":1.1276,"2020-07-12":1.1276,"2020-07-13":1.1329,"2020-07-14":1.1375,"2020-07-15":1.1444,"2020-07-16":1.1414,"2020-07-17":1.1428,"2020-07-18":1.1428,"2020-07-19":1.1428,"2020-07-20":1.1448,"2020-07-21":1.1443,"2020-07-22":1.1578,"2020-07-23":1.1569,"2020-07-24":1.1608,"2020-07-25":1.1608,"2020-07-26":1.1608,"2020-07-27":1.176,"2020-07-28":1.1717,"2020-07-29":1.1725,"2020-07-30":1.1743,"2020-07-31":1.1848,"2020-08-01":1.1848,"2020-08-02":1.1848,"2020-08-03":1.1726,"2020-08-04":1.1765,"2020-08-05":1.1854,"2020-08-06":1.1843,"2020-08-07":1.1817,"2020-08-08":1.1817,"2020-08-09":1.1817,"2020-08-10":1.1763,"2020-08-11":1.1783,"2020-08-12":1.1771,"2020-08-13":1.1833,"2020-08-14":1.1813,"2020-08-15":1.1813,"2020-08-16":1.1813,"2020-08-17":1.1853,"2020-08-18":1.1906,"2020-08-19":1.1933,"2020-08-20":1.185,"2020-08-21":1.1769,"2020-08-22":1.1769,"2020-08-23":1.1769,"2020-08-24":1.1847,"2020-08-25":1.1814,"2020-08-26":1.1789,"2020-08-27":1.1806,"2020-08-28":1.1915,"2020-08-29":1.1915,"2020-08-30":1.1915,"2020-08-31":1.194,"2020-09-01":1.1987,"2020-09-02":1.1861,"2020-09-03":1.1813,"2020-09-04":1.1842,"2020-09-05":1.1842,"2020-09-06":1.1842,"2020-09-07":1.1824,"2020-09-08":1.1785,"2020-09-09":1.1773,"2020-09-10":1.1849,"2020-09-11":1.1854,"2020-09-12":1.1854,"2020-09-13":1.1854,"2020-09-14":1.1876,"2020-09-15":1.1892,"2020-09-16":1.1869,"2020-09-17":1.1797,"2020-09-18":1.1833,"2020-09-19":1.1833,"2020-09-20":1.1833,"2020-09-21":1.1787,"2020-09-22":1.174,"2020-09-23":1.1692,"2020-09-24":1.1645,"2020-09-25":1.1634,"2020-09-26":1.1634,"2020-09-27":1.1634,"2020-09-28":1.167,"2020-09-29":1.1702,"2020-09-30":1.1708,"2020-10-01":1.1752,"2020-10-02":1.173,"2020-10-03":1.173,"2020-10-04":1.173,"2020-10-05":1.1768,"2020-10-06":1.1795,"2020-10-07":1.177,"2020-10-08":1.1765,"2020-10-09":1.1795,"2020-10-10":1.1795,"2020-10-11":1.1795,"2020-10-12":1.1799,"2020-10-13":1.1787,"2020-10-14":1.175,"2020-10-15":1.1698,"2020-10-16":1.1741,"2020-10-17":1.1741,"2020-10-18":1.1741,"2020-10-19":1.1785,"2020-10-20":1.181,"2020-10-21":1.1852,"2020-10-22":1.1821,"2020-10-23":1.1856,"2020-10-24":1.1856,"2020-10-25":1.1856,"2020-10-26":1.1819,"2020-10-27":1.1832,"2020-10-28":1.1727,"2020-10-29":1.1704,"2020-10-30":1.1698,"2020-10-31":1.1698,"2020-11-01":1.1698,"2020-11-02":1.1652,"2020-11-03":1.1702,"2020-11-04":1.1721,"2020-11-05":1.1855,"2020-11-06":1.187,"2020-11-07":1.187,"2020-11-08":1.187,"2020-11-09":1.1883,"2020-11-10":1.1808,"2020-11-11":1.1766,"2020-11-12":1.1791,"2020-11-13":1.1815,"2020-11-14":1.1815,"2020-11-15":1.1815,"2020-11-16":1.183,"2020-11-17":1.1882,"2020-11-18":1.1868,"2020-11-19":1.1832,"2020-11-20":1.1863,"2020-11-21":1.1863,"2020-11-22":1.1863,"2020-11-23":1.1901,"2020-11-24":1.1865,"2020-11-25":1.189,"2020-11-26":1.19,"2020-11-27":1.1922,"2020-11-28":1.1922,"2020-11-29":1.1922,"2020-11-30":1.198,"2020-12-01":1.1968,"2020-12-02":1.2066,"2020-12-03":1.2151,"2020-12-04":1.2159,"2020-12-05":1.2159,"2020-12-06":1.2159,"2020-12-07":1.2128,"2020-12-08":1.2114,"2020-12-09":1.2109,"2020-12-10":1.2115,"2020-12-11":1.2127,"2020-12-12":1.2127,"2020-12-13":1.2127,"2020-12-14":1.2162,"2020-12-15":1.214,"2020-12-16":1.2189,"2020-12-17":1.2246,"2020-12-18":1.2259,"2020-12-19":1.2259,"2020-12-20":1.2259,"2020-12-21":1.2173,"2020-12-22":1.2239,"2020-12-23":1.2166,"2020-12-24":1.2193,"2020-12-25":1.2193,"2020-12-26":1.2193,"2020-12-27":1.2193,"2020-12-28":1.2219,"2020-12-29":1.2259,"2020-12-30":1.2281,"2020-12-31":1.2271,"2021-01-01":1.2271,"2021-01-02":1.2271,"2021-01-03":1.2271,"2021-01-04":1.2296,"2021-01-05":1.2271,"2021-01-06":1.2338,"2021-01-07":1.2276,"2021-01-08":1.225,"2021-01-09":1.225,"2021-01-10":1.225,"2021-01-11":1.2163,"2021-01-12":1.2161,"2021-01-13":1.2166,"2021-01-14":1.2124,"2021-01-15":1.2123,"2021-01-16":1.2123,"2021-01-17":1.2123,"2021-01-18":1.2064,"2021-01-19":1.2132,"2021-01-20":1.2101,"2021-01-21":1.2158,"2021-01-22":1.2158,"2021-01-23":1.2158,"2021-01-24":1.2158,"2021-01-25":1.2152,"2021-01-26":1.2143,"2021-01-27":1.2114,"2021-01-28":1.2091,"2021-01-29":1.2136,"2021-01-30":1.2136,"2021-01-31":1.2136,"2021-02-01":1.2084,"2021-02-02":1.2044,"2021-02-03":1.2017,"2021-02-04":1.1996,"2021-02-05":1.1983,"2021-02-06":1.1983,"2021-02-07":1.1983,"2021-02-08":1.2025,"2021-02-09":1.2104,"2021-02-10":1.2127,"2021-02-11":1.2147,"2021-02-12":1.2108,"2021-02-13":1.2108,"2021-02-14":1.2108,"2021-02-15":1.2129,"2021-02-16":1.2143,"2021-02-17":1.206,"2021-02-18":1.2084,"2021-02-19":1.2139,"2021-02-20":1.2139,"2021-02-21":1.2139,"2021-02-22":1.2133,"2021-02-23":1.2143,"2021-02-24":1.2146,"2021-02-25":1.2225,"2021-02-26":1.2121,"2021-02-27":1.2121,"2021-02-28":1.2121,"2021-03-01":1.2053,"2021-03-02":1.2028,"2021-03-03":1.2048,"2021-03-04":1.2034,"2021-03-05":1.1938,"2021-03-06":1.1938,"2021-03-07":1.1938,"2021-03-08":1.1866,"2021-03-09":1.1894,"2021-03-10":1.1892,"2021-03-11":1.1969,"2021-03-12":1.1933,"2021-03-13":1.1933,"2021-03-14":1.1933,"2021-03-15":1.192,"2021-03-16":1.1926,"2021-03-17":1.1907,"2021-03-18":1.1912,"2021-03-19":1.1891,"2021-03-20":1.1891,"2021-03-21":1.1891,"2021-03-22":1.1926,"2021-03-23":1.1883,"2021-03-24":1.1825,"2021-03-25":1.1802,"2021-03-26":1.1782,"2021-03-27":1.1782,"2021-03-28":1.1782,"2021-03-29":1.1784,"2021-03-30":1.1741,"2021-03-31":1.1725,"2021-04-01":1.1746,"2021-04-02":1.1746,"2021-04-03":1.1746,"2021-04-04":1.1746,"2021-04-05":1.1746,"2021-04-06":1.1812,"2021-04-07":1.1884,"2021-04-08":1.1873,"2021-04-09":1.1888,"2021-04-10":1.1888,"2021-04-11":1.1888,"2021-04-12":1.1904,"2021-04-13":1.1896,"2021-04-14":1.1964,"2021-04-15":1.197,"2021-04-16":1.1986,"2021-04-17":1.1986,"2021-04-18":1.1986,"2021-04-19":1.2035,"2021-04-20":1.2051,"2021-04-21":1.2007,"2021-04-22":1.2046,"2021-04-23":1.2066,"2021-04-24":1.2066,"2021-04-25":1.2066,"2021-04-26":1.2085,"2021-04-27":1.2088,"2021-04-28":1.207,"2021-04-29":1.2129,"2021-04-30":1.2082,"2021-05-01":1.2082,"2021-05-02":1.2082,"2021-05-03":1.2044,"2021-05-04":1.2021,"2021-05-05":1.2005,"2021-05-06":1.206,"2021-05-07":1.2059,"2021-05-08":1.2059,"2021-05-09":1.2059,"2021-05-10":1.2169,"2021-05-11":1.217,"2021-05-12":1.2118,"2021-05-13":1.2081,"2021-05-14":1.2123,"2021-05-15":1.2123,"2021-05-16":1.2123,"2021-05-17":1.2143,"2021-05-18":1.2222,"2021-05-19":1.2212,"2021-05-20":1.2203,"2021-05-21":1.2188,"2021-05-22":1.2188,"2021-05-23":1.2188,"2021-05-24":1.2212,"2021-05-25":1.2264,"2021-05-26":1.2229,"2021-05-27":1.2198,"2021-05-28":1.2142,"2021-05-29":1.2142,"2021-05-30":1.2142,"2021-05-31":1.2201,"2021-06-01":1.2225,"2021-06-02":1.2186,"2021-06-03":1.2187,"2021-06-04":1.2117,"2021-06-05":1.2117,"2021-06-06":1.2117,"2021-06-07":1.2162,"2021-06-08":1.2182,"2021-06-09":1.2195,"2021-06-10":1.2174,"2021-06-11":1.2125,"2021-06-12":1.2125,"2021-06-13":1.2125,"2021-06-14":1.2112,"2021-06-15":1.2108,"2021-06-16":1.2124,"2021-06-17":1.1937,"2021-06-18":1.1898,"2021-06-19":1.1898,"2021-06-20":1.1898,"2021-06-21":1.1891,"2021-06-22":1.1894,"2021-06-23":1.1951,"2021-06-24":1.1936,"2021-06-25":1.195,"2021-06-26":1.195,"2021-06-27":1.195,"2021-06-28":1.191,"2021-06-29":1.1888,"2021-06-30":1.1884,"2021-07-01":1.1884,"2021-07-02":1.1823,"2021-07-03":1.1823,"2021-07-04":1.1823,"2021-07-05":1.1866,"2021-07-06":1.1838,"2021-07-07":1.1831,"2021-07-08":1.1838,"2021-07-09":1.1858,"2021-07-10":1.1858,"2021-07-11":1.1858,"2021-07-12":1.1852,"2021-07-13":1.1844,"2021-07-14":1.1812,"2021-07-15":1.1809,"2021-07-16":1.1802,"2021-07-17":1.1802,"2021-07-18":1.1802,"2021-07-19":1.1766,"2021-07-20":1.1775,"2021-07-21":1.1772,"2021-07-22":1.1775,"2021-07-23":1.1767,"2021-07-24":1.1767,"2021-07-25":1.1767,"2021-07-26":1.1787,"2021-07-27":1.181,"2021-07-28":1.1807,"2021-07-29":1.1873,"2021-07-30":1.1891,"2021-07-31":1.1891,"2021-08-01":1.1891,"2021-08-02":1.1886,"2021-08-03":1.1885,"2021-08-04":1.1861,"2021-08-05":1.185,"2021-08-06":1.1807,"2021-08-07":1.1807,"2021-08-08":1.1807,"2021-08-09":1.1761,"2021-08-10":1.1722,"2021-08-11":1.1718,"2021-08-12":1.1739,"2021-08-13":1.1765,"2021-08-14":1.1765,"2021-08-15":1.1765,"2021-08-16":1.1772,"2021-08-17":1.1767,"2021-08-18":1.1723,"2021-08-19":1.1696,"2021-08-20":1.1671,"2021-08-21":1.1671,"2021-08-22":1.1671,"2021-08-23":1.1718,"2021-08-24":1.174,"2021-08-25":1.1736,"2021-08-26":1.1767,"2021-08-27":1.1761,"2021-08-28":1.1761,"2021-08-29":1.1761,"2021-08-30":1.1801,"2021-08-31":1.1834,"2021-09-01":1.1817,"2021-09-02":1.1846,"2021-09-03":1.1872,"2021-09-04":1.1872,"2021-09-05":1.1872,"2021-09-06":1.1864,"2021-09-07":1.186,"2021-09-08":1.1827,"2021-09-09":1.1838,"2021-09-10":1.1841,"2021-09-11":1.1841,"2021-09-12":1.1841,"2021-09-13":1.178,"2021-09-14":1.1814,"2021-09-15":1.1824,"2021-09-16":1.1763,"2021-09-17":1.178,"2021-09-18":1.178,"2021-09-19":1.178,"2021-09-20":1.1711,"2021-09-21":1.1738,"2021-09-22":1.1729,"2021-09-23":1.1715,"2021-09-24":1.1719,"2021-09-25":1.1719,"2021-09-26":1.1719,"2021-09-27":1.1698,"2021-09-28":1.1678,"2021-09-29":1.1654,"2021-09-30":1.1579,"2021-10-01":1.16,"2021-10-02":1.16,"2021-10-03":1.16,"2021-10-04":1.1636,"2021-10-05":1.1602,"2021-10-06":1.1542,"2021-10-07":1.1562,"2021-10-08":1.1569,"2021-10-09":1.1569,"2021-10-10":1.1569,"2021-10-11":1.1574,"2021-10-12":1.1555,"2021-10-13":1.1562,"2021-10-14":1.1602,"2021-10-15":1.1602,"2021-10-16":1.1602,"2021-10-17":1.1602,"2021-10-18":1.1604,"2021-10-19":1.1655,"2021-10-20":1.1623,"2021-10-21":1.1637,"2021-10-22":1.163,"2021-10-23":1.163,"2021-10-24":1.163,"2021-10-25":1.1603,"2021-10-26":1.1618,"2021-10-27":1.1617,"2021-10-28":1.1593,"2021-10-29":1.1645,"2021-10-30":1.1645,"2021-10-31":1.1645,"2021-11-01":1.1578,"2021-11-02":1.1603,"2021-11-03":1.1578,"2021-11-04":1.1569,"2021-11-05":1.1519,"2021-11-06":1.1519,"2021-11-07":1.1519,"2021-11-08":1.1579,"2021-11-09":1.1577,"2021-11-10":1.1558,"2021-11-11":1.146,"2021-11-12":1.1448,"2021-11-13":1.1448,"2021-11-14":1.1448,"2021-11-15":1.1444,"2021-11-16":1.1368,"2021-11-17":1.1316,"2021-11-18":1.1345,"2021-11-19":1.1271,"2021-11-20":1.1271,"2021-11-21":1.1271,"2021-11-22":1.1278,"2021-11-23":1.1259,"2021-11-24":1.1206,"2021-11-25":1.1223,"2021-11-26":1.1291,"2021-11-27":1.1291,"2021-11-28":1.1291,"2021-11-29":1.1276,"2021-11-30":1.1363,"2021-12-01":1.1314,"2021-12-02":1.1339,"2021-12-03":1.1291,"2021-12-04":1.1291,"2021-12-05":1.1291,"2021-12-06":1.1287,"2021-12-07":1.1256,"2021-12-08":1.1299,"2021-12-09":1.1311,"2021-12-10":1.1273,"2021-12-11":1.1273,"2021-12-12":1.1273,"2021-12-13":1.1278,"2021-12-14":1.1309,"2021-12-15":1.1262,"2021-12-16":1.1336,"2021-12-17":1.133,"2021-12-18":1.133,"2021-12-19":1.133,"2021-12-20":1.1273,"2021-12-21":1.1295,"2021-12-22":1.1301,"2021-12-23":1.131,"2021-12-24":1.1317,"2021-12-25":1.1317,"2021-12-26":1.1317,"2021-12-27":1.1312,"2021-12-28":1.1331,"2021-12-29":1.1303,"2021-12-30":1.1334,"2021-12-31":1.1326,"2022-01-01":1.1326,"2022-01-02":1.1326,"2022-01-03":1.1355,"2022-01-04":1.1279,"2022-01-05":1.1319,"2022-01-06":1.1315,"2022-01-07":1.1298,"2022-01-08":1.1298,"2022-01-09":1.1298,"2022-01-10":1.1318,"2022-01-11":1.1336,"2022-01-12":1.137,"2022-01-13":1.1463,"2022-01-14":1.1447,"2022-01-15":1.1447,"2022-01-16":1.1447,"2022-01-17":1.1403,"2022-01-18":1.1367,"2022-01-19":1.1345,"2022-01-20":1.1338,"2022-01-21":1.1348,"2022-01-22":1.1348,"2022-01-23":1.1348,"2022-01-24":1.1304,"2022-01-25":1.1268,"2022-01-26":1.1277,"2022-01-27":1.116,"2022-01-28":1.1138,"2022-01-29":1.1138,"2022-01-30":1.1138,"2022-01-31":1.1156,"2022-02-01":1.126,"2022-02-02":1.1323,"2022-02-03":1.1286,"2022-02-04":1.1464,"2022-02-05":1.1464,"2022-02-06":1.1464,"2022-02-07":1.1447,"2022-02-08":1.1408,"2022-02-09":1.1435,"2022-02-10":1.1439,"2022-02-11":1.1417,"2022-02-12":1.1417,"2022-02-13":1.1417,"2022-02-14":1.1316,"2022-02-15":1.1345,"2022-02-16":1.1372,"2022-02-17":1.137,"2022-02-18":1.1354,"2022-02-19":1.1354,"2022-02-20":1.1354,"2022-02-21":1.1338,"2022-02-22":1.1342,"2022-02-23":1.1344,"2022-02-24":1.1163,"2022-02-25":1.1216,"2022-02-26":1.1216,"2022-02-27":1.1216,"2022-02-28":1.1199,"2022-03-01":1.1162,"2022-03-02":1.1106,"2022-03-03":1.1076,"2022-03-04":1.0929,"2022-03-05":1.0929,"2022-03-06":1.0929,"2022-03-07":1.0895,"2022-03-08":1.0892,"2022-03-09":1.0993,"2022-03-10":1.1084,"2022-03-11":1.099,"2022-03-12":1.099,"2022-03-13":1.099,"2022-03-14":1.096,"2022-03-15":1.0991,"2022-03-16":1.0994,"2022-03-17":1.1051,"2022-03-18":1.1008,"2022-03-19":1.1008,"2022-03-20":1.1008,"2022-03-21":1.1038,"2022-03-22":1.1024,"2022-03-23":1.0985,"2022-03-24":1.0978,"2022-03-25":1.1002,"2022-03-26":1.1002,"2022-03-27":1.1002,"2022-03-28":1.0966,"2022-03-29":1.1085,"2022-03-30":1.1126,"2022-03-31":1.1101,"2022-04-01":1.1052,"2022-04-02":1.1052,"2022-04-03":1.1052,"2022-04-04":1.1005,"2022-04-05":1.0969,"2022-04-06":1.0923,"2022-04-07":1.0916,"2022-04-08":1.0861,"2022-04-09":1.0861,"2022-04-10":1.0861,"2022-04-11":1.09,"2022-04-12":1.0861,"2022-04-13":1.0826,"2022-04-14":1.0878,"2022-04-15":1.0878,"2022-04-16":1.0878,"2022-04-17":1.0878,"2022-04-18":1.0878,"2022-04-19":1.0803,"2022-04-20":1.083,"2022-04-21":1.0887,"2022-04-22":1.0817,"2022-04-23":1.0817,"2022-04-24":1.0817,"2022-04-25":1.0746,"2022-04-26":1.0674,"2022-04-27":1.0583,"2022-04-28":1.0485,"2022-04-29":1.054,"2022-04-30":1.054,"2022-05-01":1.054,"2022-05-02":1.0524,"2022-05-03":1.0556,"2022-05-04":1.0531,"2022-05-05":1.0568,"2022-05-06":1.057,"2022-05-07":1.057,"2022-05-08":1.057,"2022-05-09":1.0559,"2022-05-10":1.0554,"2022-05-11":1.0553,"2022-05-12":1.0408,"2022-05-13":1.0385,"2022-05-14":1.0385,"2022-05-15":1.0385,"2022-05-16":1.0422,"2022-05-17":1.0541,"2022-05-18":1.0523,"2022-05-19":1.0525,"2022-05-20":1.0577,"2022-05-21":1.0577,"2022-05-22":1.0577,"2022-05-23":1.0659,"2022-05-24":1.072,"2022-05-25":1.0656,"2022-05-26":1.0697,"2022-05-27":1.0722,"2022-05-28":1.0722,"2022-05-29":1.0722,"2022-05-30":1.0764,"2022-05-31":1.0713,"2022-06-01":1.0712,"2022-06-02":1.0692,"2022-06-03":1.073,"2022-06-04":1.073,"2022-06-05":1.073,"2022-06-06":1.0726,"2022-06-07":1.0662,"2022-06-08":1.0739,"2022-06-09":1.0743,"2022-06-10":1.0578,"2022-06-11":1.0578,"2022-06-12":1.0578,"2022-06-13":1.0455,"2022-06-14":1.0452,"2022-06-15":1.0431,"2022-06-16":1.04,"2022-06-17":1.0486,"2022-06-18":1.0486,"2022-06-19":1.0486,"2022-06-20":1.0517,"2022-06-21":1.055,"2022-06-22":1.0521,"2022-06-23":1.0493,"2022-06-24":1.0524,"2022-06-25":1.0524,"2022-06-26":1.0524,"2022-06-27":1.0572,"2022-06-28":1.0561,"2022-06-29":1.0517,"2022-06-30":1.0387,"2022-07-01":1.0425,"2022-07-02":1.0425,"2022-07-03":1.0425,"2022-07-04":1.0455,"2022-07-05":1.029,"2022-07-06":1.0177,"2022-07-07":1.018,"2022-07-08":1.0163,"2022-07-09":1.0163,"2022-07-10":1.0163,"2022-07-11":1.0098,"2022-07-12":1.0042,"2022-07-13":1.0067,"2022-07-14":1.0005,"2022-07-15":1.0059,"2022-07-16":1.0059,"2022-07-17":1.0059,"2022-07-18":1.0131,"2022-07-19":1.0245,"2022-07-20":1.0199,"2022-07-21":1.0199,"2022-07-22":1.019,"2022-07-23":1.019,"2022-07-24":1.019,"2022-07-25":1.0236,"2022-07-26":1.0124,"2022-07-27":1.0152,"2022-07-28":1.0122,"2022-07-29":1.0198,"2022-07-30":1.0198,"2022-07-31":1.0198,"2022-08-01":1.0233,"2022-08-02":1.0224,"2022-08-03":1.0194,"2022-08-04":1.0181,"2022-08-05":1.0233,"2022-08-06":1.0233,"2022-08-07":1.0233,"2022-08-08":1.0199,"2022-08-09":1.0234,"2022-08-10":1.0252,"2022-08-11":1.0338,"2022-08-12":1.0285,"2022-08-13":1.0285,"2022-08-14":1.0285,"2022-08-15":1.0195,"2022-08-16":1.0131,"2022-08-17":1.0164,"2022-08-18":1.0178,"2022-08-19":1.0054,"2022-08-20":1.0054,"2022-08-21":1.0054,"2022-08-22":1.0001,"2022-08-23":0.9927,"2022-08-24":0.9934,"2022-08-25":0.997,"2022-08-26":1.0007,"2022-08-27":1.0007,"2022-08-28":1.0007,"2022-08-29":0.9986,"2022-08-30":1.0034,"2022-08-31":1,"2022-09-01":1.0004,"2022-09-02":0.9993,"2022-09-03":0.9993,"2022-09-04":0.9993,"2022-09-05":0.992,"2022-09-06":0.9928,"2022-09-07":0.9885,"2022-09-08":1.0009,"2022-09-09":1.0049,"2022-09-10":1.0049,"2022-09-11":1.0049,"2022-09-12":1.0155,"2022-09-13":1.0175,"2022-09-14":0.999,"2022-09-15":0.9992,"2022-09-16":0.9954,"2022-09-17":0.9954,"2022-09-18":0.9954,"2022-09-19":0.999,"2022-09-20":0.9986,"2022-09-21":0.9906,"2022-09-22":0.9884,"2022-09-23":0.9754,"2022-09-24":0.9754,"2022-09-25":0.9754,"2022-09-26":0.9646,"2022-09-27":0.9644,"2022-09-28":0.9565,"2022-09-29":0.9706,"2022-09-30":0.9748,"2022-10-01":0.9748,"2022-10-02":0.9748,"2022-10-03":0.9764,"2022-10-04":0.9891,"2022-10-05":0.9915,"2022-10-06":0.986,"2022-10-07":0.9797,"2022-10-08":0.9797,"2022-10-09":0.9797,"2022-10-10":0.9697,"2022-10-11":0.9723,"2022-10-12":0.9706,"2022-10-13":0.9739,"2022-10-14":0.9717,"2022-10-15":0.9717,"2022-10-16":0.9717,"2022-10-17":0.9739,"2022-10-18":0.9835,"2022-10-19":0.9778,"2022-10-20":0.9811,"2022-10-21":0.973,"2022-10-22":0.973,"2022-10-23":0.973,"2022-10-24":0.9851,"2022-10-25":0.9861,"2022-10-26":1.0023,"2022-10-27":1.0037,"2022-10-28":0.9951,"2022-10-29":0.9951,"2022-10-30":0.9951,"2022-10-31":0.9914,"2022-11-01":0.9947,"2022-11-02":0.9908,"2022-11-03":0.9753,"2022-11-04":0.9872,"2022-11-05":0.9872,"2022-11-06":0.9872,"2022-11-07":0.9993,"2022-11-08":0.9996,"2022-11-09":1.0039,"2022-11-10":0.9954,"2022-11-11":1.0308,"2022-11-12":1.0308,"2022-11-13":1.0308,"2022-11-14":1.0319,"2022-11-15":1.0404,"2022-11-16":1.0412,"2022-11-17":1.0319,"2022-11-18":1.0366,"2022-11-19":1.0366,"2022-11-20":1.0366,"2022-11-21":1.0246,"2022-11-22":1.0274,"2022-11-23":1.0325,"2022-11-24":1.0413,"2022-11-25":1.0375,"2022-11-26":1.0375,"2022-11-27":1.0375,"2022-11-28":1.0463,"2022-11-29":1.0366,"2022-11-30":1.0376,"2022-12-01":1.0454,"2022-12-02":1.0538,"2022-12-03":1.0538,"2022-12-04":1.0538,"2022-12-05":1.0587,"2022-12-06":1.0516,"2022-12-07":1.0529,"2022-12-08":1.0519,"2022-12-09":1.0559,"2022-12-10":1.0559,"2022-12-11":1.0559,"2022-12-12":1.0562,"2022-12-13":1.0545,"2022-12-14":1.0649,"2022-12-15":1.0621,"2022-12-16":1.0619,"2022-12-17":1.0619,"2022-12-18":1.0619,"2022-12-19":1.0598,"2022-12-20":1.0599,"2022-12-21":1.0636,"2022-12-22":1.0633,"2022-12-23":1.0622,"2022-12-24":1.0622,"2022-12-25":1.0622,"2022-12-26":1.0622,"2022-12-27":1.0624,"2022-12-28":1.064,"2022-12-29":1.0649,"2022-12-30":1.0666,"2022-12-31":1.0666,"2023-01-01":1.0666,"2023-01-02":1.0683,"2023-01-03":1.0545,"2023-01-04":1.0599,"2023-01-05":1.0601,"2023-01-06":1.05,"2023-01-07":1.05,"2023-01-08":1.05,"2023-01-09":1.0696,"2023-01-10":1.0723,"2023-01-11":1.0747,"2023-01-12":1.0772,"2023-01-13":1.0814,"2023-01-14":1.0814,"2023-01-15":1.0814,"2023-01-16":1.0812,"2023-01-17":1.0843,"2023-01-18":1.0839,"2023-01-19":1.0815,"2023-01-20":1.0826,"2023-01-21":1.0826,"2023-01-22":1.0826,"2023-01-23":1.0871,"2023-01-24":1.0858,"2023-01-25":1.0878,"2023-01-26":1.0895,"2023-01-27":1.0865,"2023-01-28":1.0865,"2023-01-29":1.0865,"2023-01-30":1.0903,"2023-01-31":1.0833,"2023-02-01":1.0894,"2023-02-02":1.0988,"2023-02-03":1.0937,"2023-02-04":1.0937,"2023-02-05":1.0937,"2023-02-06":1.0776,"2023-02-07":1.07,"2023-02-08":1.0735,"2023-02-09":1.0771,"2023-02-10":1.069,"2023-02-11":1.069,"2023-02-12":1.069,"2023-02-13":1.0686,"2023-02-14":1.0759,"2023-02-15":1.07,"2023-02-16":1.07,"2023-02-17":1.0625,"2023-02-18":1.0625,"2023-02-19":1.0625,"2023-02-20":1.0674,"2023-02-21":1.0664,"2023-02-22":1.0644,"2023-02-23":1.0616,"2023-02-24":1.057,"2023-02-25":1.057,"2023-02-26":1.057,"2023-02-27":1.0554,"2023-02-28":1.0619,"2023-03-01":1.0684,"2023-03-02":1.0605,"2023-03-03":1.0615,"2023-03-04":1.0615,"2023-03-05":1.0615,"2023-03-06":1.0646,"2023-03-07":1.0665,"2023-03-08":1.0545,"2023-03-09":1.0554,"2023-03-10":1.0586,"2023-03-11":1.0586,"2023-03-12":1.0586,"2023-03-13":1.0706,"2023-03-14":1.0737,"2023-03-15":1.0549,"2023-03-16":1.0595,"2023-03-17":1.0623,"2023-03-18":1.0623,"2023-03-19":1.0623,"2023-03-20":1.0717,"2023-03-21":1.0776,"2023-03-22":1.0785,"2023-03-23":1.0879,"2023-03-24":1.0745,"2023-03-25":1.0745,"2023-03-26":1.0745,"2023-03-27":1.0773,"2023-03-28":1.0841,"2023-03-29":1.0847,"2023-03-30":1.0886,"2023-03-31":1.0875,"2023-04-01":1.0875,"2023-04-02":1.0875,"2023-04-03":1.087,"2023-04-04":1.0901,"2023-04-05":1.094,"2023-04-06":1.0915,"2023-04-07":1.0915,"2023-04-08":1.0915,"2023-04-09":1.0915,"2023-04-10":1.0915,"2023-04-11":1.0905,"2023-04-12":1.0922,"2023-04-13":1.1015,"2023-04-14":1.1057,"2023-04-15":1.1057,"2023-04-16":1.1057,"2023-04-17":1.0981,"2023-04-18":1.0972,"2023-04-19":1.0933,"2023-04-20":1.0944,"2023-04-21":1.0978,"2023-04-22":1.0978,"2023-04-23":1.0978,"2023-04-24":1.1002,"2023-04-25":1.1022,"2023-04-26":1.1039,"2023-04-27":1.1042,"2023-04-28":1.0981,"2023-04-29":1.0981,"2023-04-30":1.0981,"2023-05-01":1.0981,"2023-05-02":1.0965,"2023-05-03":1.1043,"2023-05-04":1.1074,"2023-05-05":1.1014,"2023-05-06":1.1014,"2023-05-07":1.1014,"2023-05-08":1.1037,"2023-05-09":1.0959,"2023-05-10":1.095,"2023-05-11":1.093,"2023-05-12":1.0892,"2023-05-13":1.0892,"2023-05-14":1.0892,"2023-05-15":1.0876,"2023-05-16":1.0881,"2023-05-17":1.0829,"2023-05-18":1.0813,"2023-05-19":1.0808,"2023-05-20":1.0808,"2023-05-21":1.0808,"2023-05-22":1.0822,"2023-05-23":1.0779,"2023-05-24":1.0785,"2023-05-25":1.0735,"2023-05-26":1.0751,"2023-05-27":1.0751,"2023-05-28":1.0751,"2023-05-29":1.0715,"2023-05-30":1.0744,"2023-05-31":1.0683,"2023-06-01":1.0697,"2023-06-02":1.0763,"2023-06-03":1.0763,"2023-06-04":1.0763,"2023-06-05":1.069,"2023-06-06":1.0683,"2023-06-07":1.0717,"2023-06-08":1.0737,"2023-06-09":1.078,"2023-06-10":1.078,"2023-06-11":1.078,"2023-06-12":1.0765,"2023-06-13":1.0793,"2023-06-14":1.0809,"2023-06-15":1.0819,"2023-06-16":1.0966,"2023-06-17":1.0966,"2023-06-18":1.0966,"2023-06-19":1.0922,"2023-06-20":1.0933,"2023-06-21":1.0923,"2023-06-22":1.0985,"2023-06-23":1.0884,"2023-06-24":1.0884,"2023-06-25":1.0884,"2023-06-26":1.0918,"2023-06-27":1.0951,"2023-06-28":1.0938,"2023-06-29":1.0938,"2023-06-30":1.0866,"2023-07-01":1.0866,"2023-07-02":1.0866,"2023-07-03":1.0899,"2023-07-04":1.0895,"2023-07-05":1.0879,"2023-07-06":1.0899,"2023-07-07":1.0888,"2023-07-08":1.0888,"2023-07-09":1.0888,"2023-07-10":1.0956,"2023-07-11":1.0989,"2023-07-12":1.1022,"2023-07-13":1.1182,"2023-07-14":1.1221,"2023-07-15":1.1221,"2023-07-16":1.1221,"2023-07-17":1.123,"2023-07-18":1.1255,"2023-07-19":1.1222,"2023-07-20":1.1197,"2023-07-21":1.1123,"2023-07-22":1.1123,"2023-07-23":1.1123,"2023-07-24":1.1096,"2023-07-25":1.1051,"2023-07-26":1.1059,"2023-07-27":1.1125,"2023-07-28":1.101,"2023-07-29":1.101,"2023-07-30":1.101,"2023-07-31":1.1023,"2023-08-01":1.097,"2023-08-02":1.0985,"2023-08-03":1.0932,"2023-08-04":1.0946,"2023-08-05":1.0946,"2023-08-06":1.0946,"2023-08-07":1.0984,"2023-08-08":1.0944,"2023-08-09":1.0968,"2023-08-10":1.1019,"2023-08-11":1.1004,"2023-08-12":1.1004,"2023-08-13":1.1004,"2023-08-14":1.093,"2023-08-15":1.0926,"2023-08-16":1.0916,"2023-08-17":1.09,"2023-08-18":1.0867,"2023-08-19":1.0867,"2023-08-20":1.0867,"2023-08-21":1.0908,"2023-08-22":1.0887,"2023-08-23":1.0805,"2023-08-24":1.084,"2023-08-25":1.0808,"2023-08-26":1.0808,"2023-08-27":1.0808,"2023-08-28":1.0808,"2023-08-29":1.0803,"2023-08-30":1.0886,"2023-08-31":1.0868,"2023-09-01":1.0844,"2023-09-02":1.0844,"2023-09-03":1.0844,"2023-09-04":1.0801,"2023-09-05":1.0731,"2023-09-06":1.0745,"2023-09-07":1.071,"2023-09-08":1.0704,"2023-09-09":1.0704,"2023-09-10":1.0704,"2023-09-11":1.0724,"2023-09-12":1.0713,"2023-09-13":1.0733,"2023-09-14":1.073,"2023-09-15":1.0658,"2023-09-16":1.0658,"2023-09-17":1.0658,"2023-09-18":1.0663,"2023-09-19":1.0713,"2023-09-20":1.0702,"2023-09-21":1.0635,"2023-09-22":1.0647,"2023-09-23":1.0647,"2023-09-24":1.0647,"2023-09-25":1.0633,"2023-09-26":1.0605,"2023-09-27":1.0536,"2023-09-28":1.0539,"2023-09-29":1.0594,"2023-09-30":1.0594,"2023-10-01":1.0594,"2023-10-02":1.053,"2023-10-03":1.0469,"2023-10-04":1.0497,"2023-10-05":1.0526,"2023-10-06":1.0563,"2023-10-07":1.0563,"2023-10-08":1.0563,"2023-10-09":1.0531,"2023-10-10":1.0582,"2023-10-11":1.0604,"2023-10-12":1.0619,"2023-10-13":1.0524,"2023-10-14":1.0524,"2023-10-15":1.0524,"2023-10-16":1.0538,"2023-10-17":1.0569,"2023-10-18":1.0565,"2023-10-19":1.0558,"2023-10-20":1.0591,"2023-10-21":1.0591,"2023-10-22":1.0591,"2023-10-23":1.0597,"2023-10-24":1.0632,"2023-10-25":1.0576,"2023-10-26":1.054,"2023-10-27":1.0541,"2023-10-28":1.0541,"2023-10-29":1.0541,"2023-10-30":1.0605,"2023-10-31":1.0619,"2023-11-01":1.0537,"2023-11-02":1.0661,"2023-11-03":1.0702,"2023-11-04":1.0702,"2023-11-05":1.0702,"2023-11-06":1.0741,"2023-11-07":1.0686,"2023-11-08":1.0671,"2023-11-09":1.0691,"2023-11-10":1.0683,"2023-11-11":1.0683,"2023-11-12":1.0683,"2023-11-13":1.067,"2023-11-14":1.0724,"2023-11-15":1.0868,"2023-11-16":1.0849,"2023-11-17":1.0872,"2023-11-18":1.0872,"2023-11-19":1.0872,"2023-11-20":1.0928,"2023-11-21":1.0955,"2023-11-22":1.0911,"2023-11-23":1.09,"2023-11-24":1.0916,"2023-11-25":1.0916,"2023-11-26":1.0916,"2023-11-27":1.0951,"2023-11-28":1.0949,"2023-11-29":1.0985,"2023-11-30":1.0931,"2023-12-01":1.0875,"2023-12-02":1.0875,"2023-12-03":1.0875,"2023-12-04":1.0868,"2023-12-05":1.0817,"2023-12-06":1.0778,"2023-12-07":1.0771,"2023-12-08":1.0777,"2023-12-09":1.0777,"2023-12-10":1.0777,"2023-12-11":1.0757,"2023-12-12":1.0804,"2023-12-13":1.0787,"2023-12-14":1.0919,"2023-12-15":1.0946,"2023-12-16":1.0946,"2023-12-17":1.0946,"2023-12-18":1.0918,"2023-12-19":1.0962,"2023-12-20":1.0944,"2023-12-21":1.0983,"2023-12-22":1.1023,"2023-12-23":1.1023,"2023-12-24":1.1023,"2023-12-25":1.1023,"2023-12-26":1.1023,"2023-12-27":1.1065,"2023-12-28":1.1114,"2023-12-29":1.105,"2023-12-30":1.105,"2023-12-31":1.105}');
 
 },{}],"51lWg":[function(require,module,exports) {
-// lib/generate-report.ts
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "generateReport", ()=>generateReport);
@@ -65295,7 +66287,6 @@ var _momentDefault = parcelHelpers.interopDefault(_moment);
 var _round = require("./round");
 var _lodash = require("lodash");
 var _lodashDefault = parcelHelpers.interopDefault(_lodash);
-// Tax Rate Functions
 function getIncomeTaxRate(date) {
     return date.getFullYear() > 2018 ? 0.2 : 0.15;
 }
@@ -65304,11 +66295,9 @@ function getGainTaxRate(date) {
 }
 const generateReport = async (issuedShares, soldShares, fetchExchangeRate)=>{
     console.log("Generating report please wait...\n");
-    // Sort issued shares by vestingDate
     const issuedSharesSortedByDate = (0, _lodashDefault.default).sortBy(issuedShares, [
         "vestingDate"
     ]);
-    // Augment Issued Shares with Additional Properties
     const augmentedIssuedShares = [];
     for (const share of issuedSharesSortedByDate){
         const date = (0, _momentDefault.default)(share.vestingDate).format("YYYY-MM-DD");
@@ -65324,13 +66313,10 @@ const generateReport = async (issuedShares, soldShares, fetchExchangeRate)=>{
         };
         augmentedIssuedShares.push(augmentedShare);
     }
-    // Group Augmented Issued Shares by grantNumber
     const shareGroups = (0, _lodashDefault.default).groupBy(augmentedIssuedShares, "grantNumber");
-    // Sort sold shares by orderDate
     const soldSharesSortedByDate = (0, _lodashDefault.default).sortBy(soldShares, [
         "orderDate"
     ]);
-    // Augment Sold Shares with Additional Properties
     const augmentedSoldShares = [];
     for (const transaction of soldSharesSortedByDate){
         const date = (0, _momentDefault.default)(transaction.orderDate).format("YYYY-MM-DD");
@@ -65347,8 +66333,9 @@ const generateReport = async (issuedShares, soldShares, fetchExchangeRate)=>{
         };
         augmentedSoldShares.push(augmentedTransaction);
     }
-    // Initialize Report Aggregations
     const incomeByYear = {};
+    const gainByYear = {};
+    const calculationDetails = {};
     for (const share of augmentedIssuedShares){
         const year = share.vestingDate.getFullYear();
         if (!incomeByYear[year]) incomeByYear[year] = {
@@ -65356,11 +66343,25 @@ const generateReport = async (issuedShares, soldShares, fetchExchangeRate)=>{
             taxAmount: 0,
             shares: []
         };
+        if (!calculationDetails[year]) calculationDetails[year] = [];
         incomeByYear[year].total += share.incomeAmount;
-        incomeByYear[year].taxAmount += (0, _round.round)(share.incomeAmount * getIncomeTaxRate(share.vestingDate));
+        const taxRate = getIncomeTaxRate(share.vestingDate);
+        const taxAmount = (0, _round.round)(share.incomeAmount * taxRate);
+        incomeByYear[year].taxAmount += taxAmount;
         incomeByYear[year].shares.push(share);
+        calculationDetails[year].push({
+            type: "income",
+            description: `Income calculation for vested shares on ${share.vestingDate.toISOString().split("T")[0]}`,
+            calculation: `(${share.vestedShares} * (${share.stockPrice} - ${share.exercisePrice})) / ${share.exchangeRate}`,
+            result: share.incomeAmount
+        });
+        calculationDetails[year].push({
+            type: "income",
+            description: `Tax calculation for income on ${share.vestingDate.toISOString().split("T")[0]}`,
+            calculation: `${share.incomeAmount} * ${taxRate}`,
+            result: taxAmount
+        });
     }
-    const gainByYear = {};
     for (const transaction of augmentedSoldShares){
         const year = transaction.orderDate.getFullYear();
         if (!gainByYear[year]) gainByYear[year] = {
@@ -65368,6 +66369,7 @@ const generateReport = async (issuedShares, soldShares, fetchExchangeRate)=>{
             taxAmount: 0,
             transactions: []
         };
+        if (!calculationDetails[year]) calculationDetails[year] = [];
         let gain = transaction.amount - transaction.totalFeesInEur;
         let sharesSold = transaction.sharesSold;
         const sharesForGrant = shareGroups[transaction.grantNumber] || [];
@@ -65391,12 +66393,27 @@ const generateReport = async (issuedShares, soldShares, fetchExchangeRate)=>{
         }
         transaction.gain = gain;
         gainByYear[year].total += transaction.gain;
-        gainByYear[year].taxAmount += (0, _round.round)(transaction.gain * getGainTaxRate(transaction.orderDate));
+        const taxRate = getGainTaxRate(transaction.orderDate);
+        const taxAmount = (0, _round.round)(transaction.gain * taxRate);
+        gainByYear[year].taxAmount += taxAmount;
         gainByYear[year].transactions.push(transaction);
+        calculationDetails[year].push({
+            type: "gain",
+            description: `Gain calculation for sold shares on ${transaction.orderDate.toISOString().split("T")[0]}`,
+            calculation: `${transaction.amount} - ${transaction.totalFeesInEur} - ${transaction.cost}`,
+            result: transaction.gain
+        });
+        calculationDetails[year].push({
+            type: "gain",
+            description: `Tax calculation for gain on ${transaction.orderDate.toISOString().split("T")[0]}`,
+            calculation: `${transaction.gain} * ${taxRate}`,
+            result: taxAmount
+        });
     }
     return {
         incomeByYear,
-        gainByYear
+        gainByYear,
+        calculationDetails
     };
 };
 

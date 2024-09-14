@@ -1,4 +1,3 @@
-// lib/generate-report.ts
 import moment from 'moment';
 import { round } from './round';
 import _ from 'lodash';
@@ -20,7 +19,6 @@ export interface AugmentedSoldShare extends SoldShare {
   gain: number;
 }
 
-// Yearly Aggregation Interfaces Using Augmented Types
 export interface YearlyIncome {
   total: number;
   taxAmount: number;
@@ -33,12 +31,19 @@ export interface YearlyGain {
   transactions: AugmentedSoldShare[];
 }
 
+export interface CalculationDetail {
+  type: 'income' | 'gain';
+  description: string;
+  calculation: string;
+  result: number;
+}
+
 export interface Report {
   incomeByYear: { [year: number]: YearlyIncome };
   gainByYear: { [year: number]: YearlyGain };
+  calculationDetails: { [year: number]: CalculationDetail[] };
 }
 
-// Tax Rate Functions
 function getIncomeTaxRate(date: Date): number {
   return date.getFullYear() > 2018 ? 0.2 : 0.15;
 }
@@ -47,7 +52,6 @@ function getGainTaxRate(date: Date): number {
   return 0.15;
 }
 
-// generateReport Function with Correct Types
 export const generateReport = async (
     issuedShares: IssuedShare[],
     soldShares: SoldShare[],
@@ -55,11 +59,9 @@ export const generateReport = async (
 ): Promise<Report> => {
   console.log('Generating report please wait...\n');
 
-  // Sort issued shares by vestingDate
   const issuedSharesSortedByDate: IssuedShare[] = _.sortBy(issuedShares, ['vestingDate']);
 
-  // Augment Issued Shares with Additional Properties
-  const augmentedIssuedShares: AugmentedIssuedShare[] = [];
+  const augmentedIssuedShares: (AugmentedIssuedShare &  IssuedShare)[] = [];
   for (const share of issuedSharesSortedByDate) {
     const date = moment(share.vestingDate).format('YYYY-MM-DD');
     const exchangeRate = await fetchExchangeRate(date, 'USD');
@@ -77,13 +79,10 @@ export const generateReport = async (
     augmentedIssuedShares.push(augmentedShare);
   }
 
-  // Group Augmented Issued Shares by grantNumber
   const shareGroups: { [grantNumber: string]: AugmentedIssuedShare[] } = _.groupBy(augmentedIssuedShares, 'grantNumber');
 
-  // Sort sold shares by orderDate
   const soldSharesSortedByDate: SoldShare[] = _.sortBy(soldShares, ['orderDate']);
 
-  // Augment Sold Shares with Additional Properties
   const augmentedSoldShares: AugmentedSoldShare[] = [];
   for (const transaction of soldSharesSortedByDate) {
     const date = moment(transaction.orderDate).format('YYYY-MM-DD');
@@ -96,31 +95,54 @@ export const generateReport = async (
       exchangeRate,
       amount,
       totalFeesInEur,
-      cost: 0,  // Initialized to 0; will be calculated later
-      gain: 0,  // Initialized to 0; will be calculated later
+      cost: 0,
+      gain: 0,
     };
 
     augmentedSoldShares.push(augmentedTransaction);
   }
 
-  // Initialize Report Aggregations
   const incomeByYear: { [year: number]: YearlyIncome } = {};
+  const gainByYear: { [year: number]: YearlyGain } = {};
+  const calculationDetails: { [year: number]: CalculationDetail[] } = {};
+
   for (const share of augmentedIssuedShares) {
     const year = share.vestingDate.getFullYear();
     if (!incomeByYear[year]) {
       incomeByYear[year] = { total: 0, taxAmount: 0, shares: [] };
     }
+    if (!calculationDetails[year]) {
+      calculationDetails[year] = [];
+    }
 
     incomeByYear[year].total += share.incomeAmount;
-    incomeByYear[year].taxAmount += round(share.incomeAmount * getIncomeTaxRate(share.vestingDate));
+    const taxRate = getIncomeTaxRate(share.vestingDate);
+    const taxAmount = round(share.incomeAmount * taxRate);
+    incomeByYear[year].taxAmount += taxAmount;
     incomeByYear[year].shares.push(share);
+
+    calculationDetails[year].push({
+      type: 'income',
+      description: `Income calculation for vested shares on ${share.vestingDate.toISOString().split('T')[0]}`,
+      calculation: `(${share.vestedShares} * (${share.stockPrice} - ${share.exercisePrice})) / ${share.exchangeRate}`,
+      result: share.incomeAmount
+    });
+
+    calculationDetails[year].push({
+      type: 'income',
+      description: `Tax calculation for income on ${share.vestingDate.toISOString().split('T')[0]}`,
+      calculation: `${share.incomeAmount} * ${taxRate}`,
+      result: taxAmount
+    });
   }
 
-  const gainByYear: { [year: number]: YearlyGain } = {};
   for (const transaction of augmentedSoldShares) {
     const year = transaction.orderDate.getFullYear();
     if (!gainByYear[year]) {
       gainByYear[year] = { total: 0, taxAmount: 0, transactions: [] };
+    }
+    if (!calculationDetails[year]) {
+      calculationDetails[year] = [];
     }
 
     let gain = transaction.amount - transaction.totalFeesInEur;
@@ -150,9 +172,25 @@ export const generateReport = async (
     transaction.gain = gain;
 
     gainByYear[year].total += transaction.gain;
-    gainByYear[year].taxAmount += round(transaction.gain * getGainTaxRate(transaction.orderDate));
+    const taxRate = getGainTaxRate(transaction.orderDate);
+    const taxAmount = round(transaction.gain * taxRate);
+    gainByYear[year].taxAmount += taxAmount;
     gainByYear[year].transactions.push(transaction);
+
+    calculationDetails[year].push({
+      type: 'gain',
+      description: `Gain calculation for sold shares on ${transaction.orderDate.toISOString().split('T')[0]}`,
+      calculation: `${transaction.amount} - ${transaction.totalFeesInEur} - ${transaction.cost}`,
+      result: transaction.gain
+    });
+
+    calculationDetails[year].push({
+      type: 'gain',
+      description: `Tax calculation for gain on ${transaction.orderDate.toISOString().split('T')[0]}`,
+      calculation: `${transaction.gain} * ${taxRate}`,
+      result: taxAmount
+    });
   }
 
-  return { incomeByYear, gainByYear };
+  return { incomeByYear, gainByYear, calculationDetails };
 };

@@ -1,12 +1,14 @@
 import React from 'react';
-import { Table, Text, Card } from '@wix/design-system';
+import { Table, Text, Card , Accordion } from '@wix/design-system';
 import { TaxInstructions } from '../../../lib/generate-tax-fill-instructions-data';
+import { Report } from '../../../lib/generate-report';
 
 interface ReportDisplayProps {
     report: TaxInstructions;
+    calculationDetails: Report['calculationDetails'];
 }
 
-export const ReportDisplay: React.FC<ReportDisplayProps> = ({ report }) => (
+export const ReportDisplay: React.FC<ReportDisplayProps> = ({ report, calculationDetails }) => (
     <>
         {Object.entries(report).map(([year, { heading, fields }]) => (
             <Card key={year}>
@@ -37,6 +39,24 @@ export const ReportDisplay: React.FC<ReportDisplayProps> = ({ report }) => (
                         }
                     ]}
                 />
+                <Accordion items={[
+                    {
+                        title: 'Show Your Work',
+                        children: (
+                            <Table
+                                rowVerticalPadding="tiny"
+                                data={calculationDetails[parseInt(year)]}
+                                columns={[
+                                    { title: 'Description', render: (row) => row.description },
+                                    { title: 'Calculation', render: (row) => row.calculation },
+                                    { title: 'Result', render: (row) => row.result }
+                                ]}
+                            >
+                                <Table.Content />
+                            </Table>
+                        ),
+                    },
+                ]} />
                 </Card.Content>
             </Card>
         ))}
