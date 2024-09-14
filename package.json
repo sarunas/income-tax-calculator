@@ -1,25 +1,53 @@
 {
   "name": "@sarunas/income-tax-calculator",
-  "version": "1.1.0",
-  "description": "",
-  "main": "index.js",
+  "version": "1.2.0",
+  "description": "Income tax calculator for stock options and RSUs",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
-    "calc": "node terminal.js",
-    "calc:split": "npm run calc split-gain",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "fetch-rates": "TZ=utc node generateExchangeHistory.js",
-    "build": "parcel build ./client/index.html --public-url ./",
-    "start": "parcel ./client/index.html",
-    "deploy": "git subtree push --prefix dist origin gh-pages"
+    "build": "tsc",
+    "start": "ts-node terminal.ts",
+    "calc": "ts-node terminal.ts",
+    "calc:split": "ts-node terminal.ts split-gain",
+    "fetch-rates": "ts-node generateExchangeHistory.ts",
+    "build:web": "parcel build ./client/index.html --public-url ./",
+    "start:web": "parcel ./client/index.html",
+    "deploy": "git subtree push --prefix dist origin gh-pages",
+    "type-check": "tsc --noEmit",
+    "clean": "rimraf dist",
+    "prebuild": "npm run clean",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "lint": "eslint . --ext .ts"
   },
   "author": "Šarūnas Dubinskas <sarunas.dubinskas@gmail.com>",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sarunas/income-tax-calculator.git"
+  },
   "dependencies": {
-    "date-fns": "^2.12.0",
-    "lodash": "^4.17.11",
-    "moment": "^2.24.0",
-    "node-fetch": "^2.3.0",
-    "parcel": "1.12.3"
+    "date-fns": "^2.29.3",
+    "decimal.js": "^10.4.3",
+    "lodash": "^4.17.21",
+    "moment": "^2.29.4",
+    "node-fetch": "^2.6.9"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.1",
+    "@types/lodash": "^4.14.194",
+    "@types/moment": "^2.13.0",
+    "@types/node": "^18.16.3",
+    "@types/node-fetch": "^2.6.3",
+    "@typescript-eslint/eslint-plugin": "^5.59.2",
+    "@typescript-eslint/parser": "^5.59.2",
+    "eslint": "^8.39.0",
+    "jest": "^29.5.0",
+    "parcel": "^2.8.3",
+    "rimraf": "^5.0.0",
+    "ts-jest": "^29.1.0",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.0.4"
   },
   "browserslist": [
     "last 1 Chrome versions"

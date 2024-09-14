@@ -1,14 +1,25 @@
-const { trim, uniqBy } = require('lodash');
-const { parseDate } = require('./parse-date');
+import { trim, uniqBy } from 'lodash';
+import { parseDate } from './parse-date';
 
-function parseSameDayShares(content) {
-  const result = [];
+export interface SameDayShare {
+  orderNumber: string;
+  grantNumber: string;
+  grantDate: Date;
+  grantType: string;
+  orderDate: Date;
+  sharesSold: number;
+  salePrice: number;
+  exercisePrice: number;
+  totalFees: number;
+}
+
+export function parseSameDayShares(content: string): SameDayShare[] {
+  const result: SameDayShare[] = [];
   const lines = trim(content)
     .split(/[\n\r]+/)
     .filter(line => line.includes('Same Day Sell'))
     .map(line => line.replace(/Same Day Sell /g, ''));
 
-  // Skip empty file
   if (lines[0] === '') {
     return result;
   }
@@ -27,11 +38,5 @@ function parseSameDayShares(content) {
       totalFees: parseFloat(totalFees),
     });
   });
-  return uniqBy(result, ({ orderNumber }) => {
-    return orderNumber;
-  });
+  return uniqBy(result, ({ orderNumber }) => orderNumber);
 }
-
-module.exports = {
-  parseSameDayShares,
-};
