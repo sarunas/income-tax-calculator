@@ -24654,6 +24654,34 @@ const App = ()=>{
     const [report, setReport] = (0, _react.useState)(null);
     const [error, setError] = (0, _react.useState)(null);
     const [calculationDetails, setCalculationDetails] = (0, _react.useState)(null);
+    (0, _react.useEffect)(()=>{
+        const script = document.createElement("script");
+        script.src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js?config=TeX-MML-AM_CHTML";
+        script.async = true;
+        document.head.appendChild(script);
+        return ()=>{
+            document.head.removeChild(script);
+        };
+    }, []);
+    (0, _react.useEffect)(()=>{
+        if (window.MathJax) window.MathJax.Hub.Config({
+            tex2jax: {
+                inlineMath: [
+                    [
+                        "\\(",
+                        "\\)"
+                    ]
+                ],
+                displayMath: [
+                    [
+                        "$$",
+                        "$$"
+                    ]
+                ],
+                processEscapes: true
+            }
+        });
+    }, []);
     const handleCalculate = (0, _react.useCallback)(async ()=>{
         if (!issuedShares && !soldShares) {
             setError("Please enter issued and sold shares");
@@ -24692,7 +24720,7 @@ const App = ()=>{
                 title: "Wix Lithuania Tax Calculator"
             }, void 0, false, {
                 fileName: "client/src/App.tsx",
-                lineNumber: 57,
+                lineNumber: 80,
                 columnNumber: 13
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _designSystem.Card).Content, {
@@ -24704,7 +24732,7 @@ const App = ()=>{
                         onSoldSharesChange: setSoldShares
                     }, void 0, false, {
                         fileName: "client/src/App.tsx",
-                        lineNumber: 59,
+                        lineNumber: 82,
                         columnNumber: 17
                     }, undefined),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _designSystem.Box), {
@@ -24715,12 +24743,12 @@ const App = ()=>{
                             onChange: setShouldSplit
                         }, void 0, false, {
                             fileName: "client/src/App.tsx",
-                            lineNumber: 65,
+                            lineNumber: 88,
                             columnNumber: 53
                         }, undefined)
                     }, void 0, false, {
                         fileName: "client/src/App.tsx",
-                        lineNumber: 65,
+                        lineNumber: 88,
                         columnNumber: 17
                     }, undefined),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _designSystem.Box), {
@@ -24728,12 +24756,12 @@ const App = ()=>{
                             onClick: handleCalculate
                         }, void 0, false, {
                             fileName: "client/src/App.tsx",
-                            lineNumber: 66,
+                            lineNumber: 89,
                             columnNumber: 22
                         }, undefined)
                     }, void 0, false, {
                         fileName: "client/src/App.tsx",
-                        lineNumber: 66,
+                        lineNumber: 89,
                         columnNumber: 17
                     }, undefined),
                     error && /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _designSystem.Box), {
@@ -24742,7 +24770,7 @@ const App = ()=>{
                         children: error
                     }, void 0, false, {
                         fileName: "client/src/App.tsx",
-                        lineNumber: 67,
+                        lineNumber: 90,
                         columnNumber: 27
                     }, undefined),
                     report && calculationDetails && /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reportDisplay.ReportDisplay), {
@@ -24751,7 +24779,7 @@ const App = ()=>{
                         calculationDetails: calculationDetails
                     }, void 0, false, {
                         fileName: "client/src/App.tsx",
-                        lineNumber: 68,
+                        lineNumber: 91,
                         columnNumber: 50
                     }, undefined),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _designSystem.Box), {
@@ -24762,12 +24790,12 @@ const App = ()=>{
                             children: "How to fill declaration?"
                         }, void 0, false, {
                             fileName: "client/src/App.tsx",
-                            lineNumber: 70,
+                            lineNumber: 93,
                             columnNumber: 25
                         }, undefined)
                     }, void 0, false, {
                         fileName: "client/src/App.tsx",
-                        lineNumber: 69,
+                        lineNumber: 92,
                         columnNumber: 21
                     }, undefined),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _designSystem.Box), {
@@ -24776,33 +24804,33 @@ const App = ()=>{
                             width: "100%"
                         }, void 0, false, {
                             fileName: "client/src/App.tsx",
-                            lineNumber: 73,
+                            lineNumber: 96,
                             columnNumber: 25
                         }, undefined)
                     }, void 0, false, {
                         fileName: "client/src/App.tsx",
-                        lineNumber: 72,
+                        lineNumber: 95,
                         columnNumber: 21
                     }, undefined)
                 ]
             }, void 0, true, {
                 fileName: "client/src/App.tsx",
-                lineNumber: 58,
+                lineNumber: 81,
                 columnNumber: 13
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _designSystem.Card).Divider, {}, void 0, false, {
                 fileName: "client/src/App.tsx",
-                lineNumber: 76,
+                lineNumber: 99,
                 columnNumber: 13
             }, undefined)
         ]
     }, void 0, true, {
         fileName: "client/src/App.tsx",
-        lineNumber: 56,
+        lineNumber: 79,
         columnNumber: 9
     }, undefined);
 };
-_s(App, "DlH53LTBAdFB8Jj5tg23zE2RGEg=");
+_s(App, "SUVrlvoLpDdyyilWNrqXLfCWOeY=");
 _c = App;
 exports.default = App;
 var _c;
@@ -25480,7 +25508,7 @@ var _composerButtonDefault = parcelHelpers.interopDefault(_composerButton);
 var _colorTokens = require("./COLOR_TOKENS");
 var _cdnUrls = require("./CDN_URLS");
 
-},{"./PopoverMenu":false,"./AddItem":false,"./AddressInputItem":false,"./AudioPlayer":false,"./FieldSet":false,"./SelectorButton":false,"./Avatar":false,"./Button":"k3KwH","./Input":false,"./InputArea":"6ofu4","./InputWithOptions":false,"./Checkbox":"h82Ab","./ToggleSwitch":false,"./Modal":false,"./ModalSelectorLayout":false,"./SelectorList":false,"./SelectorList/Content":false,"./RadioGroup":false,"./Slider":false,"./GoogleAddressInput":false,"./clients":false,"./MultiSelect":false,"./MultiSelectCheckbox":false,"./Loader":false,"./DatePicker":false,"./Calendar":false,"./TimeInput":false,"./Tooltip":false,"./Page":false,"./SectionHelper":false,"./Page/components/Header":false,"./Popover":false,"./DropdownLayout":false,"./Dropdown":false,"./AutoComplete":false,"./Table":"eSRyH","./Table/components/TableFloatingScrollBar":false,"./TableToolbar":false,"./TableActionCell":false,"./Text":"PEbaS","./Range":false,"./Notification":false,"./Toast":false,"./Breadcrumbs":false,"./ImageViewer":false,"./Badge":false,"./BadgeSelect":false,"./BadgeSelectItem":false,"./EditableSelector":false,"./Card":"jXizi","./ColorPicker":false,"./CounterBadge":false,"./FloatingHelper":false,"./FormField":"9OYT6","./Heading":"5cBTM","./Highlighter":false,"./Search":false,"./Tabs":false,"./Tag":false,"./LinearProgressBar":false,"./CircularProgressBar":false,"./EmptyState":false,"./DragDropContextProvider":false,"./SortableListBase":false,"./NestableListBase":false,"./FilePicker":false,"./Layout":false,"./TextButton":false,"./IconButton":false,"./CloseButton":false,"./ToggleButton":false,"./CardGalleryItem":false,"./Carousel":false,"./CalendarPanel":false,"./Proportion":false,"./DropdownBase":false,"./CalendarPanelFooter":false,"./Box":"e1k7J","./Thumbnail":false,"./SegmentedToggle":false,"./FloatingNotification":false,"./RichTextInputArea":false,"./NumberInput":false,"./ColorInput":false,"./EditableTitle":false,"./Accordion":"cXYjP","./SocialPreview":false,"./GooglePreview":false,"./ListItemAction":false,"./ListItemEditable":false,"./Sidebar":false,"./Swatches":false,"./SidebarSectionTitle":false,"./SidebarSectionItem":false,"./Collapse":false,"./SidebarDivider":false,"./SidebarHeader":false,"./ModalPreviewLayout":false,"./StatisticsWidget":false,"./InputWithLabel":false,"./ComposerHeader":false,"./Stepper":false,"./Skeleton":false,"./FillPreview":false,"./FillButton":false,"./BarChart":false,"./AutoCompleteWithLabel":false,"./Divider":false,"./ModalMobileLayout":false,"./MediaOverlay":false,"./TimeTable":false,"./SidebarBackButton":false,"./PreviewWidget":false,"./MobilePreviewWidget":false,"./ListItemSelect":false,"./InfoIcon":false,"./SocialButton":false,"./VerticalTabs":false,"./VerticalTabsItem":false,"./ListItemSection":false,"./BrowserPreviewWidget":false,"./MarketingLayout":false,"./Palette":false,"./VariableInput":false,"./Image":false,"./Selector":false,"./SelectableAccordion":false,"./SidePanel":false,"./StatusIndicator":false,"./CustomModalLayout":false,"./MessageModalLayout":false,"./AnnouncementModalLayout":false,"./Pagination":false,"./CheckToggle":false,"./Timeline":false,"./ComposerSidebar":false,"./SortableGridBase":false,"./dnd-styles":false,"./HorizontalTimeline":false,"./StarsRatingBar":false,"./TagList":false,"./MarketingPageLayout":false,"./FileUpload":false,"./Dropzone":false,"./FacesRatingBar":false,"./ThemeProvider":false,"./TableListItem":false,"./TableListHeader":false,"./TestimonialList":false,"./FeatureList":false,"./MarketingPageLayoutContent":false,"./FunnelChart":false,"./SparklineChart":false,"./AreaChart":false,"./AddressInput":false,"./StackedBarChart":false,"./CardFolderTabs":false,"./Page/components/Footer":false,"./NestableList":false,"./TrendIndicator":false,"./AnalyticsLayout":false,"./Radio":false,"./CopyClipboard":false,"./CarouselWIP":false,"./WixStyleReactMaskingProvider":false,"./AnalyticsSummaryCard":false,"./BounceAnimation":false,"./AvatarGroup":false,"./SkeletonGroup":false,"./SkeletonRectangle":false,"./SkeletonCircle":false,"./SkeletonLine":false,"./PulseAnimation":false,"./Page/components/Section":false,"./WixStyleReactEnvironmentProvider":false,"./RadarChart":false,"./SidebarItemNext":false,"./SidebarNext":false,"./SidebarSubMenuNext":false,"./MessageBoxFunctionalLayout":false,"./MessageBoxMarketerialLayout":false,"./SidebarDividerNext":false,"./Transition":false,"./SidebarTitleItemNext":false,"./SocialPostPreview":false,"./WixStyleReactDefaultsOverrideProvider":false,"./SidebarHeaderNext":false,"./LiveRegion":false,"./WixDesignSystemProvider":"d2eSE","./SectionHeader":false,"./CornerRadiusInput":false,"./ComposerButton":false,"./COLOR_TOKENS":false,"./CDN_URLS":false,"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"k3KwH":[function(require,module,exports) {
+},{"./PopoverMenu":false,"./AddItem":false,"./AddressInputItem":false,"./AudioPlayer":false,"./FieldSet":false,"./SelectorButton":false,"./Avatar":false,"./Button":"k3KwH","./Input":false,"./InputArea":"6ofu4","./InputWithOptions":false,"./Checkbox":"h82Ab","./ToggleSwitch":false,"./Modal":false,"./ModalSelectorLayout":false,"./SelectorList":false,"./SelectorList/Content":false,"./RadioGroup":false,"./Slider":false,"./GoogleAddressInput":false,"./clients":false,"./MultiSelect":false,"./MultiSelectCheckbox":false,"./Loader":false,"./DatePicker":false,"./Calendar":false,"./TimeInput":false,"./Tooltip":false,"./Page":false,"./SectionHelper":false,"./Page/components/Header":false,"./Popover":false,"./DropdownLayout":false,"./Dropdown":false,"./AutoComplete":false,"./Table":"eSRyH","./Table/components/TableFloatingScrollBar":false,"./TableToolbar":false,"./TableActionCell":false,"./Text":"PEbaS","./Range":false,"./Notification":false,"./Toast":false,"./Breadcrumbs":false,"./ImageViewer":false,"./Badge":false,"./BadgeSelect":false,"./BadgeSelectItem":false,"./EditableSelector":false,"./Card":"jXizi","./ColorPicker":false,"./CounterBadge":false,"./FloatingHelper":false,"./FormField":"9OYT6","./Heading":"5cBTM","./Highlighter":false,"./Search":false,"./Tabs":false,"./Tag":false,"./LinearProgressBar":false,"./CircularProgressBar":false,"./EmptyState":false,"./DragDropContextProvider":false,"./SortableListBase":false,"./NestableListBase":false,"./FilePicker":false,"./Layout":"3iJnt","./TextButton":false,"./IconButton":false,"./CloseButton":false,"./ToggleButton":false,"./CardGalleryItem":false,"./Carousel":false,"./CalendarPanel":false,"./Proportion":false,"./DropdownBase":false,"./CalendarPanelFooter":false,"./Box":"e1k7J","./Thumbnail":false,"./SegmentedToggle":false,"./FloatingNotification":false,"./RichTextInputArea":false,"./NumberInput":false,"./ColorInput":false,"./EditableTitle":false,"./Accordion":"cXYjP","./SocialPreview":false,"./GooglePreview":false,"./ListItemAction":false,"./ListItemEditable":false,"./Sidebar":false,"./Swatches":false,"./SidebarSectionTitle":false,"./SidebarSectionItem":false,"./Collapse":false,"./SidebarDivider":false,"./SidebarHeader":false,"./ModalPreviewLayout":false,"./StatisticsWidget":false,"./InputWithLabel":false,"./ComposerHeader":false,"./Stepper":false,"./Skeleton":false,"./FillPreview":false,"./FillButton":false,"./BarChart":false,"./AutoCompleteWithLabel":false,"./Divider":false,"./ModalMobileLayout":false,"./MediaOverlay":false,"./TimeTable":false,"./SidebarBackButton":false,"./PreviewWidget":false,"./MobilePreviewWidget":false,"./ListItemSelect":false,"./InfoIcon":false,"./SocialButton":false,"./VerticalTabs":false,"./VerticalTabsItem":false,"./ListItemSection":false,"./BrowserPreviewWidget":false,"./MarketingLayout":false,"./Palette":false,"./VariableInput":false,"./Image":false,"./Selector":false,"./SelectableAccordion":false,"./SidePanel":false,"./StatusIndicator":false,"./CustomModalLayout":false,"./MessageModalLayout":false,"./AnnouncementModalLayout":false,"./Pagination":false,"./CheckToggle":false,"./Timeline":false,"./ComposerSidebar":false,"./SortableGridBase":false,"./dnd-styles":false,"./HorizontalTimeline":false,"./StarsRatingBar":false,"./TagList":false,"./MarketingPageLayout":false,"./FileUpload":false,"./Dropzone":false,"./FacesRatingBar":false,"./ThemeProvider":false,"./TableListItem":false,"./TableListHeader":false,"./TestimonialList":false,"./FeatureList":false,"./MarketingPageLayoutContent":false,"./FunnelChart":false,"./SparklineChart":false,"./AreaChart":false,"./AddressInput":false,"./StackedBarChart":false,"./CardFolderTabs":false,"./Page/components/Footer":false,"./NestableList":false,"./TrendIndicator":false,"./AnalyticsLayout":false,"./Radio":false,"./CopyClipboard":false,"./CarouselWIP":false,"./WixStyleReactMaskingProvider":false,"./AnalyticsSummaryCard":false,"./BounceAnimation":false,"./AvatarGroup":false,"./SkeletonGroup":false,"./SkeletonRectangle":false,"./SkeletonCircle":false,"./SkeletonLine":false,"./PulseAnimation":false,"./Page/components/Section":false,"./WixStyleReactEnvironmentProvider":false,"./RadarChart":false,"./SidebarItemNext":false,"./SidebarNext":false,"./SidebarSubMenuNext":false,"./MessageBoxFunctionalLayout":false,"./MessageBoxMarketerialLayout":false,"./SidebarDividerNext":false,"./Transition":false,"./SidebarTitleItemNext":false,"./SocialPostPreview":false,"./WixStyleReactDefaultsOverrideProvider":false,"./SidebarHeaderNext":false,"./LiveRegion":false,"./WixDesignSystemProvider":"d2eSE","./SectionHeader":false,"./CornerRadiusInput":false,"./ComposerButton":false,"./COLOR_TOKENS":false,"./CDN_URLS":false,"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"k3KwH":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "default", ()=>(0, _buttonDefault.default));
@@ -46869,7 +46897,160 @@ const FieldSetContext = (0, _reactDefault.default).createContext({
     statusId: null
 });
 
-},{"react":"21dqq","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"2Ntsg":[function(require,module,exports) {
+},{"react":"21dqq","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"3iJnt":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "Layout", ()=>(0, _layoutDefault.default));
+parcelHelpers.export(exports, "Cell", ()=>(0, _cellDefault.default));
+var _layout = require("./Layout");
+var _layoutDefault = parcelHelpers.interopDefault(_layout);
+var _cell = require("./Cell");
+var _cellDefault = parcelHelpers.interopDefault(_cell);
+
+},{"./Layout":"8MfrD","./Cell":"a8EBG","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"8MfrD":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _react = require("react");
+var _reactDefault = parcelHelpers.interopDefault(_react);
+var _propTypes = require("prop-types");
+var _propTypesDefault = parcelHelpers.interopDefault(_propTypes);
+var _spacingStCssJs = require("../Foundation/stylable/spacing.st.css.js");
+var _layoutStCssJs = require("./Layout.st.css.js");
+const formatSpacingValue = (value)=>{
+    if (typeof value === "number") return `${value}px`;
+    return (0, _spacingStCssJs.stVars)[value] || `${value}`;
+};
+const Layout = ({ children, gap = "24px", cols, justifyItems, alignItems, rowHeight = "auto", dataHook, height, className })=>{
+    const smartGap = (0, _react.useMemo)(()=>formatSpacingValue(gap), [
+        gap
+    ]);
+    return (0, _reactDefault.default).createElement("div", {
+        "data-hook": dataHook,
+        "data-gap": smartGap,
+        style: {
+            height,
+            gap: smartGap,
+            justifyItems,
+            alignItems,
+            gridAutoRows: rowHeight,
+            gridTemplateColumns: cols ? `repeat(${cols}, minmax(0, 1fr))` : undefined
+        },
+        className: (0, _layoutStCssJs.st)((0, _layoutStCssJs.classes).root, className),
+        children: children
+    });
+};
+Layout.displayName = "Layout";
+Layout.propTypes = {
+    /** Applies a data-hook HTML attribute that can be used in the tests. */ dataHook: (0, _propTypesDefault.default).string,
+    /** Accept single or multiple compound <Cell/> elements which store content items. Other nodes are accepted but not recommended. */ children: (0, _propTypesDefault.default).node,
+    /** Specifies a CSS class name to be appended to the component’s root element. */ className: (0, _propTypesDefault.default).string,
+    /** Control both vertical and horizontal distance between layout cells */ gap: (0, _propTypesDefault.default).oneOfType([
+        (0, _propTypesDefault.default).string,
+        (0, _propTypesDefault.default).number
+    ]),
+    /** Set a number of grid columns to be rendered. Default number is 12. */ cols: (0, _propTypesDefault.default).number,
+    /** Align grid items on the X axis */ justifyItems: (0, _propTypesDefault.default).string,
+    /** Aligns grid items on the Y axis */ alignItems: (0, _propTypesDefault.default).string,
+    /** Set all rows to have the same height in pixels or percentage */ rowHeight: (0, _propTypesDefault.default).string,
+    /** Set the height of the layout */ height: (0, _propTypesDefault.default).string
+};
+exports.default = Layout;
+
+},{"react":"21dqq","prop-types":"7wKI2","../Foundation/stylable/spacing.st.css.js":"9bp3c","./Layout.st.css.js":"9aa11","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"9aa11":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "cssStates", ()=>cssStates);
+parcelHelpers.export(exports, "style", ()=>style);
+parcelHelpers.export(exports, "st", ()=>st);
+parcelHelpers.export(exports, "namespace", ()=>namespace);
+parcelHelpers.export(exports, "classes", ()=>classes);
+parcelHelpers.export(exports, "keyframes", ()=>keyframes);
+parcelHelpers.export(exports, "layers", ()=>layers);
+parcelHelpers.export(exports, "containers", ()=>containers);
+parcelHelpers.export(exports, "stVars", ()=>stVars);
+parcelHelpers.export(exports, "vars", ()=>vars);
+var _stylableEsmRuntimeJs = require("./../stylable-esm-runtime.js");
+var _namespace_ = "wds_1_127_0_Layout";
+var _style_ = (0, _stylableEsmRuntimeJs.classesRuntime).bind(null, _namespace_);
+var cssStates = (0, _stylableEsmRuntimeJs.statesRuntime).bind(null, _namespace_);
+var style = _style_;
+var st = _style_;
+var namespace = _namespace_;
+var classes = {
+    "root": "wds_1_127_0_Layout__root"
+};
+var keyframes = {};
+var layers = {};
+var containers = {};
+var stVars = {};
+var vars = {};
+
+},{"./../stylable-esm-runtime.js":"9riQG","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"a8EBG":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "default", ()=>(0, _cellDefault.default));
+var _cell = require("./Cell");
+var _cellDefault = parcelHelpers.interopDefault(_cell);
+
+},{"./Cell":"5skZc","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"5skZc":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _react = require("react");
+var _reactDefault = parcelHelpers.interopDefault(_react);
+var _propTypes = require("prop-types");
+var _propTypesDefault = parcelHelpers.interopDefault(_propTypes);
+var _cellStCssJs = require("./Cell.st.css.js");
+const Cell = ({ span = 12, rows = 1, children, vertical, className, dataHook })=>(0, _reactDefault.default).createElement("div", {
+        "data-hook": dataHook,
+        style: {
+            gridColumn: `span ${span}`,
+            gridRow: `span ${rows}`
+        },
+        className: (0, _cellStCssJs.st)((0, _cellStCssJs.classes).root, {
+            vertical
+        }, className),
+        children: children
+    });
+Cell.displayName = "Cell";
+Cell.propTypes = {
+    /** hook for testing purposes */ dataHook: (0, _propTypesDefault.default).string,
+    /** any node to be rendered inside */ children: (0, _propTypesDefault.default).node,
+    /** how many columns should this cell occupy. Can be any number from 1 to 12 inclusive */ span: (0, _propTypesDefault.default).number,
+    /** whether to align children vertically to the middle */ vertical: (0, _propTypesDefault.default).bool,
+    /** how many rows should this cell occupy */ rows: (0, _propTypesDefault.default).number
+};
+exports.default = Cell;
+
+},{"react":"21dqq","prop-types":"7wKI2","./Cell.st.css.js":"7ebxn","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"7ebxn":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "cssStates", ()=>cssStates);
+parcelHelpers.export(exports, "style", ()=>style);
+parcelHelpers.export(exports, "st", ()=>st);
+parcelHelpers.export(exports, "namespace", ()=>namespace);
+parcelHelpers.export(exports, "classes", ()=>classes);
+parcelHelpers.export(exports, "keyframes", ()=>keyframes);
+parcelHelpers.export(exports, "layers", ()=>layers);
+parcelHelpers.export(exports, "containers", ()=>containers);
+parcelHelpers.export(exports, "stVars", ()=>stVars);
+parcelHelpers.export(exports, "vars", ()=>vars);
+var _stylableEsmRuntimeJs = require("./../../stylable-esm-runtime.js");
+var _namespace_ = "wds_1_127_0_LayoutCell";
+var _style_ = (0, _stylableEsmRuntimeJs.classesRuntime).bind(null, _namespace_);
+var cssStates = (0, _stylableEsmRuntimeJs.statesRuntime).bind(null, _namespace_);
+var style = _style_;
+var st = _style_;
+var namespace = _namespace_;
+var classes = {
+    "root": "wds_1_127_0_LayoutCell__root"
+};
+var keyframes = {};
+var layers = {};
+var containers = {};
+var stVars = {};
+var vars = {};
+
+},{"./../../stylable-esm-runtime.js":"9riQG","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"2Ntsg":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "default", ()=>(0, _textButtonDefault.default));
@@ -48179,115 +48360,386 @@ var _jsxDevRuntime = require("react/jsx-dev-runtime");
 var _react = require("react");
 var _reactDefault = parcelHelpers.interopDefault(_react);
 var _designSystem = require("@wix/design-system");
-const ReportDisplay = ({ report, calculationDetails })=>/*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _jsxDevRuntime.Fragment), {
-        children: Object.entries(report).map(([year, { heading, fields }])=>/*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _designSystem.Card), {
-                children: [
-                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _designSystem.Card).Header, {
-                        title: heading
+var _s = $RefreshSig$(), _s1 = $RefreshSig$();
+const MathJaxExpression = ({ expression })=>{
+    _s();
+    const nodeRef = (0, _react.useRef)(null);
+    (0, _react.useEffect)(()=>{
+        if (nodeRef.current) window.MathJax.Hub.Queue([
+            "Typeset",
+            window.MathJax.Hub,
+            nodeRef.current
+        ]);
+    }, [
+        expression
+    ]);
+    return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("span", {
+        ref: nodeRef,
+        children: `\\(${expression}\\)`
+    }, void 0, false, {
+        fileName: "client/src/components/ReportDisplay.tsx",
+        lineNumber: 27,
+        columnNumber: 12
+    }, undefined);
+};
+_s(MathJaxExpression, "6lOStpyXmuUepN3BYUamOEINVKQ=");
+_c = MathJaxExpression;
+const formatCalculation = (calculation, result)=>{
+    return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _designSystem.Text), {
+        children: [
+            calculation,
+            " = ",
+            result
+        ]
+    }, void 0, true, {
+        fileName: "client/src/components/ReportDisplay.tsx",
+        lineNumber: 31,
+        columnNumber: 12
+    }, undefined);
+};
+const renderCalculationDetails = (details)=>/*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _designSystem.Table), {
+        rowVerticalPadding: "tiny",
+        data: details,
+        columns: [
+            {
+                title: "Description",
+                render: (row)=>/*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _designSystem.Text), {
+                        children: row.description
                     }, void 0, false, {
                         fileName: "client/src/components/ReportDisplay.tsx",
-                        lineNumber: 15,
-                        columnNumber: 17
-                    }, undefined),
-                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _designSystem.Card).Content, {
-                        children: [
-                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _designSystem.Table), {
-                                data: fields,
-                                columns: [
-                                    {
-                                        title: "Field",
-                                        render: (row)=>row.name
-                                    },
-                                    {
-                                        title: "Value",
-                                        render: (row)=>{
-                                            if (row.value !== undefined) return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _designSystem.Text), {
-                                                children: row.value
-                                            }, void 0, false, {
-                                                fileName: "client/src/components/ReportDisplay.tsx",
-                                                lineNumber: 25,
-                                                columnNumber: 44
-                                            }, void 0);
-                                            else if (row.subfields) return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _designSystem.Table), {
-                                                data: row.subfields,
-                                                columns: [
-                                                    {
-                                                        title: "Subfield",
-                                                        render: (subfield)=>subfield.name
-                                                    },
-                                                    {
-                                                        title: "Value",
-                                                        render: (subfield)=>subfield.value
-                                                    }
-                                                ]
-                                            }, void 0, false, {
-                                                fileName: "client/src/components/ReportDisplay.tsx",
-                                                lineNumber: 28,
-                                                columnNumber: 41
-                                            }, void 0);
-                                            return null;
-                                        }
-                                    }
-                                ]
-                            }, void 0, false, {
-                                fileName: "client/src/components/ReportDisplay.tsx",
-                                lineNumber: 17,
-                                columnNumber: 17
-                            }, undefined),
-                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _designSystem.Accordion), {
-                                items: [
-                                    {
-                                        title: "Show Your Work",
-                                        children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _designSystem.Table), {
-                                            rowVerticalPadding: "tiny",
-                                            data: calculationDetails[parseInt(year)],
-                                            columns: [
-                                                {
-                                                    title: "Description",
-                                                    render: (row)=>row.description
-                                                },
-                                                {
-                                                    title: "Calculation",
-                                                    render: (row)=>row.calculation
-                                                },
-                                                {
-                                                    title: "Result",
-                                                    render: (row)=>row.result
-                                                }
-                                            ],
-                                            children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _designSystem.Table).Content, {}, void 0, false, {
-                                                fileName: "client/src/components/ReportDisplay.tsx",
-                                                lineNumber: 55,
-                                                columnNumber: 33
-                                            }, void 0)
-                                        }, void 0, false, {
-                                            fileName: "client/src/components/ReportDisplay.tsx",
-                                            lineNumber: 46,
-                                            columnNumber: 29
-                                        }, void 0)
-                                    }
-                                ]
-                            }, void 0, false, {
-                                fileName: "client/src/components/ReportDisplay.tsx",
-                                lineNumber: 42,
-                                columnNumber: 17
-                            }, undefined)
-                        ]
-                    }, void 0, true, {
+                        lineNumber: 39,
+                        columnNumber: 53
+                    }, void 0)
+            },
+            {
+                title: "Calculation",
+                render: (row)=>formatCalculation(row.calculation, row.result)
+            }
+        ],
+        children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _designSystem.Table).Content, {}, void 0, false, {
+            fileName: "client/src/components/ReportDisplay.tsx",
+            lineNumber: 46,
+            columnNumber: 9
+        }, undefined)
+    }, void 0, false, {
+        fileName: "client/src/components/ReportDisplay.tsx",
+        lineNumber: 35,
+        columnNumber: 5
+    }, undefined);
+const renderFormulas = ()=>/*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _designSystem.Card), {
+        children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _designSystem.Card).Content, {
+            children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _designSystem.Layout), {
+                children: [
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _designSystem.Cell), {
+                        span: 6,
+                        children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _designSystem.Heading), {
+                            size: "medium",
+                            children: "Income Calculation"
+                        }, void 0, false, {
+                            fileName: "client/src/components/ReportDisplay.tsx",
+                            lineNumber: 55,
+                            columnNumber: 13
+                        }, undefined)
+                    }, void 0, false, {
                         fileName: "client/src/components/ReportDisplay.tsx",
-                        lineNumber: 16,
-                        columnNumber: 17
+                        lineNumber: 54,
+                        columnNumber: 9
+                    }, undefined),
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _designSystem.Cell), {
+                        span: 6
+                    }, void 0, false, {
+                        fileName: "client/src/components/ReportDisplay.tsx",
+                        lineNumber: 57,
+                        columnNumber: 9
+                    }, undefined),
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _designSystem.Cell), {
+                        span: 6,
+                        rows: 4,
+                        children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)(MathJaxExpression, {
+                            expression: "GPM308P = \\sum_{i} (V_i \\times (S_i - E_i)) / R_i"
+                        }, void 0, false, {
+                            fileName: "client/src/components/ReportDisplay.tsx",
+                            lineNumber: 59,
+                            columnNumber: 13
+                        }, undefined)
+                    }, void 0, false, {
+                        fileName: "client/src/components/ReportDisplay.tsx",
+                        lineNumber: 58,
+                        columnNumber: 9
+                    }, undefined),
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _designSystem.Cell), {
+                        span: 6,
+                        children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _designSystem.Text), {
+                            children: "V_i = Number of vested shares"
+                        }, void 0, false, {
+                            fileName: "client/src/components/ReportDisplay.tsx",
+                            lineNumber: 62,
+                            columnNumber: 13
+                        }, undefined)
+                    }, void 0, false, {
+                        fileName: "client/src/components/ReportDisplay.tsx",
+                        lineNumber: 61,
+                        columnNumber: 9
+                    }, undefined),
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _designSystem.Cell), {
+                        span: 6,
+                        children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _designSystem.Text), {
+                            children: "S_i = Stock price at vesting"
+                        }, void 0, false, {
+                            fileName: "client/src/components/ReportDisplay.tsx",
+                            lineNumber: 65,
+                            columnNumber: 13
+                        }, undefined)
+                    }, void 0, false, {
+                        fileName: "client/src/components/ReportDisplay.tsx",
+                        lineNumber: 64,
+                        columnNumber: 9
+                    }, undefined),
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _designSystem.Cell), {
+                        span: 6,
+                        children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _designSystem.Text), {
+                            children: "E_i = Exercise price"
+                        }, void 0, false, {
+                            fileName: "client/src/components/ReportDisplay.tsx",
+                            lineNumber: 68,
+                            columnNumber: 13
+                        }, undefined)
+                    }, void 0, false, {
+                        fileName: "client/src/components/ReportDisplay.tsx",
+                        lineNumber: 67,
+                        columnNumber: 9
+                    }, undefined),
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _designSystem.Cell), {
+                        span: 6,
+                        children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _designSystem.Text), {
+                            children: "R_i = Exchange rate at vesting date"
+                        }, void 0, false, {
+                            fileName: "client/src/components/ReportDisplay.tsx",
+                            lineNumber: 71,
+                            columnNumber: 13
+                        }, undefined)
+                    }, void 0, false, {
+                        fileName: "client/src/components/ReportDisplay.tsx",
+                        lineNumber: 70,
+                        columnNumber: 9
+                    }, undefined),
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _designSystem.Cell), {
+                        span: 6,
+                        rows: 2,
+                        children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)(MathJaxExpression, {
+                            expression: "GPM308F (F4) = \\max(F1 - F2 - 500, 0)"
+                        }, void 0, false, {
+                            fileName: "client/src/components/ReportDisplay.tsx",
+                            lineNumber: 74,
+                            columnNumber: 13
+                        }, undefined)
+                    }, void 0, false, {
+                        fileName: "client/src/components/ReportDisplay.tsx",
+                        lineNumber: 73,
+                        columnNumber: 9
+                    }, undefined),
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _designSystem.Cell), {
+                        span: 6,
+                        children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _designSystem.Text), {
+                            children: "F1 = Total sales amount"
+                        }, void 0, false, {
+                            fileName: "client/src/components/ReportDisplay.tsx",
+                            lineNumber: 77,
+                            columnNumber: 13
+                        }, undefined)
+                    }, void 0, false, {
+                        fileName: "client/src/components/ReportDisplay.tsx",
+                        lineNumber: 76,
+                        columnNumber: 9
+                    }, undefined),
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _designSystem.Cell), {
+                        span: 6,
+                        children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _designSystem.Text), {
+                            children: "F2 = Total cost basis and fees"
+                        }, void 0, false, {
+                            fileName: "client/src/components/ReportDisplay.tsx",
+                            lineNumber: 80,
+                            columnNumber: 13
+                        }, undefined)
+                    }, void 0, false, {
+                        fileName: "client/src/components/ReportDisplay.tsx",
+                        lineNumber: 79,
+                        columnNumber: 9
                     }, undefined)
                 ]
-            }, year, true, {
+            }, void 0, true, {
                 fileName: "client/src/components/ReportDisplay.tsx",
-                lineNumber: 14,
+                lineNumber: 53,
+                columnNumber: 5
+            }, undefined)
+        }, void 0, false, {
+            fileName: "client/src/components/ReportDisplay.tsx",
+            lineNumber: 52,
+            columnNumber: 9
+        }, undefined)
+    }, void 0, false, {
+        fileName: "client/src/components/ReportDisplay.tsx",
+        lineNumber: 51,
+        columnNumber: 5
+    }, undefined);
+const ReportDisplay = ({ report, calculationDetails })=>{
+    _s1();
+    (0, _react.useEffect)(()=>{
+        if (window.MathJax) window.MathJax.Hub.Queue([
+            "Typeset",
+            window.MathJax.Hub
+        ]);
+    }, [
+        report,
+        calculationDetails
+    ]);
+    return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _jsxDevRuntime.Fragment), {
+        children: [
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _designSystem.Accordion), {
+                items: [
+                    {
+                        title: "Formulas",
+                        children: renderFormulas()
+                    }
+                ]
+            }, void 0, false, {
+                fileName: "client/src/components/ReportDisplay.tsx",
+                lineNumber: 96,
                 columnNumber: 13
-            }, undefined))
-    }, void 0, false);
-_c = ReportDisplay;
-var _c;
-$RefreshReg$(_c, "ReportDisplay");
+            }, undefined),
+            Object.entries(report).map(([year, { heading, fields }])=>/*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _designSystem.Card), {
+                    children: [
+                        /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _designSystem.Card).Header, {
+                            title: heading
+                        }, void 0, false, {
+                            fileName: "client/src/components/ReportDisplay.tsx",
+                            lineNumber: 102,
+                            columnNumber: 21
+                        }, undefined),
+                        /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _designSystem.Card).Content, {
+                            children: [
+                                /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _designSystem.Table), {
+                                    data: fields,
+                                    columns: [
+                                        {
+                                            title: "Field",
+                                            render: (row)=>row.name
+                                        },
+                                        {
+                                            title: "Value",
+                                            render: (row)=>{
+                                                if (row.value !== undefined) return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _designSystem.Text), {
+                                                    children: row.value.toFixed(2)
+                                                }, void 0, false, {
+                                                    fileName: "client/src/components/ReportDisplay.tsx",
+                                                    lineNumber: 112,
+                                                    columnNumber: 52
+                                                }, void 0);
+                                                else if (row.subfields) return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _designSystem.Table), {
+                                                    data: row.subfields,
+                                                    columns: [
+                                                        {
+                                                            title: "Subfield",
+                                                            render: (subfield)=>subfield.name
+                                                        },
+                                                        {
+                                                            title: "Value",
+                                                            render: (subfield)=>subfield.value.toFixed(2)
+                                                        }
+                                                    ]
+                                                }, void 0, false, {
+                                                    fileName: "client/src/components/ReportDisplay.tsx",
+                                                    lineNumber: 115,
+                                                    columnNumber: 49
+                                                }, void 0);
+                                                return null;
+                                            }
+                                        }
+                                    ]
+                                }, void 0, false, {
+                                    fileName: "client/src/components/ReportDisplay.tsx",
+                                    lineNumber: 104,
+                                    columnNumber: 25
+                                }, undefined),
+                                /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _designSystem.Accordion), {
+                                    items: [
+                                        {
+                                            title: "Show Calculation Details",
+                                            children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _jsxDevRuntime.Fragment), {
+                                                children: [
+                                                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _designSystem.Card), {
+                                                        children: [
+                                                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _designSystem.Card).Header, {
+                                                                title: "Income Calculations Details"
+                                                            }, void 0, false, {
+                                                                fileName: "client/src/components/ReportDisplay.tsx",
+                                                                lineNumber: 138,
+                                                                columnNumber: 45
+                                                            }, void 0),
+                                                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _designSystem.Card).Content, {
+                                                                children: renderCalculationDetails(calculationDetails[parseInt(year)].filter((detail)=>detail.type === "income"))
+                                                            }, void 0, false, {
+                                                                fileName: "client/src/components/ReportDisplay.tsx",
+                                                                lineNumber: 139,
+                                                                columnNumber: 45
+                                                            }, void 0)
+                                                        ]
+                                                    }, void 0, true, {
+                                                        fileName: "client/src/components/ReportDisplay.tsx",
+                                                        lineNumber: 137,
+                                                        columnNumber: 41
+                                                    }, void 0),
+                                                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _designSystem.Card), {
+                                                        children: [
+                                                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _designSystem.Card).Header, {
+                                                                title: "Gain Calculations"
+                                                            }, void 0, false, {
+                                                                fileName: "client/src/components/ReportDisplay.tsx",
+                                                                lineNumber: 144,
+                                                                columnNumber: 45
+                                                            }, void 0),
+                                                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _designSystem.Card).Content, {
+                                                                children: renderCalculationDetails(calculationDetails[parseInt(year)].filter((detail)=>detail.type === "gain"))
+                                                            }, void 0, false, {
+                                                                fileName: "client/src/components/ReportDisplay.tsx",
+                                                                lineNumber: 145,
+                                                                columnNumber: 45
+                                                            }, void 0)
+                                                        ]
+                                                    }, void 0, true, {
+                                                        fileName: "client/src/components/ReportDisplay.tsx",
+                                                        lineNumber: 143,
+                                                        columnNumber: 41
+                                                    }, void 0)
+                                                ]
+                                            }, void 0, true)
+                                        }
+                                    ]
+                                }, void 0, false, {
+                                    fileName: "client/src/components/ReportDisplay.tsx",
+                                    lineNumber: 132,
+                                    columnNumber: 25
+                                }, undefined)
+                            ]
+                        }, void 0, true, {
+                            fileName: "client/src/components/ReportDisplay.tsx",
+                            lineNumber: 103,
+                            columnNumber: 21
+                        }, undefined)
+                    ]
+                }, year, true, {
+                    fileName: "client/src/components/ReportDisplay.tsx",
+                    lineNumber: 101,
+                    columnNumber: 17
+                }, undefined))
+        ]
+    }, void 0, true);
+};
+_s1(ReportDisplay, "OD7bBpZva5O2jO+Puf00hKivP7c=");
+_c1 = ReportDisplay;
+var _c, _c1;
+$RefreshReg$(_c, "MathJaxExpression");
+$RefreshReg$(_c1, "ReportDisplay");
 
   $parcel$ReactRefreshHelpers$4459.postlude(module);
 } finally {
@@ -66400,7 +66852,7 @@ const generateReport = async (issuedShares, soldShares, fetchExchangeRate)=>{
         calculationDetails[year].push({
             type: "gain",
             description: `Gain calculation for sold shares on ${transaction.orderDate.toISOString().split("T")[0]}`,
-            calculation: `${transaction.amount} - ${transaction.totalFeesInEur} - ${transaction.cost}`,
+            calculation: `(${transaction.sharesSold} * ${transaction.salePrice} / ${transaction.exchangeRate}) - ${transaction.totalFeesInEur} - (${transaction.sharesSold} * ${transaction.exercisePrice} / ${transaction.exchangeRate})`,
             result: transaction.gain
         });
         calculationDetails[year].push({

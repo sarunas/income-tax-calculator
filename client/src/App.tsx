@@ -1,4 +1,4 @@
-import React, {useState, useCallback} from 'react';
+import React, {useState, useCallback, useEffect} from 'react';
 import {InputAreas} from './components/InputAreas';
 import {CalculateButton} from './components/CalculateButton';
 import {SplitCheckbox} from './components/SplitCheckbox';
@@ -19,6 +19,29 @@ const App: React.FC = () => {
     const [report, setReport] = useState<TaxInstructions | null>(null);
     const [error, setError] = useState<string | null>(null);
     const [calculationDetails, setCalculationDetails] = useState<Report['calculationDetails'] | null>(null);
+
+    useEffect(() => {
+        const script = document.createElement('script');
+        script.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js?config=TeX-MML-AM_CHTML';
+        script.async = true;
+        document.head.appendChild(script);
+
+        return () => {
+            document.head.removeChild(script);
+        };
+    }, []);
+
+    useEffect(() => {
+        if (window.MathJax) {
+            window.MathJax.Hub.Config({
+                tex2jax: {
+                    inlineMath: [['\\(', '\\)']],
+                    displayMath: [['$$', '$$']],
+                    processEscapes: true,
+                },
+            });
+        }
+    }, []);
 
     const handleCalculate = useCallback(async () => {
         if (!issuedShares && !soldShares) {

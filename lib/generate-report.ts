@@ -180,7 +180,7 @@ export const generateReport = async (
     calculationDetails[year].push({
       type: 'gain',
       description: `Gain calculation for sold shares on ${transaction.orderDate.toISOString().split('T')[0]}`,
-      calculation: `${transaction.amount} - ${transaction.totalFeesInEur} - ${transaction.cost}`,
+      calculation: `(${transaction.sharesSold} * ${transaction.salePrice} / ${transaction.exchangeRate}) - ${transaction.totalFeesInEur} - (${transaction.sharesSold} * ${transaction.exercisePrice} / ${transaction.exchangeRate})`,
       result: transaction.gain
     });
 
