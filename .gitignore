@@ -67,3 +67,5 @@ typings/
 /shares-issued.txt
 /shares-sold.txt
 /.cache/
+/.parcel-cache
+/@wix
