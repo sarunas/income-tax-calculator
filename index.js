@@ -1,15 +1,6 @@
-const { parseIssuedShares } = require('./lib/parse-issued-shares');
-const { parseSoldShares } = require('./lib/parse-sold-shares');
-const { generateReport } = require('./lib/generate-report');
-const { generateTaxFillInstructions } = require('./lib/generate-tax-fill-instructions-data');
-const { fetchExchangeRate } = require('./lib/currency-exchange');
-const { round } = require('./lib/round');
-
-module.exports = {
-  parseIssuedShares,
-  parseSoldShares,
-  generateReport,
-  generateTaxFillInstructions,
-  fetchExchangeRate,
-  round
-};
+export * from "./lib/parse-issued-shares.js";
+export * from "./lib/parse-sold-shares.js";
+export * from "./lib/generate-report.js";
+export * from "./lib/generate-tax-fill-instructions-data.js";
+export * from "./lib/currency-exchange.js";
+export * from "./lib/round.js";

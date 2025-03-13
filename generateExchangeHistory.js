@@ -1,7 +1,7 @@
-const fs = require("fs");
-const { fetchExchangeRate } = require("./lib/currency-exchange");
-const { eachDayOfInterval, formatISO } = require("date-fns");
-const ratesJSON = require("./rates.json");
+import fs from "fs";
+import { fetchExchangeRate } from "./lib/currency-exchange.js";
+import { eachDayOfInterval, formatISO } from "date-fns";
+import ratesJSON from "./rates.json" with { type: "json" };
 
 const currency = "USD";
 
@@ -27,7 +27,7 @@ const run = async () => {
 };
 
 run().then(() => {
-  fs.writeFileSync("rates.json", JSON.stringify(ratesJSON, null, 2))
+  fs.writeFileSync("rates.json", JSON.stringify(ratesJSON, null, 2));
   console.log("fetching done");
   process.exit(0);
-});
+}).catch(console.error);

@@ -4,9 +4,7 @@ const { generateReport } = require("../lib/generate-report");
 const { parseIssuedShares } = require("../lib/parse-issued-shares");
 const { parseSameDayShares } = require("../lib/parse-same-day-shares");
 const { parseSoldShares } = require("../lib/parse-sold-shares");
-const {
-  generateTaxFillInstructionsData,
-} = require("../lib/generate-tax-fill-instructions-data");
+const { generateTaxFillInstructionsData } = require("../lib/generate-tax-fill-instructions-data");
 
 const issuedArea = document.querySelector("#issued");
 const soldArea = document.querySelector("#sold");
@@ -33,9 +31,7 @@ const renderReport = (data) => {
       if (value !== undefined) {
         report.append(h("div", value));
       } else {
-        subfields.forEach(({ name, value }) =>
-          report.append(h("div", `${name}: ${value}`))
-        );
+        subfields.forEach(({ name, value }) => report.append(h("div", `${name}: ${value}`)));
       }
     });
   });
@@ -50,15 +46,17 @@ calculateButton.addEventListener("click", () => {
   const soldShares = parseSoldShares(soldArea.value);
   const sameDayShares = parseSameDayShares(soldArea.value);
   const issuedShares = parseIssuedShares(issuedArea.value);
-  sameDayShares.forEach(entry => issuedShares.push({
-    grantDate: entry.grantDate,
-    grantNumber: entry.grantNumber,
-    grantType: entry.grantType,
-    vestingDate: entry.orderDate,
-    vestedShares: entry.sharesSold,
-    stockPrice: entry.salePrice,
-    exercisePrice: entry.exercisePrice,
-  }));
+  sameDayShares.forEach((entry) =>
+    issuedShares.push({
+      grantDate: entry.grantDate,
+      grantNumber: entry.grantNumber,
+      grantType: entry.grantType,
+      vestingDate: entry.orderDate,
+      vestedShares: entry.sharesSold,
+      stockPrice: entry.salePrice,
+      exercisePrice: entry.exercisePrice,
+    })
+  );
 
   const shouldSplit = splitCheckbox.checked;
 
