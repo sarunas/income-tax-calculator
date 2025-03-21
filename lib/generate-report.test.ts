@@ -101,4 +101,18 @@ describe(generateReport, () => {
     // Verify remaining balance
     expect(report.incomeByYear[2020].shares[0].balance).toBe(5); // 10 - 5
   });
+
+  it("should throw error when trying to sell more shares than available", async () => {
+    const issuedSharesContent = `01/01/2020 1111 RSU 01/06/2020 10 100.00 $ 0.00 $
+01/01/2020 1111 RSU 01/06/2021 10 100.00 $ 0.00 $`;
+
+    const soldSharesContent = `123456 Sell of Stock 1111 01/01/2020 RSU 01/07/2020 25 120.00 $ 0.00 $ 10.00 $`;
+
+    const issuedShares = parseIssuedShares(issuedSharesContent);
+    const soldShares = parseSoldShares(soldSharesContent);
+
+    await expect(generateReport(issuedShares, soldShares, () => Promise.resolve(1))).rejects.toThrow(
+      "Not enough shares available for grant 1111. Attempted to sell 25 shares but only 20 were available."
+    );
+  });
 }); 

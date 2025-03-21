@@ -83,25 +83,20 @@ export const generateReport = async (
     let sharesSold = transaction.sale.sharesSold;
 
     for (const share of shareGroups[transaction.sale.grantNumber]) {
-      if (share.balance! > 0) {
-        if (share.balance! > sharesSold) {
-          const cost = round((share.cost! / share.vesting.vestedShares) * sharesSold);
-          share.balance = share.balance! - sharesSold;
-          transaction.cost = transaction.cost! + cost;
-          gain -= cost;
-          sharesSold = 0;
-        } else {
-          const cost = round((share.cost! / share.vesting.vestedShares) * share.balance!);
-          sharesSold -= share.balance!;
-          transaction.cost = transaction.cost! + cost;
-          gain -= cost;
-          share.balance = 0;
-        }
-      }
+      const sharesToUse = Math.min(sharesSold, share.balance);
+      const costPerShare = share.cost / share.vesting.vestedShares;
+      const cost = round(costPerShare * sharesToUse);
+      
+      share.balance = share.balance - sharesToUse;
+      transaction.cost = transaction.cost + cost;
+      gain -= cost;
+      sharesSold -= sharesToUse;
 
-      if (sharesSold === 0) {
-        break;
-      }
+      if (sharesSold === 0) break;
+    }
+
+    if (sharesSold > 0) {
+      throw new Error(`Not enough shares available for grant ${transaction.sale.grantNumber}. Attempted to sell ${transaction.sale.sharesSold} shares but only ${transaction.sale.sharesSold - sharesSold} were available.`);
     }
 
     transaction.gain = gain;
