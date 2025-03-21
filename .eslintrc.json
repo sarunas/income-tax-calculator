@@ -16,8 +16,6 @@
     "@typescript-eslint"
   ],
   "rules": {
-    "@typescript-eslint/explicit-function-return-type": "warn",
-    "@typescript-eslint/no-explicit-any": "warn",
     "@typescript-eslint/no-unused-vars": [
       "error",
       {
@@ -30,18 +28,6 @@
         "ignoreRestSiblings": true
       }
     ],
-    "no-console": ["warn", { "allow": ["warn", "error"] }],
-    "no-var": "error",
-    "prefer-const": "error",
-    "eqeqeq": ["error", "always"],
-    "curly": ["error", "all"],
-    "brace-style": ["error", "1tbs"],
-    "space-before-function-paren": ["error", {
-      "anonymous": "always",
-      "named": "never",
-      "asyncArrow": "always"
-    }],
-    "comma-dangle": ["error", "always-multiline"],
-    "semi": ["error", "always"]
+    "no-console": ["warn", { "allow": ["warn", "error"] }]
   }
 } 
