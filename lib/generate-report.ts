@@ -1,4 +1,4 @@
-import { isAfter, differenceInYears, format, formatters, longFormatters } from "date-fns";
+import { isAfter, differenceInYears, formatDate, formatters, longFormatters } from "date-fns";
 import { round } from "./round";
 import { sortBy, groupBy } from "lodash-es";
 import { 
@@ -38,7 +38,7 @@ export async function generateReport(
 
   const filteredIssuedShares = sortedIssuedShares.filter(excludeOptions);
   const vestedSharesWithTax: VestedShareWithTax[] = await Promise.all(filteredIssuedShares.map(async share => {
-    const date = format(share.vestingDate, "yyyy-MM-dd");
+    const date = formatDate(share.vestingDate, "yyyy-MM-dd");
     const exchangeRate = await fetchExchangeRate(date, "USD");
     return {
       vesting: share,
@@ -51,7 +51,7 @@ export async function generateReport(
   const sortedSoldShares = sortBy(soldShares, ["orderDate"]);
   const shareSalesWithTax: ShareSaleWithTax[] = await Promise.all(sortedSoldShares.map(async share => {
     // Calculate sale amount and fees
-    const date = format(share.orderDate, "yyyy-MM-dd");
+    const date = formatDate(share.orderDate, "yyyy-MM-dd");
     const exchangeRate = await fetchExchangeRate(date, "USD");
     const amount = round((share.sharesSold * share.salePrice) / exchangeRate);
     const totalFeesInEur = round(share.totalFees / exchangeRate);
@@ -64,7 +64,7 @@ export async function generateReport(
       if (shareBalance.remainingShares <= 0) continue;
 
       const sharesToUse = Math.min(shareBalance.remainingShares, remainingSharesToSell);
-      const vestingDate = format(shareBalance.vesting.vestingDate, "yyyy-MM-dd");
+      const vestingDate = formatDate(shareBalance.vesting.vestingDate, "yyyy-MM-dd");
       const vestingExchangeRate = await fetchExchangeRate(vestingDate, "USD");
       const costPerShare = round((shareBalance.vesting.stockPrice) / vestingExchangeRate);
       const cost = round(sharesToUse * costPerShare);
