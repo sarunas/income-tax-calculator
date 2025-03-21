@@ -1,5 +1,5 @@
 import fs from "fs";
-import { fetchExchangeRate } from "./lib/currency-exchange";
+import { fetchExchangeRate } from "./lib/fetch-exchange-rate";
 import { eachDayOfInterval, formatISO } from "date-fns";
 import ratesJSON from "./rates.json" with { type: "json" };
 import { ExchangeRates } from "./lib/types";
