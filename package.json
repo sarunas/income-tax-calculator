@@ -9,7 +9,7 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "fetch-rates": "TZ=utc tsx generateExchangeHistory.ts",
-    "build": "parcel build ./client/index.html --public-url ./",
+    "build": "parcel build --no-scope-hoist ./client/index.html --public-url ./",
     "start": "parcel ./client/index.html",
     "deploy": "git subtree push --prefix dist origin gh-pages",
     "type-check": "tsc --noEmit",
@@ -21,7 +21,6 @@
   "dependencies": {
     "date-fns": "^4.1.0",
     "lodash-es": "^4.17.21",
-    "moment": "^2.30.1",
     "node-fetch": "^3.3.2",
     "parcel": "2.13.3"
   },

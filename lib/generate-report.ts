@@ -1,12 +1,11 @@
-import moment from "moment";
+import { isAfter, differenceInYears, format } from "date-fns";
 import { round } from "./round";
 import { sortBy, groupBy } from "lodash-es";
 import { IssuedShare, SoldShare, SoldShareTax, Report, IssuedShareTax, YearlyIncome, YearlyGain } from "./types";
 
 const excludeOptions = (share: IssuedShare): boolean => {
-  const grantDate = moment(share.grantDate);
-  const vestingDate = moment(share.vestingDate);
-  return !(grantDate.isAfter("2020-02-01") && vestingDate.diff(grantDate, "years") >= 3);
+  return !(isAfter(share.grantDate, new Date("2020-02-01")) && 
+          differenceInYears(share.vestingDate, share.grantDate) >= 3);
 };
 
 export const generateReport = async (
@@ -18,7 +17,7 @@ export const generateReport = async (
 
   const issuedSharesSortedByDate: IssuedShareTax[] = [];
   for (const share of sortBy(issuedShares, ["vestingDate"]).filter(excludeOptions)) {
-    const exchangeRate = await fetchExchangeRate(moment(share.vestingDate).format("YYYY-MM-DD"), "USD");
+    const exchangeRate = await fetchExchangeRate(format(share.vestingDate, "yyyy-MM-dd"), "USD");
     issuedSharesSortedByDate.push({
       ...share,
       balance: share.vestedShares,
@@ -32,7 +31,7 @@ export const generateReport = async (
 
   const soldSharesSortedByDate: SoldShareTax[] = [];
   for (const transaction of sortBy(soldShares, ["orderDate"])) {
-    const date = moment(transaction.orderDate).format("YYYY-MM-DD");
+    const date = format(transaction.orderDate, "yyyy-MM-dd");
     const exchangeRate = await fetchExchangeRate(date, "USD");
     soldSharesSortedByDate.push({
       ...transaction,
