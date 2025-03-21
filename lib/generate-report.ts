@@ -1,7 +1,15 @@
 import { isAfter, differenceInYears, format, formatters, longFormatters } from "date-fns";
 import { round } from "./round";
 import { sortBy, groupBy } from "lodash-es";
-import { IssuedShare, SoldShare, SoldShareTax, Report, IssuedShareTax, YearlyIncome, YearlyGain } from "./types";
+import { 
+  IssuedShare, 
+  SoldShare, 
+  ShareSaleWithTax, 
+  Report, 
+  VestedShareWithTax, 
+  YearlyIncome, 
+  YearlyGain 
+} from "./types";
 
 const _FORCE_BUNDLE = [formatters, longFormatters];
 
@@ -18,28 +26,28 @@ export const generateReport = async (
   console.log("Generating report please wait...\n");
 
   const filteredIssuedShares = sortBy(issuedShares, ["vestingDate"]).filter(excludeOptions);
-  const issuedSharesSortedByDate: IssuedShareTax[] = await Promise.all(filteredIssuedShares.map(async share => {
+  const vestedSharesWithTax: VestedShareWithTax[] = await Promise.all(filteredIssuedShares.map(async share => {
     const date = format(share.vestingDate, "yyyy-MM-dd");
     const exchangeRate = await fetchExchangeRate(date, "USD");
     return {
-      ...share,
+      vesting: share,
       balance: share.vestedShares,
       exchangeRate: exchangeRate,
       cost: round((share.vestedShares * share.stockPrice) / exchangeRate),
       incomeAmount: round((share.vestedShares * (share.stockPrice - share.exercisePrice)) / exchangeRate),
     };
   }));
-  const shareGroups = groupBy(issuedSharesSortedByDate, (item) => item.grantNumber);
+  const shareGroups = groupBy(vestedSharesWithTax, (item) => item.vesting.grantNumber);
 
   const filteredSoldShares = sortBy(soldShares, ["orderDate"]);
-  const soldSharesSortedByDate: SoldShareTax[] = await Promise.all(filteredSoldShares.map(async transaction => {
-    const date = format(transaction.orderDate, "yyyy-MM-dd");
+  const shareSalesWithTax: ShareSaleWithTax[] = await Promise.all(filteredSoldShares.map(async share => {
+    const date = format(share.orderDate, "yyyy-MM-dd");
     const exchangeRate = await fetchExchangeRate(date, "USD");
     return {
-      ...transaction,
+      sale: share,
       exchangeRate,
-      amount: round((transaction.sharesSold * transaction.salePrice) / exchangeRate),
-      totalFeesInEur: round(transaction.totalFees / exchangeRate),
+      amount: round((share.sharesSold * share.salePrice) / exchangeRate),
+      totalFeesInEur: round(share.totalFees / exchangeRate),
       cost: 0,
       gain: 0,
     };
@@ -47,8 +55,8 @@ export const generateReport = async (
 
   // income by year
   const incomeByYear: Record<number, YearlyIncome> = {};
-  for (const share of issuedSharesSortedByDate) {
-    const year = share.vestingDate.getFullYear();
+  for (const share of vestedSharesWithTax) {
+    const year = share.vesting.vestingDate.getFullYear();
     if (incomeByYear[year] === undefined) {
       incomeByYear[year] = {
         total: 0,
@@ -62,8 +70,8 @@ export const generateReport = async (
 
   // profit by year
   const gainByYear: Record<number, YearlyGain> = {};
-  for (const transaction of soldSharesSortedByDate) {
-    const year = transaction.orderDate.getFullYear();
+  for (const transaction of shareSalesWithTax) {
+    const year = transaction.sale.orderDate.getFullYear();
     if (gainByYear[year] === undefined) {
       gainByYear[year] = {
         total: 0,
@@ -71,20 +79,19 @@ export const generateReport = async (
       };
     }
 
-    let gain = transaction.amount! - transaction.totalFeesInEur!;
-    let sharesSold = transaction.sharesSold;
+    let gain = transaction.amount - transaction.totalFeesInEur;
+    let sharesSold = transaction.sale.sharesSold;
 
-    transaction.cost = 0;
-    for (const share of shareGroups[transaction.grantNumber]) {
+    for (const share of shareGroups[transaction.sale.grantNumber]) {
       if (share.balance! > 0) {
         if (share.balance! > sharesSold) {
-          const cost = round((share.cost! / share.vestedShares) * sharesSold);
+          const cost = round((share.cost! / share.vesting.vestedShares) * sharesSold);
           share.balance = share.balance! - sharesSold;
           transaction.cost = transaction.cost! + cost;
           gain -= cost;
           sharesSold = 0;
         } else {
-          const cost = round((share.cost! / share.vestedShares) * share.balance!);
+          const cost = round((share.cost! / share.vesting.vestedShares) * share.balance!);
           sharesSold -= share.balance!;
           transaction.cost = transaction.cost! + cost;
           gain -= cost;

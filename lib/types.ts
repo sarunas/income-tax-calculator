@@ -22,14 +22,16 @@ export interface SoldShare {
 }
 
 // Tax calculation types
-export interface IssuedShareTax extends IssuedShare {
+export interface VestedShareWithTax {
+  vesting: IssuedShare;
   balance: number;
   exchangeRate: number;
   cost: number;
   incomeAmount: number;
 }
 
-export interface SoldShareTax extends SoldShare {
+export interface ShareSaleWithTax {
+  sale: SoldShare;
   exchangeRate: number;
   amount: number;
   totalFeesInEur: number;
@@ -40,12 +42,12 @@ export interface SoldShareTax extends SoldShare {
 // Shared types
 export interface YearlyIncome {
   total: number;
-  shares: IssuedShareTax[];
+  shares: VestedShareWithTax[];
 }
 
 export interface YearlyGain {
   total: number;
-  transactions: SoldShareTax[];
+  transactions: ShareSaleWithTax[];
 }
 
 export interface Report {
