@@ -17,33 +17,33 @@ export const generateReport = async (
 ): Promise<Report> => {
   console.log("Generating report please wait...\n");
 
-  const issuedSharesSortedByDate: IssuedShareTax[] = [];
-  for (const share of sortBy(issuedShares, ["vestingDate"]).filter(excludeOptions)) {
-    const exchangeRate = await fetchExchangeRate(format(share.vestingDate, "yyyy-MM-dd"), "USD");
-    issuedSharesSortedByDate.push({
+  const filteredIssuedShares = sortBy(issuedShares, ["vestingDate"]).filter(excludeOptions);
+  const issuedSharesSortedByDate: IssuedShareTax[] = await Promise.all(filteredIssuedShares.map(async share => {
+    const date = format(share.vestingDate, "yyyy-MM-dd");
+    const exchangeRate = await fetchExchangeRate(date, "USD");
+    return {
       ...share,
       balance: share.vestedShares,
       exchangeRate: exchangeRate,
       cost: round((share.vestedShares * share.stockPrice) / exchangeRate),
       incomeAmount: round((share.vestedShares * (share.stockPrice - share.exercisePrice)) / exchangeRate),
-    });
-  }
-
+    };
+  }));
   const shareGroups = groupBy(issuedSharesSortedByDate, (item) => item.grantNumber);
 
-  const soldSharesSortedByDate: SoldShareTax[] = [];
-  for (const transaction of sortBy(soldShares, ["orderDate"])) {
+  const filteredSoldShares = sortBy(soldShares, ["orderDate"]);
+  const soldSharesSortedByDate: SoldShareTax[] = await Promise.all(filteredSoldShares.map(async transaction => {
     const date = format(transaction.orderDate, "yyyy-MM-dd");
     const exchangeRate = await fetchExchangeRate(date, "USD");
-    soldSharesSortedByDate.push({
+    return {
       ...transaction,
       exchangeRate,
       amount: round((transaction.sharesSold * transaction.salePrice) / exchangeRate),
       totalFeesInEur: round(transaction.totalFees / exchangeRate),
       cost: 0,
       gain: 0,
-    });
-  }
+    };
+  }));
 
   // income by year
   const incomeByYear: Record<number, YearlyIncome> = {};
