@@ -1,4 +1,4 @@
-import { get, uniq, concat, keys } from "lodash";
+import { get, uniq, concat, keys } from "lodash-es";
 import { round } from "./round";
 import { Report, TaxInstructions, SoldShareTax } from "./types";
 

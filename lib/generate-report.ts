@@ -1,6 +1,6 @@
 import { isAfter, differenceInYears, format, formatters, longFormatters } from "date-fns";
 import { round } from "./round";
-import { sortBy, groupBy } from "lodash";
+import { sortBy, groupBy } from "lodash-es";
 import { IssuedShare, SoldShare, SoldShareTax, Report, IssuedShareTax, YearlyIncome, YearlyGain } from "./types";
 
 const _FORCE_BUNDLE = [formatters, longFormatters];

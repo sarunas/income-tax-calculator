@@ -1,4 +1,4 @@
-import { isArray } from "lodash";
+import { isArray } from "lodash-es";
 import { fetchExchangeRateCached } from "../lib/fetch-exchange-rate-cached";
 import { generateReport } from "../lib/generate-report";
 import { parseIssuedShares } from "../lib/parse-issued-shares";
