@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { generateReport } from "./generate-report.js";
-import { parseIssuedShares } from "./parse-issued-shares.js";
+import { generateReport } from "./generate-report";
+import { parseIssuedShares } from "./parse-issued-shares";
 
 describe(generateReport, () => {
   it("it should exclude options from income", async () => {
@@ -11,7 +11,7 @@ describe(generateReport, () => {
 
     const issuedShares = parseIssuedShares(issuedSharesContent);
 
-    const report = await generateReport(issuedShares, [], () => 1);
+    const report = await generateReport(issuedShares, [], () => Promise.resolve(1));
     expect(report).toEqual({
       incomeByYear: {
         2020: {
@@ -67,4 +67,4 @@ describe(generateReport, () => {
       gainByYear: {},
     });
   });
-});
+}); 

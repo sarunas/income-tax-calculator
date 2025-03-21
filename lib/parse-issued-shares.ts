@@ -1,8 +1,18 @@
 import { trim, uniqBy } from "lodash";
 import { parseDate } from "./parse-date.js";
 
-export function parseIssuedShares(content) {
-  const result = [];
+interface IssuedShare {
+  grantDate: Date;
+  grantNumber: string;
+  grantType: string;
+  vestingDate: Date;
+  vestedShares: number;
+  stockPrice: number;
+  exercisePrice: number;
+}
+
+export function parseIssuedShares(content: string): IssuedShare[] {
+  const result: IssuedShare[] = [];
   const lines = trim(content)
     .split(/[\n\r]+/)
     .filter((line) => line);
@@ -22,4 +32,4 @@ export function parseIssuedShares(content) {
   return uniqBy(result, ({ grantNumber, vestingDate }) => {
     return grantNumber + vestingDate.toString();
   });
-}
+} 

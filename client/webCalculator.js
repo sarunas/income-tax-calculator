@@ -1,5 +1,5 @@
 const { isArray } = require("lodash");
-const { fetchExchangeRate } = require("../lib/fetch-exchange-rate-cached");
+const { fetchExchangeRateCached } = require("../lib/fetch-exchange-rate-cached");
 const { generateReport } = require("../lib/generate-report");
 const { parseIssuedShares } = require("../lib/parse-issued-shares");
 const { parseSameDayShares } = require("../lib/parse-same-day-shares");
@@ -60,7 +60,7 @@ calculateButton.addEventListener("click", () => {
 
   const shouldSplit = splitCheckbox.checked;
 
-  generateReport(issuedShares, soldShares, fetchExchangeRate).then((report) => {
+  generateReport(issuedShares, soldShares, fetchExchangeRateCached).then((report) => {
     const data = generateTaxFillInstructionsData(report, shouldSplit);
     renderReport(Object.values(data).reverse());
   });

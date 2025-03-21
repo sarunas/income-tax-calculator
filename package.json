@@ -4,14 +4,15 @@
   "version": "1.1.0",
   "description": "",
   "scripts": {
-    "calc": "node terminal.js",
+    "calc": "tsx terminal.ts",
     "calc:split": "npm run calc split-gain",
     "test": "vitest run",
     "test:watch": "vitest",
-    "fetch-rates": "TZ=utc node generateExchangeHistory.js",
+    "fetch-rates": "TZ=utc tsx generateExchangeHistory.ts",
     "build": "parcel build ./client/index.html --public-url ./",
     "start": "parcel ./client/index.html",
-    "deploy": "git subtree push --prefix dist origin gh-pages"
+    "deploy": "git subtree push --prefix dist origin gh-pages",
+    "type-check": "tsc --noEmit"
   },
   "author": "Šarūnas Dubinskas <sarunas.dubinskas@gmail.com>",
   "license": "MIT",
@@ -26,6 +27,11 @@
     "last 1 Chrome versions"
   ],
   "devDependencies": {
+    "@types/lodash": "^4.14.202",
+    "@types/node": "^20.11.24",
+    "@types/node-fetch": "^2.6.11",
+    "tsx": "^4.7.1",
+    "typescript": "^5.3.3",
     "vitest": "^3.0.8"
   }
 }
