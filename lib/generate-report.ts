@@ -1,7 +1,9 @@
-import { isAfter, differenceInYears, format } from "date-fns";
+import { isAfter, differenceInYears, format, formatters, longFormatters } from "date-fns";
 import { round } from "./round";
 import { sortBy, groupBy } from "lodash-es";
 import { IssuedShare, SoldShare, SoldShareTax, Report, IssuedShareTax, YearlyIncome, YearlyGain } from "./types";
+
+const _FORCE_BUNDLE = [formatters, longFormatters];
 
 const excludeOptions = (share: IssuedShare): boolean => {
   return !(isAfter(share.grantDate, new Date("2020-02-01")) && 
