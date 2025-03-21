@@ -1,6 +1,6 @@
 import moment from "moment";
 import { round } from "./round.js";
-import _ from "lodash";
+import { sortBy, groupBy } from "lodash-es";
 import { IssuedShare, SoldShare, SoldShareTax, Report, IssuedShareTax, YearlyIncome, YearlyGain } from "./types";
 
 const excludeOptions = (share: IssuedShare): boolean => {
@@ -17,7 +17,7 @@ export const generateReport = async (
   console.log("Generating report please wait...\n");
 
   const issuedSharesSortedByDate: IssuedShareTax[] = [];
-  for (const share of _.sortBy(issuedShares, ["vestingDate"]).filter(excludeOptions)) {
+  for (const share of sortBy(issuedShares, ["vestingDate"]).filter(excludeOptions)) {
     const exchangeRate = await fetchExchangeRate(moment(share.vestingDate).format("YYYY-MM-DD"), "USD");
     issuedSharesSortedByDate.push({
       ...share,
@@ -28,12 +28,10 @@ export const generateReport = async (
     });
   }
 
-  const shareGroups = _(issuedSharesSortedByDate)
-    .groupBy((item) => item.grantNumber)
-    .value();
+  const shareGroups = groupBy(issuedSharesSortedByDate, (item) => item.grantNumber);
 
   const soldSharesSortedByDate: SoldShareTax[] = [];
-  for (const transaction of _.sortBy(soldShares, ["orderDate"])) {
+  for (const transaction of sortBy(soldShares, ["orderDate"])) {
     const date = moment(transaction.orderDate).format("YYYY-MM-DD");
     const exchangeRate = await fetchExchangeRate(date, "USD");
     soldSharesSortedByDate.push({
