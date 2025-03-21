@@ -5,6 +5,7 @@ import { parseIssuedShares } from "../lib/parse-issued-shares";
 import { parseSameDayShares } from "../lib/parse-same-day-shares";
 import { parseSoldShares } from "../lib/parse-sold-shares";
 import { generateTaxFillInstructionsData } from "../lib/generate-tax-fill-instructions-data";
+import { TaxInstructions } from "../lib/types";
 
 // DOM Elements
 const issuedArea = document.querySelector<HTMLTextAreaElement>("#issued");

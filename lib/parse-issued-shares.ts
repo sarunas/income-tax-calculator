@@ -1,6 +1,6 @@
 import { trim, uniqBy } from "lodash-es";
-import { parseDate } from "./parse-date.js";
-import { IssuedShare } from "./types.js";
+import { parseDate } from "./parse-date";
+import { IssuedShare } from "./types";
 
 export function parseIssuedShares(content: string): IssuedShare[] {
   const result: IssuedShare[] = [];

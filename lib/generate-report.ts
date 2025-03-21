@@ -1,5 +1,5 @@
 import moment from "moment";
-import { round } from "./round.js";
+import { round } from "./round";
 import { sortBy, groupBy } from "lodash-es";
 import { IssuedShare, SoldShare, SoldShareTax, Report, IssuedShareTax, YearlyIncome, YearlyGain } from "./types";
 

@@ -1,5 +1,5 @@
 import { trim, uniqBy } from "lodash-es";
-import { parseDate } from "./parse-date.js";
+import { parseDate } from "./parse-date";
 import { SoldShare } from "./types";
 
 export function parseSoldShares(content: string): SoldShare[] {
