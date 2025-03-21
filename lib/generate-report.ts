@@ -8,105 +8,116 @@ import {
   Report, 
   VestedShareWithTax, 
   YearlyIncome, 
-  YearlyGain 
+  YearlyGain,
+  ShareBalance
 } from "./types";
 
+// Force date-fns formatters to be included in the bundle for Parcel
 const _FORCE_BUNDLE = [formatters, longFormatters];
 
-const excludeOptions = (share: IssuedShare): boolean => {
+// Exclude options where grant date is after 2020-02-01 and vesting period is 3+ years
+function excludeOptions(share: IssuedShare): boolean {
   return !(isAfter(share.grantDate, new Date("2020-02-01")) && 
-          differenceInYears(share.vestingDate, share.grantDate) >= 3);
-};
+    differenceInYears(share.vestingDate, share.grantDate) >= 3);
+}
 
-export const generateReport = async (
+export async function generateReport(
   issuedShares: IssuedShare[],
   soldShares: SoldShare[],
   fetchExchangeRate: (date: string, currency: string) => Promise<number>,
-): Promise<Report> => {
+): Promise<Report> {
   console.log("Generating report please wait...\n");
 
-  const filteredIssuedShares = sortBy(issuedShares, ["vestingDate"]).filter(excludeOptions);
+  // Create share balances for gain calculations from all issued shares
+  const sortedIssuedShares = sortBy(issuedShares, ["vestingDate"]);
+  const shareBalances: ShareBalance[] = sortedIssuedShares.map(share => ({
+    vesting: share,
+    remainingShares: share.vestedShares
+  }));
+  const shareBalancesByGrant = groupBy(shareBalances, (item) => item.vesting.grantNumber);
+
+  const filteredIssuedShares = sortedIssuedShares.filter(excludeOptions);
   const vestedSharesWithTax: VestedShareWithTax[] = await Promise.all(filteredIssuedShares.map(async share => {
     const date = format(share.vestingDate, "yyyy-MM-dd");
     const exchangeRate = await fetchExchangeRate(date, "USD");
     return {
       vesting: share,
-      balance: share.vestedShares,
       exchangeRate: exchangeRate,
       cost: round((share.vestedShares * share.stockPrice) / exchangeRate),
       incomeAmount: round((share.vestedShares * (share.stockPrice - share.exercisePrice)) / exchangeRate),
     };
   }));
-  const shareGroups = groupBy(vestedSharesWithTax, (item) => item.vesting.grantNumber);
 
-  const filteredSoldShares = sortBy(soldShares, ["orderDate"]);
-  const shareSalesWithTax: ShareSaleWithTax[] = await Promise.all(filteredSoldShares.map(async share => {
+  const sortedSoldShares = sortBy(soldShares, ["orderDate"]);
+  const shareSalesWithTax: ShareSaleWithTax[] = await Promise.all(sortedSoldShares.map(async share => {
+    // Calculate sale amount and fees
     const date = format(share.orderDate, "yyyy-MM-dd");
     const exchangeRate = await fetchExchangeRate(date, "USD");
+    const amount = round((share.sharesSold * share.salePrice) / exchangeRate);
+    const totalFeesInEur = round(share.totalFees / exchangeRate);
+
+    // Calculate cost basis using FIFO method
+    let remainingSharesToSell = share.sharesSold;
+    let totalCost = 0;
+
+    for (const shareBalance of shareBalancesByGrant[share.grantNumber]) {
+      if (shareBalance.remainingShares <= 0) continue;
+
+      const sharesToUse = Math.min(shareBalance.remainingShares, remainingSharesToSell);
+      const vestingDate = format(shareBalance.vesting.vestingDate, "yyyy-MM-dd");
+      const vestingExchangeRate = await fetchExchangeRate(vestingDate, "USD");
+      const costPerShare = round((shareBalance.vesting.stockPrice) / vestingExchangeRate);
+      const cost = round(sharesToUse * costPerShare);
+
+      shareBalance.remainingShares -= sharesToUse;
+      remainingSharesToSell -= sharesToUse;
+      totalCost += cost;
+
+      if (remainingSharesToSell <= 0) break;
+    }
+
+    if (remainingSharesToSell > 0) {
+      throw new Error(`Not enough shares available for grant ${share.grantNumber}. Attempted to sell ${share.sharesSold} shares but only ${share.sharesSold - remainingSharesToSell} were available.`);
+    }
+
+    // Calculate final gain
+    const gain = round(amount - totalFeesInEur - totalCost);
+
     return {
       sale: share,
       exchangeRate,
-      amount: round((share.sharesSold * share.salePrice) / exchangeRate),
-      totalFeesInEur: round(share.totalFees / exchangeRate),
-      cost: 0,
-      gain: 0,
+      amount,
+      totalFeesInEur,
+      cost: totalCost,
+      gain
     };
   }));
 
   // income by year
-  const incomeByYear: Record<number, YearlyIncome> = {};
-  for (const share of vestedSharesWithTax) {
+  const incomeByYear = vestedSharesWithTax.reduce((acc, share) => {
     const year = share.vesting.vestingDate.getFullYear();
-    if (incomeByYear[year] === undefined) {
-      incomeByYear[year] = {
-        total: 0,
-        shares: [],
-      };
+    if (!acc[year]) {
+      acc[year] = { total: 0, shares: [] };
     }
-
-    incomeByYear[year].total += share.incomeAmount!;
-    incomeByYear[year].shares.push(share);
-  }
+    acc[year].total += share.incomeAmount;
+    acc[year].shares.push(share);
+    return acc;
+  }, {} as Record<number, YearlyIncome>);
 
   // profit by year
-  const gainByYear: Record<number, YearlyGain> = {};
-  for (const transaction of shareSalesWithTax) {
+  const gainByYear = shareSalesWithTax.reduce((acc, transaction) => {
     const year = transaction.sale.orderDate.getFullYear();
-    if (gainByYear[year] === undefined) {
-      gainByYear[year] = {
-        total: 0,
-        transactions: [],
-      };
+    if (!acc[year]) {
+      acc[year] = { total: 0, transactions: [] };
     }
-
-    let gain = transaction.amount - transaction.totalFeesInEur;
-    let sharesSold = transaction.sale.sharesSold;
-
-    for (const share of shareGroups[transaction.sale.grantNumber]) {
-      const sharesToUse = Math.min(sharesSold, share.balance);
-      const costPerShare = share.cost / share.vesting.vestedShares;
-      const cost = round(costPerShare * sharesToUse);
-      
-      share.balance = share.balance - sharesToUse;
-      transaction.cost = transaction.cost + cost;
-      gain -= cost;
-      sharesSold -= sharesToUse;
-
-      if (sharesSold === 0) break;
-    }
-
-    if (sharesSold > 0) {
-      throw new Error(`Not enough shares available for grant ${transaction.sale.grantNumber}. Attempted to sell ${transaction.sale.sharesSold} shares but only ${transaction.sale.sharesSold - sharesSold} were available.`);
-    }
-
-    transaction.gain = gain;
-
-    gainByYear[year].total += transaction.gain;
-    gainByYear[year].transactions.push(transaction);
-  }
+    acc[year].total += transaction.gain;
+    acc[year].transactions.push(transaction);
+    return acc;
+  }, {} as Record<number, YearlyGain>);
 
   return {
+    shareBalancesByGrant,
     incomeByYear,
     gainByYear,
   };
-}; 
+} 

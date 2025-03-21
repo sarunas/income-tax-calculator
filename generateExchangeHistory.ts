@@ -4,7 +4,6 @@ import { eachDayOfInterval, formatISO } from "date-fns";
 import ratesJSON from "./rates.json" with { type: "json" };
 import { ExchangeRates } from "./lib/types";
 
-
 const currency = "USD";
 
 const args = process.argv.slice(2);
@@ -19,14 +18,14 @@ const days = eachDayOfInterval({
   end: new Date(year, 11, 31),
 }).map((day) => formatISO(day, { representation: "date" }));
 
-const run = async (): Promise<void> => {
+async function run(): Promise<void> {
   for (const day of days) {
     const rate = await fetchExchangeRate(day, currency);
     (ratesJSON as ExchangeRates)[day] = rate;
     console.log(day, rate);
     await new Promise((resolve) => setTimeout(resolve, 1000));
   }
-};
+}
 
 run().then(() => {
   fs.writeFileSync("rates.json", JSON.stringify(ratesJSON, null, 2));

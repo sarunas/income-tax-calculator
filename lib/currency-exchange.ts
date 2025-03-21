@@ -4,7 +4,7 @@ import fetch from "node-fetch";
 const LB_EXCHANGE_PAGE_URL =
   "https://www.lb.lt/lt/kasdien-skelbiami-euro-ir-uzsienio-valiutu-santykiai-skelbia-europos-centrinis-bankas?class=Eu&type=day&selected_curr={currency}&date_day={date}";
 
-export const fetchExchangeRate = async (date: string, currency: string): Promise<number> => {
+export async function fetchExchangeRate(date: string, currency: string): Promise<number> {
   const url = LB_EXCHANGE_PAGE_URL.replace("{currency}", currency.toUpperCase()).replace("{date}", date);
 
   try {
@@ -29,4 +29,4 @@ export const fetchExchangeRate = async (date: string, currency: string): Promise
     }
     throw error;
   }
-}; 
+} 

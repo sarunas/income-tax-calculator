@@ -14,6 +14,60 @@ describe(generateReport, () => {
 
     const report = await generateReport(issuedShares, [], () => Promise.resolve(1));
     expect(report).toEqual({
+      shareBalancesByGrant: {
+        "1111": [
+          {
+            vesting: {
+              grantDate: new Date("2020-01-01T00:00:00.000Z"),
+              grantNumber: "1111",
+              grantType: "RSU",
+              vestingDate: new Date("2020-06-01T00:00:00.000Z"),
+              vestedShares: 10,
+              stockPrice: 100,
+              exercisePrice: 0,
+            },
+            remainingShares: 10,
+          },
+          {
+            vesting: {
+              grantDate: new Date("2020-01-01T00:00:00.000Z"),
+              grantNumber: "1111",
+              grantType: "RSU",
+              vestingDate: new Date("2023-06-01T00:00:00.000Z"),
+              vestedShares: 10,
+              stockPrice: 100,
+              exercisePrice: 0,
+            },
+            remainingShares: 10,
+          },
+        ],
+        "2222": [
+          {
+            vesting: {
+              grantDate: new Date("2020-02-02T00:00:00.000Z"),
+              grantNumber: "2222",
+              grantType: "RSU",
+              vestingDate: new Date("2020-06-01T00:00:00.000Z"),
+              vestedShares: 10,
+              stockPrice: 100,
+              exercisePrice: 0,
+            },
+            remainingShares: 10,
+          },
+          {
+            vesting: {
+              grantDate: new Date("2020-02-02T00:00:00.000Z"),
+              grantNumber: "2222",
+              grantType: "RSU",
+              vestingDate: new Date("2023-06-01T00:00:00.000Z"),
+              vestedShares: 10,
+              stockPrice: 100,
+              exercisePrice: 0,
+            },
+            remainingShares: 10,
+          },
+        ],
+      },
       incomeByYear: {
         2020: {
           total: 2000,
@@ -28,7 +82,6 @@ describe(generateReport, () => {
                 stockPrice: 100,
                 exercisePrice: 0,
               },
-              balance: 10,
               exchangeRate: 1,
               cost: 1000,
               incomeAmount: 1000,
@@ -43,7 +96,6 @@ describe(generateReport, () => {
                 stockPrice: 100,
                 exercisePrice: 0,
               },
-              balance: 10,
               exchangeRate: 1,
               cost: 1000,
               incomeAmount: 1000,
@@ -63,7 +115,6 @@ describe(generateReport, () => {
                 stockPrice: 100,
                 exercisePrice: 0,
               },
-              balance: 10,
               exchangeRate: 1,
               cost: 1000,
               incomeAmount: 1000,
@@ -99,7 +150,7 @@ describe(generateReport, () => {
     expect(sale.gain).toBe(90); // 600 - 10 - 500
 
     // Verify remaining balance
-    expect(report.incomeByYear[2020].shares[0].balance).toBe(5); // 10 - 5
+    expect(report.shareBalancesByGrant["1111"][0].remainingShares).toBe(5); // 10 - 5
   });
 
   it("should throw error when trying to sell more shares than available", async () => {

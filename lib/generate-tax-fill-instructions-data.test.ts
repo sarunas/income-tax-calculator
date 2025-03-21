@@ -7,6 +7,7 @@ describe("generateTaxFillInstructionsData", () => {
 
   it("should generate tax instructions for income only", () => {
     const report: Report = {
+      shareBalancesByGrant: {},
       incomeByYear: {
         2020: {
           total: 1000,
@@ -33,6 +34,7 @@ describe("generateTaxFillInstructionsData", () => {
 
   it("should generate tax instructions for gains only", () => {
     const report: Report = {
+      shareBalancesByGrant: {},
       incomeByYear: {},
       gainByYear: {
         2020: {
@@ -95,6 +97,7 @@ describe("generateTaxFillInstructionsData", () => {
 
   it("should generate tax instructions for both income and gains", () => {
     const report: Report = {
+      shareBalancesByGrant: {},
       incomeByYear: {
         2020: {
           total: 1000,
@@ -162,6 +165,7 @@ describe("generateTaxFillInstructionsData", () => {
 
   it("should handle splitting gains with partner", () => {
     const report: Report = {
+      shareBalancesByGrant: {},
       incomeByYear: {},
       gainByYear: {
         2020: {
@@ -224,6 +228,7 @@ describe("generateTaxFillInstructionsData", () => {
 
   it("should handle current year with different heading", () => {
     const report: Report = {
+      shareBalancesByGrant: {},
       incomeByYear: {
         [currentYear]: {
           total: 1000,

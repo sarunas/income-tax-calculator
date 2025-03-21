@@ -24,7 +24,6 @@ export interface SoldShare {
 // Tax calculation types
 export interface VestedShareWithTax {
   vesting: IssuedShare;
-  balance: number;
   exchangeRate: number;
   cost: number;
   incomeAmount: number;
@@ -40,6 +39,11 @@ export interface ShareSaleWithTax {
 }
 
 // Shared types
+export interface ShareBalance {
+  vesting: IssuedShare;
+  remainingShares: number;
+}
+
 export interface YearlyIncome {
   total: number;
   shares: VestedShareWithTax[];
@@ -51,6 +55,7 @@ export interface YearlyGain {
 }
 
 export interface Report {
+  shareBalancesByGrant: Record<string, ShareBalance[]>;
   incomeByYear: Record<number, YearlyIncome>;
   gainByYear: Record<number, YearlyGain>;
 }

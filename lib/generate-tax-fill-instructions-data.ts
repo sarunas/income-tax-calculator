@@ -1,11 +1,11 @@
 import { get, uniq, concat, keys } from "lodash-es";
 import { round } from "./round";
-import { Report, TaxInstructions, SoldShareTax } from "./types";
+import { Report, TaxInstructions, ShareSaleWithTax } from "./types";
 
-export const generateTaxFillInstructionsData = (
+export function generateTaxFillInstructionsData(
   report: Report,
   splitGainWithPartner = false,
-): TaxInstructions => {
+): TaxInstructions {
   const currentYear = new Date().getFullYear();
   const years = uniq(concat(keys(report.incomeByYear), keys(report.gainByYear))).sort().map(Number);
   const instructions: TaxInstructions = {};
@@ -21,11 +21,11 @@ export const generateTaxFillInstructionsData = (
       value: get(report.incomeByYear, `[${year}].total`, 0),
     };
 
-    const f1 = get(report.gainByYear, `[${year}].transactions`, []).reduce((result: number, transaction: SoldShareTax) => {
+    const f1 = get(report.gainByYear, `[${year}].transactions`, []).reduce((result: number, transaction: ShareSaleWithTax) => {
       return result + transaction.amount;
     }, 0);
 
-    const f2 = get(report.gainByYear, `[${year}].transactions`, []).reduce((result: number, transaction: SoldShareTax) => {
+    const f2 = get(report.gainByYear, `[${year}].transactions`, []).reduce((result: number, transaction: ShareSaleWithTax) => {
       return result + transaction.cost + transaction.totalFeesInEur;
     }, 0);
 
@@ -54,4 +54,4 @@ export const generateTaxFillInstructionsData = (
   }
 
   return instructions;
-}; 
+} 

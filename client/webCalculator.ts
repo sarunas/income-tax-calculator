@@ -18,7 +18,7 @@ if (!issuedArea || !soldArea || !calculateButton || !splitCheckbox || !report) {
 }
 
 // Helper function to create HTML elements
-const h = (tag: string, contents: string | HTMLElement | (string | HTMLElement)[]): HTMLElement => {
+function h(tag: string, contents: string | HTMLElement | (string | HTMLElement)[]): HTMLElement {
   const element = document.createElement(tag);
   if (isArray(contents)) {
     contents.forEach((item) => element.append(item));
@@ -26,7 +26,7 @@ const h = (tag: string, contents: string | HTMLElement | (string | HTMLElement)[
     element.append(contents);
   }
   return element;
-};
+}
 
 // Render the tax report
 const renderReport = (data: Array<{ heading: string; fields: Array<{ name: string; value?: number; subfields?: Array<{ name: string; value: number }> }> }>): void => {
