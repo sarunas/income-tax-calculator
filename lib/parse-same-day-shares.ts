@@ -1,8 +1,9 @@
-import { trim, uniqBy } from "lodash";
-import { parseDate } from "./parse-date.js";
+import { trim, uniqBy } from "lodash-es";
+import { parseDate } from "./parse-date";
+import { SoldShare } from "./types";
 
-export function parseSameDayShares(content) {
-  const result = [];
+export function parseSameDayShares(content: string): SoldShare[] {
+  const result: SoldShare[] = [];
   const lines = trim(content)
     .split(/[\n\r]+/)
     .filter((line) => line.includes("Same Day Sell"))
@@ -43,4 +44,4 @@ export function parseSameDayShares(content) {
   return uniqBy(result, ({ orderNumber }) => {
     return orderNumber;
   });
-}
+} 

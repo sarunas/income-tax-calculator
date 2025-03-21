@@ -1,8 +1,9 @@
-import { trim, uniqBy } from "lodash";
-import { parseDate } from "./parse-date.js";
+import { trim, uniqBy } from "lodash-es";
+import { parseDate } from "./parse-date";
+import { SoldShare } from "./types";
 
-export function parseSoldShares(content) {
-  const result = [];
+export function parseSoldShares(content: string): SoldShare[] {
+  const result: SoldShare[] = [];
   const lines = trim(content)
     .replace(/Sell of Restricted Stock /g, "")
     .replace(/Sell of Stock /g, "")
@@ -44,4 +45,4 @@ export function parseSoldShares(content) {
   return uniqBy(result, ({ orderNumber }) => {
     return orderNumber;
   });
-}
+} 

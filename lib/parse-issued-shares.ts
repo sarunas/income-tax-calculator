@@ -1,8 +1,9 @@
-import { trim, uniqBy } from "lodash";
-import { parseDate } from "./parse-date.js";
+import { trim, uniqBy } from "lodash-es";
+import { parseDate } from "./parse-date";
+import { IssuedShare } from "./types";
 
-export function parseIssuedShares(content) {
-  const result = [];
+export function parseIssuedShares(content: string): IssuedShare[] {
+  const result: IssuedShare[] = [];
   const lines = trim(content)
     .split(/[\n\r]+/)
     .filter((line) => line);

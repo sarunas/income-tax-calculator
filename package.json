@@ -4,21 +4,23 @@
   "version": "1.1.0",
   "description": "",
   "scripts": {
-    "calc": "node terminal.js",
+    "calc": "tsx terminal.ts",
     "calc:split": "npm run calc split-gain",
     "test": "vitest run",
     "test:watch": "vitest",
-    "fetch-rates": "TZ=utc node generateExchangeHistory.js",
+    "fetch-rates": "TZ=utc tsx generate-exchange-history.ts",
     "build": "parcel build ./client/index.html --public-url ./",
     "start": "parcel ./client/index.html",
-    "deploy": "git subtree push --prefix dist origin gh-pages"
+    "deploy": "git subtree push --prefix dist origin gh-pages",
+    "type-check": "tsc --noEmit",
+    "lint": "eslint . --ext .ts",
+    "lint:fix": "eslint . --ext .ts --fix"
   },
   "author": "Šarūnas Dubinskas <sarunas.dubinskas@gmail.com>",
   "license": "MIT",
   "dependencies": {
     "date-fns": "^4.1.0",
-    "lodash": "^4.17.21",
-    "moment": "^2.30.1",
+    "lodash-es": "^4.17.21",
     "node-fetch": "^3.3.2",
     "parcel": "2.13.3"
   },
@@ -26,6 +28,13 @@
     "last 1 Chrome versions"
   ],
   "devDependencies": {
+    "@types/lodash-es": "^4.17.12",
+    "@types/node": "^20.11.24",
+    "@typescript-eslint/eslint-plugin": "^7.0.1",
+    "@typescript-eslint/parser": "^7.0.1",
+    "eslint": "^8.56.0",
+    "tsx": "^4.7.1",
+    "typescript": "^5.3.3",
     "vitest": "^3.0.8"
   }
 }
