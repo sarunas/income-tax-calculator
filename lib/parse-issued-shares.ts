@@ -1,4 +1,4 @@
-import { trim, uniqBy } from "lodash-es";
+import { trim, uniqBy } from "lodash";
 import { parseDate } from "./parse-date";
 import { IssuedShare } from "./types";
 

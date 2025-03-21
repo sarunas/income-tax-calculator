@@ -1,4 +1,4 @@
-import { trim, uniqBy } from "lodash-es";
+import { trim, uniqBy } from "lodash";
 import { parseDate } from "./parse-date";
 import { SoldShare } from "./types";
 
@@ -45,4 +45,4 @@ export function parseSoldShares(content: string): SoldShare[] {
   return uniqBy(result, ({ orderNumber }) => {
     return orderNumber;
   });
-} 
+}
