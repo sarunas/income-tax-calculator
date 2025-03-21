@@ -1,47 +1,7 @@
 import moment from "moment";
 import { round } from "./round.js";
 import _ from "lodash";
-
-interface IssuedShare {
-  grantDate: Date;
-  vestingDate: Date;
-  vestedShares: number;
-  stockPrice: number;
-  exercisePrice: number;
-  grantNumber: string;
-  balance?: number;
-  exchangeRate?: number;
-  cost?: number;
-  incomeAmount?: number;
-}
-
-interface SoldShare {
-  orderDate: Date;
-  sharesSold: number;
-  salePrice: number;
-  totalFees: number;
-  grantNumber: string;
-  exchangeRate?: number;
-  amount?: number;
-  totalFeesInEur?: number;
-  cost?: number;
-  gain?: number;
-}
-
-interface YearlyIncome {
-  total: number;
-  shares: IssuedShare[];
-}
-
-interface YearlyGain {
-  total: number;
-  transactions: SoldShare[];
-}
-
-interface Report {
-  incomeByYear: Record<number, YearlyIncome>;
-  gainByYear: Record<number, YearlyGain>;
-}
+import { IssuedShare, SoldShare, SoldShareTax, Report, IssuedShareTax, YearlyIncome, YearlyGain } from "./types";
 
 const excludeOptions = (share: IssuedShare): boolean => {
   const grantDate = moment(share.grantDate);
@@ -52,28 +12,38 @@ const excludeOptions = (share: IssuedShare): boolean => {
 export const generateReport = async (
   issuedShares: IssuedShare[],
   soldShares: SoldShare[],
-  fetchExchangeRate: (date: string, currency: string) => Promise<number>
+  fetchExchangeRate: (date: string, currency: string) => Promise<number>,
 ): Promise<Report> => {
   console.log("Generating report please wait...\n");
-  const issuedSharesSortedByDate = _.sortBy(issuedShares, ["vestingDate"]).filter(excludeOptions);
-  for (const share of issuedSharesSortedByDate) {
-    const date = moment(share.vestingDate).format("YYYY-MM-DD");
-    share.balance = share.vestedShares;
-    share.exchangeRate = await fetchExchangeRate(date, "USD");
-    share.cost = round((share.vestedShares * share.stockPrice) / share.exchangeRate!);
-    share.incomeAmount = round((share.vestedShares * (share.stockPrice - share.exercisePrice)) / share.exchangeRate!);
+
+  const issuedSharesSortedByDate: IssuedShareTax[] = [];
+  for (const share of _.sortBy(issuedShares, ["vestingDate"]).filter(excludeOptions)) {
+    const exchangeRate = await fetchExchangeRate(moment(share.vestingDate).format("YYYY-MM-DD"), "USD");
+    issuedSharesSortedByDate.push({
+      ...share,
+      balance: share.vestedShares,
+      exchangeRate: exchangeRate,
+      cost: round((share.vestedShares * share.stockPrice) / exchangeRate),
+      incomeAmount: round((share.vestedShares * (share.stockPrice - share.exercisePrice)) / exchangeRate),
+    });
   }
 
   const shareGroups = _(issuedSharesSortedByDate)
     .groupBy((item) => item.grantNumber)
     .value();
 
-  const soldSharesSortedByDate = _.sortBy(soldShares, ["orderDate"]);
-  for (const transaction of soldSharesSortedByDate) {
+  const soldSharesSortedByDate: SoldShareTax[] = [];
+  for (const transaction of _.sortBy(soldShares, ["orderDate"])) {
     const date = moment(transaction.orderDate).format("YYYY-MM-DD");
-    transaction.exchangeRate = await fetchExchangeRate(date, "USD");
-    transaction.amount = round((transaction.sharesSold * transaction.salePrice) / transaction.exchangeRate!);
-    transaction.totalFeesInEur = round(transaction.totalFees / transaction.exchangeRate!);
+    const exchangeRate = await fetchExchangeRate(date, "USD");
+    soldSharesSortedByDate.push({
+      ...transaction,
+      exchangeRate,
+      amount: round((transaction.sharesSold * transaction.salePrice) / exchangeRate),
+      totalFeesInEur: round(transaction.totalFees / exchangeRate),
+      cost: 0,
+      gain: 0,
+    });
   }
 
   // income by year

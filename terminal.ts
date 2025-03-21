@@ -5,24 +5,7 @@ import { parseSoldShares } from "./lib/parse-sold-shares";
 import { generateReport } from "./lib/generate-report";
 import { generateTaxFillInstructionsData } from "./lib/generate-tax-fill-instructions-data";
 import { fetchExchangeRateCached } from "./lib/fetch-exchange-rate-cached";
-
-interface TaxField {
-  name: string;
-  value?: number;
-  subfields?: {
-    name: string;
-    value: number;
-  }[];
-}
-
-interface YearInstructions {
-  heading: string;
-  fields: TaxField[];
-}
-
-interface TaxInstructions {
-  [year: number]: YearInstructions;
-}
+import { TaxInstructions } from "./lib/types";
 
 const outputInstructionsToConsole = (instructions: TaxInstructions): void => {
   const years = Object.keys(instructions).map(Number);
@@ -59,7 +42,7 @@ try {
       vestedShares: entry.sharesSold,
       stockPrice: entry.salePrice,
       exercisePrice: entry.exercisePrice,
-    })
+    }),
   );
 
   const shouldSplit = process.argv.includes("split-gain");

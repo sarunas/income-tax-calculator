@@ -12,7 +12,9 @@
     "build": "parcel build ./client/index.html --public-url ./",
     "start": "parcel ./client/index.html",
     "deploy": "git subtree push --prefix dist origin gh-pages",
-    "type-check": "tsc --noEmit"
+    "type-check": "tsc --noEmit",
+    "lint": "eslint . --ext .ts",
+    "lint:fix": "eslint . --ext .ts --fix"
   },
   "author": "Šarūnas Dubinskas <sarunas.dubinskas@gmail.com>",
   "license": "MIT",
@@ -30,6 +32,9 @@
     "@types/lodash": "^4.14.202",
     "@types/node": "^20.11.24",
     "@types/node-fetch": "^2.6.11",
+    "@typescript-eslint/eslint-plugin": "^7.0.1",
+    "@typescript-eslint/parser": "^7.0.1",
+    "eslint": "^8.56.0",
     "tsx": "^4.7.1",
     "typescript": "^5.3.3",
     "vitest": "^3.0.8"

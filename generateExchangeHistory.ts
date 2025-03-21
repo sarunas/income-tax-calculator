@@ -2,10 +2,8 @@ import fs from "fs";
 import { fetchExchangeRate } from "./lib/currency-exchange";
 import { eachDayOfInterval, formatISO } from "date-fns";
 import ratesJSON from "./rates.json" with { type: "json" };
+import { ExchangeRates } from "./lib/types";
 
-interface ExchangeRates {
-  [date: string]: number;
-}
 
 const currency = "USD";
 

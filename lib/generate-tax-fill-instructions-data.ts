@@ -1,68 +1,10 @@
 import { get, uniq, concat, keys } from "lodash";
 import { round } from "./round";
-
-interface IssuedShare {
-  grantDate: Date;
-  vestingDate: Date;
-  vestedShares: number;
-  stockPrice: number;
-  exercisePrice: number;
-  grantNumber: string;
-  balance?: number;
-  exchangeRate?: number;
-  cost?: number;
-  incomeAmount?: number;
-}
-
-interface SoldShare {
-  orderDate: Date;
-  sharesSold: number;
-  salePrice: number;
-  totalFees: number;
-  grantNumber: string;
-  exchangeRate?: number;
-  amount?: number;
-  totalFeesInEur?: number;
-  cost?: number;
-  gain?: number;
-}
-
-interface YearlyIncome {
-  total: number;
-  shares: IssuedShare[];
-}
-
-interface YearlyGain {
-  total: number;
-  transactions: SoldShare[];
-}
-
-interface Report {
-  incomeByYear: Record<number, YearlyIncome>;
-  gainByYear: Record<number, YearlyGain>;
-}
-
-interface TaxField {
-  name: string;
-  value?: number;
-  subfields?: {
-    name: string;
-    value: number;
-  }[];
-}
-
-interface YearInstructions {
-  heading: string;
-  fields: TaxField[];
-}
-
-interface TaxInstructions {
-  [year: number]: YearInstructions;
-}
+import { Report, TaxInstructions, SoldShareTax } from "./types";
 
 export const generateTaxFillInstructionsData = (
   report: Report,
-  splitGainWithPartner = false
+  splitGainWithPartner = false,
 ): TaxInstructions => {
   const currentYear = new Date().getFullYear();
   const years = uniq(concat(keys(report.incomeByYear), keys(report.gainByYear))).sort().map(Number);
@@ -79,15 +21,12 @@ export const generateTaxFillInstructionsData = (
       value: get(report.incomeByYear, `[${year}].total`, 0),
     };
 
-    const f1 = get(report.gainByYear, `[${year}].transactions`, []).reduce((result: number, transaction) => {
-      result += transaction.amount!;
-      return result;
+    const f1 = get(report.gainByYear, `[${year}].transactions`, []).reduce((result: number, transaction: SoldShareTax) => {
+      return result + transaction.amount;
     }, 0);
 
-    const f2 = get(report.gainByYear, `[${year}].transactions`, []).reduce((result: number, transaction) => {
-      result += transaction.cost!;
-      result += transaction.totalFeesInEur!;
-      return result;
+    const f2 = get(report.gainByYear, `[${year}].transactions`, []).reduce((result: number, transaction: SoldShareTax) => {
+      return result + transaction.cost + transaction.totalFeesInEur;
     }, 0);
 
     const finalF1 = splitGainWithPartner ? round(f1 / 2) : f1;

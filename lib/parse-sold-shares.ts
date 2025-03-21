@@ -1,17 +1,6 @@
 import { trim, uniqBy } from "lodash";
 import { parseDate } from "./parse-date.js";
-
-interface SoldShare {
-  orderNumber: string;
-  grantNumber: string;
-  grantDate: Date;
-  grantType: string;
-  orderDate: Date;
-  sharesSold: number;
-  salePrice: number;
-  exercisePrice: number;
-  totalFees: number;
-}
+import { SoldShare } from "./types";
 
 export function parseSoldShares(content: string): SoldShare[] {
   const result: SoldShare[] = [];
