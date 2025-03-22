@@ -1,123 +1,99 @@
-import { isArray } from "lodash-es";
 import { fetchExchangeRateCached } from "../lib/fetch-exchange-rate-cached";
 import { generateReport } from "../lib/generate-report";
 import { parseIssuedShares } from "../lib/parse-issued-shares";
 import { parseSameDayShares } from "../lib/parse-same-day-shares";
 import { parseSoldShares } from "../lib/parse-sold-shares";
 import { generateTaxFillInstructionsData } from "../lib/generate-tax-fill-instructions-data";
-import type { YearInstructions } from "../lib/types";
+import type { YearInstructions, TaxField } from "../lib/types";
 
 // DOM Elements
 const issuedArea = document.querySelector<HTMLTextAreaElement>("#issued");
 const soldArea = document.querySelector<HTMLTextAreaElement>("#sold");
 const calculateButton = document.querySelector<HTMLButtonElement>("#calculate");
 const splitCheckbox = document.querySelector<HTMLInputElement>("#split");
-const report = document.querySelector<HTMLDivElement>("#report");
+const reportElement = document.querySelector<HTMLDivElement>("#report");
 
-if (!issuedArea || !soldArea || !calculateButton || !splitCheckbox || !report) {
+if (!issuedArea || !soldArea || !calculateButton || !splitCheckbox || !reportElement) {
   throw new Error("Required DOM elements not found");
 }
 
-// Helper function to create HTML elements
-function h(tag: string, contents: string | HTMLElement | (string | HTMLElement)[]): HTMLElement {
-  const element = document.createElement(tag);
-  if (isArray(contents)) {
-    contents.forEach((item) => element.append(item));
-  } else {
-    element.append(contents);
-  }
-  return element;
-}
-
-// Format number with 2 decimal places
-function formatNumber(num: number): string {
-  return num.toFixed(2);
-}
-
-// Render the tax report
-const renderReport = (data: YearInstructions[]): void => {
-  report.innerHTML = "";
+// Helper function for creating HTML elements
+const h = (tag: string, attrs: Record<string, string> = {}, children: string | string[] = []): string => {
+  const attrsString = Object.entries(attrs)
+    .map(([key, value]) => `${key}="${value}"`)
+    .join(' ');
   
-  data.forEach(({ heading, fields }) => {
-    const yearSection = h("div", [
-      h("h2", [
-        h("span", heading),
-        h("span", " Tax Information")
-      ])
-    ]);
-    yearSection.className = "mb-8 last:mb-0";
+  const childrenString = typeof children === 'string' 
+    ? children 
+    : children.join('');
 
-    const fieldsContainer = h("div", []);
-    fieldsContainer.className = "space-y-4 mt-4";
-
-    fields.forEach(({ name, value, subfields }) => {
-      const fieldElement = h("div", []);
-      fieldElement.className = "bg-gray-50 rounded-lg p-4";
-
-      if (value !== undefined) {
-        fieldElement.append(
-          h("div", [
-            h("span", name + ": "),
-            h("span", formatNumber(value) + " €")
-          ])
-        );
-      } else if (subfields) {
-        const subfieldsContainer = h("div", []);
-        subfieldsContainer.className = "space-y-2";
-        
-        subfields.forEach(({ name, value }) => {
-          subfieldsContainer.append(
-            h("div", [
-              h("span", name + ": "),
-              h("span", formatNumber(value) + " €")
-            ])
-          );
-        });
-        
-        fieldElement.append(subfieldsContainer);
-      }
-
-      fieldsContainer.append(fieldElement);
-    });
-
-    yearSection.append(fieldsContainer);
-    report.append(yearSection);
-  });
+  return `<${tag}${attrsString ? ' ' + attrsString : ''}>${childrenString}</${tag}>`;
 };
 
+// Format number with 2 decimal places
+const formatNumber = (value: number | undefined) => value?.toFixed(2) ?? '0.00';
+
+// Render the tax report
+function renderReport(data: YearInstructions[]): void {
+  if (!reportElement) return;
+
+  const renderField = (field: TaxField) => {
+    if (field.subfields) {
+      return h('div', { class: 'space-y-2' }, [
+        h('div', { class: 'font-medium text-gray-700' }, field.name),
+        h('div', { class: 'pl-4 space-y-2' }, 
+          field.subfields.map(subfield => 
+            h('div', { class: 'flex justify-between items-center bg-gray-50 p-2 rounded' }, [
+              h('span', { class: 'text-gray-600' }, subfield.name),
+              h('span', { class: 'font-medium' }, formatNumber(subfield.value))
+            ])
+          )
+        )
+      ]);
+    }
+    return h('div', { class: 'flex justify-between items-center bg-gray-50 p-2 rounded' }, [
+      h('span', { class: 'text-gray-600' }, field.name),
+      h('span', { class: 'font-medium' }, formatNumber(field.value))
+    ]);
+  };
+
+  reportElement.innerHTML = data.map(({ heading, fields }) => 
+    h('div', { class: 'mb-8' }, [
+      h('h2', { class: 'text-xl font-semibold text-primary mb-4' }, heading),
+      h('div', { class: 'space-y-4' }, 
+        fields.map(field => renderField(field))
+      )
+    ])
+  ).join('');
+}
+
 // Event listener for calculate button
-calculateButton.addEventListener("click", () => {
-  if (!issuedArea.value && !soldArea.value) {
-    alert("Please enter issued and sold shares");
-    return;
+calculateButton.addEventListener("click", async () => {
+  try {
+    const issuedShares = parseIssuedShares(issuedArea.value);
+    const soldShares = parseSoldShares(soldArea.value);
+    const sameDayShares = parseSameDayShares(soldArea.value);
+
+    sameDayShares.forEach((entry) =>
+      issuedShares.push({
+        grantDate: entry.grantDate,
+        grantNumber: entry.grantNumber,
+        grantType: entry.grantType,
+        vestingDate: entry.orderDate,
+        vestedShares: entry.sharesSold,
+        stockPrice: entry.salePrice,
+        exercisePrice: entry.exercisePrice,
+      }),
+    );
+
+    const report = await generateReport(issuedShares, soldShares, fetchExchangeRateCached);
+    const taxInstructions = generateTaxFillInstructionsData(report, splitCheckbox.checked);
+    renderReport(Object.values(taxInstructions).reverse());
+  } catch (error) {
+    console.error("Error generating report:", error);
+    if (!reportElement) return;
+    reportElement.innerHTML = h('div', { class: 'bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded' }, 
+      `Error: ${error instanceof Error ? error.message : 'Unknown error'}`
+    );
   }
-
-  const soldShares = parseSoldShares(soldArea.value);
-  const sameDayShares = parseSameDayShares(soldArea.value);
-  const issuedShares = parseIssuedShares(issuedArea.value);
-
-  // Convert same day shares to issued shares format
-  sameDayShares.forEach((entry) =>
-    issuedShares.push({
-      grantDate: entry.grantDate,
-      grantNumber: entry.grantNumber,
-      grantType: entry.grantType,
-      vestingDate: entry.orderDate,
-      vestedShares: entry.sharesSold,
-      stockPrice: entry.salePrice,
-      exercisePrice: entry.exercisePrice,
-    }),
-  );
-
-  const shouldSplit = splitCheckbox.checked;
-
-  generateReport(issuedShares, soldShares, fetchExchangeRateCached)
-    .then((report) => {
-      const taxInstructions = generateTaxFillInstructionsData(report, shouldSplit);
-      renderReport(Object.values(taxInstructions).reverse());
-    })
-    .catch((error) => {
-      console.error("Error generating report:", error);
-      alert("An error occurred while generating the report. Please check the console for details.");
-    });
 }); 
