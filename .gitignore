@@ -68,3 +68,4 @@ typings/
 /shares-sold.txt
 /.cache/
 /.parcel-cache
+.DS_Store
