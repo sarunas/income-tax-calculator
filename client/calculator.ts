@@ -5,6 +5,7 @@ import { parseIssuedShares } from "../lib/parse-issued-shares";
 import { parseSameDayShares } from "../lib/parse-same-day-shares";
 import { parseSoldShares } from "../lib/parse-sold-shares";
 import { generateTaxFillInstructionsData } from "../lib/generate-tax-fill-instructions-data";
+import { YearInstructions } from "../lib/types";
 
 // DOM Elements
 const issuedArea = document.querySelector<HTMLTextAreaElement>("#issued");
@@ -29,7 +30,7 @@ function h(tag: string, contents: string | HTMLElement | (string | HTMLElement)[
 }
 
 // Render the tax report
-const renderReport = (data: Array<{ heading: string; fields: Array<{ name: string; value?: number; subfields?: Array<{ name: string; value: number }> }> }>): void => {
+const renderReport = (data: YearInstructions[]): void => {
   report.innerHTML = "";
   data.forEach(({ heading, fields }) => {
     report.append(h("h2", heading));
@@ -55,6 +56,7 @@ calculateButton.addEventListener("click", () => {
   const sameDayShares = parseSameDayShares(soldArea.value);
   const issuedShares = parseIssuedShares(issuedArea.value);
 
+  // Convert same day shares to issued shares format
   sameDayShares.forEach((entry) =>
     issuedShares.push({
       grantDate: entry.grantDate,
@@ -71,8 +73,8 @@ calculateButton.addEventListener("click", () => {
 
   generateReport(issuedShares, soldShares, fetchExchangeRateCached)
     .then((report) => {
-      const data = generateTaxFillInstructionsData(report, shouldSplit);
-      renderReport(Object.values(data).reverse());
+      const taxInstructions = generateTaxFillInstructionsData(report, shouldSplit);
+      renderReport(Object.values(taxInstructions).reverse());
     })
     .catch((error) => {
       console.error("Error generating report:", error);

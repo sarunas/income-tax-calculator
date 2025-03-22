@@ -61,7 +61,7 @@ export interface Report {
 }
 
 // Tax instructions types
-interface TaxField {
+export interface TaxField {
   name: string;
   value?: number;
   subfields?: {
@@ -70,7 +70,7 @@ interface TaxField {
   }[];
 }
 
-interface YearInstructions {
+export interface YearInstructions {
   heading: string;
   fields: TaxField[];
 }
