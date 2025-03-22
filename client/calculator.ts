@@ -6,22 +6,6 @@ import { parseSoldShares } from "../lib/parse-sold-shares";
 import { generateTaxFillInstructionsData } from "../lib/generate-tax-fill-instructions-data";
 import type { YearInstructions, TaxField } from "../lib/types";
 
-// CSS Classes configuration
-const classes = {
-  container: {
-    main: 'mb-8',
-    field: 'flex justify-between pr-2',
-    fieldWithSubfields: 'space-y-2',
-    fieldLabel: 'font-medium text-gray-700',
-    fieldValue: 'font-medium',
-    subfields: 'pl-4 space-y-2',
-    subfield: 'flex justify-between items-center bg-gray-50 p-2 rounded-sm',
-    heading: 'text-xl font-semibold text-primary mb-4',
-    fieldsContainer: 'space-y-4',
-  },
-  error: 'bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-sm',
-} as const;
-
 // DOM Elements
 const issuedArea = document.querySelector<HTMLTextAreaElement>("#issued");
 const soldArea = document.querySelector<HTMLTextAreaElement>("#sold");
@@ -33,70 +17,64 @@ if (!issuedArea || !soldArea || !calculateButton || !splitCheckbox || !reportEle
   throw new Error("Required DOM elements not found");
 }
 
-// Helper function for creating HTML elements
-const h = (tag: string, attrs: Record<string, string> = {}, children: string | string[] = []): string => {
-  const attrsString = Object.entries(attrs)
-    .map(([key, value]) => `${key}="${value}"`)
-    .join(' ');
-  
-  const childrenString = typeof children === 'string' 
-    ? children 
-    : children.join('');
-
-  return `<${tag}${attrsString ? ' ' + attrsString : ''}>${childrenString}</${tag}>`;
-};
-
 // Format number with 2 decimal places
 const formatNumber = (value: number | undefined) => value?.toFixed(2) ?? '0.00';
 
-// Render the tax report
-function renderReport(data: YearInstructions[]): void {
-  if (!reportElement) return;
+// Render error message
+function renderError(message: string): string {
+  return `
+    <div class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-sm">
+      ${message}
+    </div>
+  `;
+}
 
+// Render the tax report
+function renderReport(data: YearInstructions[]): string {
   const renderField = (field: TaxField) => {
     if (field.subfields) {
-      return h('div', { class: classes.container.fieldWithSubfields }, [
-        h('div', { class: classes.container.fieldLabel }, field.name),
-        h('div', { class: classes.container.subfields }, 
-          field.subfields.map(subfield => 
-            h('div', { class: classes.container.subfield }, [
-              h('span', { class: classes.container.fieldLabel }, subfield.name),
-              h('span', { class: classes.container.fieldValue }, formatNumber(subfield.value))
-            ])
-          )
-        )
-      ]);
+      return `
+        <div class="space-y-2">
+          <div class="font-medium text-gray-700">${field.name}</div>
+          <div class="pl-4 space-y-2">
+            ${field.subfields.map(subfield => `
+              <div class="flex justify-between items-center bg-gray-50 p-2 rounded-sm">
+                <span class="font-medium text-gray-700">${subfield.name}</span>
+                <span class="font-medium">${formatNumber(subfield.value)}</span>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `;
     }
-    return h('div', { class: classes.container.field }, [
-      h('span', { class: classes.container.fieldLabel }, field.name),
-      h('span', { class: classes.container.fieldValue }, formatNumber(field.value))
-    ]);
+    return `
+      <div class="flex justify-between pr-2">
+        <span class="font-medium text-gray-700">${field.name}</span>
+        <span class="font-medium">${formatNumber(field.value)}</span>
+      </div>
+    `;
   };
 
-  reportElement.innerHTML = data.map(({ heading, fields }) => 
-    h('div', { class: classes.container.main }, [
-      h('h2', { class: classes.container.heading }, heading),
-      h('div', { class: classes.container.fieldsContainer }, 
-        fields.map(field => renderField(field))
-      )
-    ])
-  ).join('');
+  return data.map(({ heading, fields }) => `
+    <div class="mb-8">
+      <h2 class="text-xl font-semibold text-primary mb-4">${heading}</h2>
+      <div class="space-y-4">
+        ${fields.map(field => renderField(field)).join('')}
+      </div>
+    </div>
+  `).join('');
 }
 
 // Event listener for calculate button
 calculateButton.addEventListener("click", async () => {
   try {
     if (!issuedArea.value.trim()) {
-      reportElement.innerHTML = h('div', { class: classes.error }, 
-        'Please enter issued shares data'
-      );
+      reportElement.innerHTML = renderError('Please enter issued shares data');
       return;
     }
 
     if (!soldArea.value.trim()) {
-      reportElement.innerHTML = h('div', { class: classes.error }, 
-        'Please enter sold shares data'
-      );
+      reportElement.innerHTML = renderError('Please enter sold shares data');
       return;
     }
 
@@ -118,12 +96,9 @@ calculateButton.addEventListener("click", async () => {
 
     const report = await generateReport(issuedShares, soldShares, fetchExchangeRateCached);
     const taxInstructions = generateTaxFillInstructionsData(report, splitCheckbox.checked);
-    renderReport(Object.values(taxInstructions).reverse());
+    reportElement.innerHTML = renderReport(Object.values(taxInstructions).reverse());
   } catch (error) {
     console.error("Error generating report:", error);
-    if (!reportElement) return;
-    reportElement.innerHTML = h('div', { class: classes.error }, 
-      `Error: ${error instanceof Error ? error.message : 'Unknown error'}`
-    );
+    reportElement.innerHTML = renderError(`Error: ${error instanceof Error ? error.message : 'Unknown error'}`);
   }
 }); 
