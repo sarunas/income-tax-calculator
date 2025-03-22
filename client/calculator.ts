@@ -6,6 +6,22 @@ import { parseSoldShares } from "../lib/parse-sold-shares";
 import { generateTaxFillInstructionsData } from "../lib/generate-tax-fill-instructions-data";
 import type { YearInstructions, TaxField } from "../lib/types";
 
+// CSS Classes configuration
+const classes = {
+  container: {
+    main: 'mb-8',
+    field: 'flex justify-between pr-2',
+    fieldWithSubfields: 'space-y-2',
+    fieldLabel: 'font-medium text-gray-700',
+    fieldValue: 'font-medium',
+    subfields: 'pl-4 space-y-2',
+    subfield: 'flex justify-between items-center bg-gray-50 p-2 rounded',
+    heading: 'text-xl font-semibold text-primary mb-4',
+    fieldsContainer: 'space-y-4',
+  },
+  error: 'bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded',
+} as const;
+
 // DOM Elements
 const issuedArea = document.querySelector<HTMLTextAreaElement>("#issued");
 const soldArea = document.querySelector<HTMLTextAreaElement>("#sold");
@@ -39,28 +55,28 @@ function renderReport(data: YearInstructions[]): void {
 
   const renderField = (field: TaxField) => {
     if (field.subfields) {
-      return h('div', { class: 'space-y-2' }, [
-        h('div', { class: 'font-medium text-gray-700' }, field.name),
-        h('div', { class: 'pl-4 space-y-2' }, 
+      return h('div', { class: classes.container.fieldWithSubfields }, [
+        h('div', { class: classes.container.fieldLabel }, field.name),
+        h('div', { class: classes.container.subfields }, 
           field.subfields.map(subfield => 
-            h('div', { class: 'flex justify-between items-center bg-gray-50 p-2 rounded' }, [
-              h('span', { class: 'text-gray-600' }, subfield.name),
-              h('span', { class: 'font-medium' }, formatNumber(subfield.value))
+            h('div', { class: classes.container.subfield }, [
+              h('span', { class: classes.container.fieldLabel }, subfield.name),
+              h('span', { class: classes.container.fieldValue }, formatNumber(subfield.value))
             ])
           )
         )
       ]);
     }
-    return h('div', { class: 'flex justify-between pr-2' }, [
-      h('span', { class: 'font-medium text-gray-700' }, field.name),
-      h('span', { class: 'font-medium' }, formatNumber(field.value))
+    return h('div', { class: classes.container.field }, [
+      h('span', { class: classes.container.fieldLabel }, field.name),
+      h('span', { class: classes.container.fieldValue }, formatNumber(field.value))
     ]);
   };
 
   reportElement.innerHTML = data.map(({ heading, fields }) => 
-    h('div', { class: 'mb-8' }, [
-      h('h2', { class: 'text-xl font-semibold text-primary mb-4' }, heading),
-      h('div', { class: 'space-y-4' }, 
+    h('div', { class: classes.container.main }, [
+      h('h2', { class: classes.container.heading }, heading),
+      h('div', { class: classes.container.fieldsContainer }, 
         fields.map(field => renderField(field))
       )
     ])
@@ -71,14 +87,14 @@ function renderReport(data: YearInstructions[]): void {
 calculateButton.addEventListener("click", async () => {
   try {
     if (!issuedArea.value.trim()) {
-      reportElement.innerHTML = h('div', { class: 'bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded' }, 
+      reportElement.innerHTML = h('div', { class: classes.error }, 
         'Please enter issued shares data'
       );
       return;
     }
 
     if (!soldArea.value.trim()) {
-      reportElement.innerHTML = h('div', { class: 'bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded' }, 
+      reportElement.innerHTML = h('div', { class: classes.error }, 
         'Please enter sold shares data'
       );
       return;
@@ -106,7 +122,7 @@ calculateButton.addEventListener("click", async () => {
   } catch (error) {
     console.error("Error generating report:", error);
     if (!reportElement) return;
-    reportElement.innerHTML = h('div', { class: 'bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded' }, 
+    reportElement.innerHTML = h('div', { class: classes.error }, 
       `Error: ${error instanceof Error ? error.message : 'Unknown error'}`
     );
   }
