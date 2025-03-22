@@ -51,8 +51,8 @@ function renderReport(data: YearInstructions[]): void {
         )
       ]);
     }
-    return h('div', { class: 'flex justify-between items-center bg-gray-50 p-2 rounded' }, [
-      h('span', { class: 'text-gray-600' }, field.name),
+    return h('div', { class: 'flex justify-between pr-2' }, [
+      h('span', { class: 'font-medium text-gray-700' }, field.name),
       h('span', { class: 'font-medium' }, formatNumber(field.value))
     ]);
   };
@@ -70,6 +70,20 @@ function renderReport(data: YearInstructions[]): void {
 // Event listener for calculate button
 calculateButton.addEventListener("click", async () => {
   try {
+    if (!issuedArea.value.trim()) {
+      reportElement.innerHTML = h('div', { class: 'bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded' }, 
+        'Please enter issued shares data'
+      );
+      return;
+    }
+
+    if (!soldArea.value.trim()) {
+      reportElement.innerHTML = h('div', { class: 'bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded' }, 
+        'Please enter sold shares data'
+      );
+      return;
+    }
+
     const issuedShares = parseIssuedShares(issuedArea.value);
     const soldShares = parseSoldShares(soldArea.value);
     const sameDayShares = parseSameDayShares(soldArea.value);
