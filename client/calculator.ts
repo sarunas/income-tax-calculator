@@ -15,11 +15,11 @@ const classes = {
     fieldLabel: 'font-medium text-gray-700',
     fieldValue: 'font-medium',
     subfields: 'pl-4 space-y-2',
-    subfield: 'flex justify-between items-center bg-gray-50 p-2 rounded',
+    subfield: 'flex justify-between items-center bg-gray-50 p-2 rounded-sm',
     heading: 'text-xl font-semibold text-primary mb-4',
     fieldsContainer: 'space-y-4',
   },
-  error: 'bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded',
+  error: 'bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-sm',
 } as const;
 
 // DOM Elements
