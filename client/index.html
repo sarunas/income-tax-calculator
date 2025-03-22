@@ -1,18 +1,42 @@
 <!DOCTYPE html>
-
 <html lang="en">
-
 <head>
   <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Wix Lithuania Tax Calculator</title>
-  <link rel="stylesheet" href="styles.css?v=1.0" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+          },
+          colors: {
+            primary: '#2c3e50',
+            secondary: '#3498db',
+          }
+        }
+      }
+    }
+  </script>
 </head>
+<body class="bg-gray-50 min-h-screen">
+  <div class="max-w-5xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
+    <header class="text-center mb-12">
+      <h1 class="text-4xl font-semibold text-primary mb-2">Wix Lithuania Tax Calculator</h1>
+      <p class="text-lg text-gray-600">Calculate your Wix stock-related taxes for Lithuania</p>
+    </header>
 
-<body>
-  <h1>Wix Lithuania Tax Calculator</h1>
-  <h2>Calculate taxes</h2>
-  <label for="issued">Shares issued</label>
-  <textarea id="issued" placeholder="28/02/2019 ESPP13783 ESPP 28/02/2019 10 109.25 $ 92.86 $
+    <main>
+      <section class="bg-white rounded-lg shadow-sm p-6 mb-8">
+        <div class="space-y-6">
+          <div>
+            <label for="issued" class="block text-sm font-medium text-primary mb-2">Shares Issued</label>
+            <textarea 
+              id="issued" 
+              placeholder="28/02/2019 ESPP13783 ESPP 28/02/2019 10 109.25 $ 92.86 $
 31/08/2018 ESPP12256 ESPP 31/08/2018 10 111.10 $ 63.79 $
 31/08/2017 ESPP9013 ESPP 31/08/2017 10 65.10 $ 53.34 $
 28/02/2018 ESPP10925 ESPP 28/02/2018 10 75.05 $ 54.78 $
@@ -23,31 +47,78 @@
 14/06/2016 5535 RSU 14/09/2018 15 115.95 $ 0.00 $
 14/06/2016 5535 RSU 14/12/2018 15 87.20 $ 0.00 $
 14/06/2016 5535 RSU 14/03/2019 15 109.27 $ 0.00 $
-14/06/2016 5535 RSU 14/06/2017 50 70.50 $ 0.00 $"></textarea>
+14/06/2016 5535 RSU 14/06/2017 50 70.50 $ 0.00 $" 
+              class="w-full h-40 p-4 border border-gray-300 rounded-md focus:ring-2 focus:ring-secondary focus:border-secondary transition-colors font-mono text-sm"
+            ></textarea>
+          </div>
 
-  <label for="sold">Shares sold</label>
-  <textarea id="sold" placeholder="2729432 Sell of Stock ESPP13783 28/02/2019 ESPP 13/03/2019 10 108.44 $ 92.86 $ 8.29 $
+          <div>
+            <label for="sold" class="block text-sm font-medium text-primary mb-2">Shares Sold</label>
+            <textarea 
+              id="sold" 
+              placeholder="2729432 Sell of Stock ESPP13783 28/02/2019 ESPP 13/03/2019 10 108.44 $ 92.86 $ 8.29 $
 2575819 Sell of Stock ESPP12256 31/08/2018 ESPP 11/09/2018 8 111.60 $ 63.79 $ 10.11 $
 2215151 Sell of Stock ESPP9013 31/08/2017 ESPP 06/09/2017 7 66.00 $ 53.34 $ 5.77 $
 2365868 Sell of Stock ESPP10925 28/02/2018 ESPP 06/03/2018 10 79.60 $ 54.78 $ 6.71 $
-2365869 Sell of Restricted Stock 5535 14/06/2016 RSU 06/03/2018 45 79.60 $ .00 $ 32.99 $
-"></textarea>
-  <label for="split">Split with partner</label>
-  <input id="split" type="checkbox" />
-  <button type="submit" id="calculate">Calculate</button>
+2365869 Sell of Restricted Stock 5535 14/06/2016 RSU 06/03/2018 45 79.60 $ .00 $ 32.99 $" 
+              class="w-full h-40 p-4 border border-gray-300 rounded-md focus:ring-2 focus:ring-secondary focus:border-secondary transition-colors font-mono text-sm"
+            ></textarea>
+          </div>
 
-  <div id="report"></div>
+          <div class="flex items-center">
+            <label class="flex items-center space-x-2 cursor-pointer">
+              <input 
+                id="split" 
+                type="checkbox" 
+                class="w-5 h-5 text-secondary border-gray-300 rounded focus:ring-secondary"
+              >
+              <span class="text-sm text-gray-700">Split with partner</span>
+            </label>
+          </div>
 
-  <h2>How to fill declaration?</h2>
-  <div>
-    <img src="instruction.png" width="100%" />
-  </div>
+          <button 
+            type="submit" 
+            id="calculate" 
+            class="w-full bg-secondary text-white py-3 px-6 rounded-md hover:bg-blue-600 transition-colors font-medium"
+          >
+            Calculate Taxes
+          </button>
+        </div>
+      </section>
 
-  <div style="position: fixed; right: 20px; top: 20px"><a href="https://paypal.me/SarunasDubinskas" rel="nofollow"><img
-        src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" alt="paypal" style="max-width: 100%;"></a>
+      <section class="mb-8">
+        <div id="report" class="bg-white rounded-lg shadow-sm p-6"></div>
+      </section>
+
+      <section>
+        <h2 class="text-2xl font-semibold text-primary mb-4">How to Fill Declaration?</h2>
+        <div class="bg-white rounded-lg shadow-sm p-4">
+          <img src="instruction.png" alt="Declaration instructions" class="w-full rounded-md" />
+        </div>
+      </section>
+    </main>
+
+    <footer class="mt-16">
+      <div class="bg-white rounded-lg shadow-sm p-8 text-center">
+        <h2 class="text-2xl font-semibold text-primary mb-4">Support the Project</h2>
+        <p class="text-gray-600 mb-6 max-w-2xl mx-auto">
+          If you find this tool helpful, consider making a donation to support its development and maintenance. Your contribution helps keep this tool free and available for everyone.
+        </p>
+        <a 
+          href="https://paypal.me/SarunasDubinskas" 
+          class="inline-block transform hover:scale-105 transition-transform duration-200" 
+          rel="nofollow"
+        >
+          <img 
+            src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" 
+            alt="Donate via PayPal" 
+            class="max-w-full h-auto"
+          >
+        </a>
+      </div>
+    </footer>
   </div>
 
   <script src="./calculator.ts" type="module"></script>
 </body>
-
 </html>
