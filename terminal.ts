@@ -4,8 +4,8 @@ import { parseSameDayShares } from "./lib/parse-same-day-shares";
 import { parseSoldShares } from "./lib/parse-sold-shares";
 import { generateReport } from "./lib/generate-report";
 import { generateTaxFillInstructionsData } from "./lib/generate-tax-fill-instructions-data";
+import type { TaxInstructions } from "./lib/types";
 import { fetchExchangeRateCached } from "./lib/fetch-exchange-rate-cached";
-import { TaxInstructions } from "./lib/types";
 
 const outputInstructionsToConsole = (instructions: TaxInstructions): void => {
   const years = Object.keys(instructions).map(Number);

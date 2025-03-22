@@ -5,7 +5,7 @@ import { parseIssuedShares } from "../lib/parse-issued-shares";
 import { parseSameDayShares } from "../lib/parse-same-day-shares";
 import { parseSoldShares } from "../lib/parse-sold-shares";
 import { generateTaxFillInstructionsData } from "../lib/generate-tax-fill-instructions-data";
-import { YearInstructions } from "../lib/types";
+import type { YearInstructions } from "../lib/types";
 
 // DOM Elements
 const issuedArea = document.querySelector<HTMLTextAreaElement>("#issued");
@@ -29,19 +29,59 @@ function h(tag: string, contents: string | HTMLElement | (string | HTMLElement)[
   return element;
 }
 
+// Format number with 2 decimal places
+function formatNumber(num: number): string {
+  return num.toFixed(2);
+}
+
 // Render the tax report
 const renderReport = (data: YearInstructions[]): void => {
   report.innerHTML = "";
+  
   data.forEach(({ heading, fields }) => {
-    report.append(h("h2", heading));
+    const yearSection = h("div", [
+      h("h2", [
+        h("span", heading),
+        h("span", " Tax Information")
+      ])
+    ]);
+    yearSection.className = "mb-8 last:mb-0";
+
+    const fieldsContainer = h("div", []);
+    fieldsContainer.className = "space-y-4 mt-4";
+
     fields.forEach(({ name, value, subfields }) => {
-      report.append(h("h3", `${name}: `));
+      const fieldElement = h("div", []);
+      fieldElement.className = "bg-gray-50 rounded-lg p-4";
+
       if (value !== undefined) {
-        report.append(h("div", value.toString()));
+        fieldElement.append(
+          h("div", [
+            h("span", name + ": "),
+            h("span", formatNumber(value) + " €")
+          ])
+        );
       } else if (subfields) {
-        subfields.forEach(({ name, value }) => report.append(h("div", `${name}: ${value}`)));
+        const subfieldsContainer = h("div", []);
+        subfieldsContainer.className = "space-y-2";
+        
+        subfields.forEach(({ name, value }) => {
+          subfieldsContainer.append(
+            h("div", [
+              h("span", name + ": "),
+              h("span", formatNumber(value) + " €")
+            ])
+          );
+        });
+        
+        fieldElement.append(subfieldsContainer);
       }
+
+      fieldsContainer.append(fieldElement);
     });
+
+    yearSection.append(fieldsContainer);
+    report.append(yearSection);
   });
 };
 

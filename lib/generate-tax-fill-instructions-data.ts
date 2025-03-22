@@ -1,6 +1,6 @@
 import { get, uniq, concat, keys } from "lodash-es";
 import { round } from "./round";
-import { Report, TaxInstructions, ShareSaleWithTax } from "./types";
+import type { Report, TaxInstructions, ShareSaleWithTax } from "./types";
 
 export function generateTaxFillInstructionsData(
   report: Report,

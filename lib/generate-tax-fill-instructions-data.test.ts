@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { generateTaxFillInstructionsData } from "./generate-tax-fill-instructions-data";
-import { Report } from "./types";
+import type { Report } from "./types";
 
 describe("generateTaxFillInstructionsData", () => {
   const currentYear = new Date().getFullYear();

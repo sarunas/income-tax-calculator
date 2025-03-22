@@ -23,7 +23,7 @@
   </script>
 </head>
 <body class="bg-gray-50 min-h-screen">
-  <div class="max-w-5xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
+  <div class="max-w-5xl mx-auto px-4 py-8 sm:px-6 lg:px-8 pb-32">
     <header class="text-center mb-12">
       <h1 class="text-4xl font-semibold text-primary mb-2">Wix Lithuania Tax Calculator</h1>
       <p class="text-lg text-gray-600">Calculate your Wix stock-related taxes for Lithuania</p>
@@ -87,7 +87,11 @@
       </section>
 
       <section class="mb-8">
-        <div id="report" class="bg-white rounded-lg shadow-sm p-6"></div>
+        <div id="report" class="bg-white rounded-lg shadow-sm p-6">
+          <div class="text-center text-gray-500 py-8">
+            Enter your data and click "Calculate Taxes" to see the results
+          </div>
+        </div>
       </section>
 
       <section>
@@ -97,27 +101,31 @@
         </div>
       </section>
     </main>
+  </div>
 
-    <footer class="mt-16">
-      <div class="bg-white rounded-lg shadow-sm p-8 text-center">
-        <h2 class="text-2xl font-semibold text-primary mb-4">Support the Project</h2>
-        <p class="text-gray-600 mb-6 max-w-2xl mx-auto">
-          If you find this tool helpful, consider making a donation to support its development and maintenance. Your contribution helps keep this tool free and available for everyone.
-        </p>
+  <footer class="fixed bottom-0 left-0 right-0 bg-gradient-to-r from-secondary to-blue-600 text-white shadow-lg">
+    <div class="max-w-5xl mx-auto px-4 py-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between">
+        <div class="flex-1">
+          <h3 class="text-lg font-semibold mb-1">Support the Project</h3>
+          <p class="text-sm text-white/90">
+            If you find this tool helpful, consider making a donation to support its development and maintenance.
+          </p>
+        </div>
         <a 
           href="https://paypal.me/SarunasDubinskas" 
-          class="inline-block transform hover:scale-105 transition-transform duration-200" 
+          class="inline-block transform hover:scale-105 transition-transform duration-200 bg-white/10 hover:bg-white/20 px-4 py-2 rounded-lg" 
           rel="nofollow"
         >
           <img 
             src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" 
             alt="Donate via PayPal" 
-            class="max-w-full h-auto"
+            class="h-8"
           >
         </a>
       </div>
-    </footer>
-  </div>
+    </div>
+  </footer>
 
   <script src="./calculator.ts" type="module"></script>
 </body>
