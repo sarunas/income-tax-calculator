@@ -27,6 +27,7 @@
     "last 1 Chrome versions"
   ],
   "devDependencies": {
+    "@parcel/transformer-typescript-tsc": "^2.14.1",
     "@tailwindcss/postcss": "^4.0.15",
     "@types/lodash-es": "^4.17.12",
     "@types/node": "^20.11.24",
