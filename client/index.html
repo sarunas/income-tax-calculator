@@ -6,9 +6,14 @@
   <title>Wix Lithuania Tax Calculator</title>
   
   <!-- Preconnect to external domains -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   
+  <!-- Critical CSS -->
+  <style type="text/css">
+    @import './styles.css';
+  </style>
+
   <!-- Preload critical font -->
   <link 
     rel="preload" 
@@ -19,11 +24,6 @@
   <noscript>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   </noscript>
-
-  <!-- <link href="./styles.css" rel="stylesheet"> -->
-  <style type="text/css">
-    @import './styles.css';
-  </style>
 </head>
 <body class="bg-gray-50 min-h-screen">
   <div class="max-w-5xl mx-auto px-4 py-8 sm:px-6 lg:px-8 pb-32">
@@ -130,7 +130,6 @@
     </div>
   </footer>
 
-  <!-- <script src="./calculator.ts" type="module" defer></script> -->
   <script type="module">
     import './calculator.ts';
   </script>
