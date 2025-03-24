@@ -200,4 +200,37 @@ describe(generateReport, () => {
     expect(sale.cost).toBe(0);
     expect(sale.gain).toBe(21539);
   })
+
+  it('should make balance calculations in FIFO order', async () => {
+    const issuedSharesContent = `8/11/2021 131168 RSU 8/2/2022 10 118.47 $ 0.00 $
+8/11/2021 131168 RSU 8/5/2022 10 71.95 $ 0.00 $
+8/11/2021 131168 RSU 8/8/2022 11 72.48 $ 0.00 $`;
+
+    const soldSharesContent = `3813190 Sell of Restricted Stock 131168 8/11/2021 RSU 19/5/2022 20 68.01 $ 0.00 $ 10 $
+4624511 Sell of Restricted Stock 131168 8/11/2021 RSU 14/12/2023 11 113.05 $ 0.00 $ 10 $
+5191057 Same Day Sell 131168 8/11/2021 RSU 22/11/2024 10 215.49 $ 0.00 $ 10 $`;
+
+    const issuedShares = parseIssuedShares(issuedSharesContent);
+    const soldShares = parseSoldShares(soldSharesContent);
+    const sameDayShares = parseSameDayShares(soldSharesContent);
+
+    sameDayShares.forEach((entry) =>
+        issuedShares.push({
+          grantDate: entry.grantDate,
+          grantNumber: entry.grantNumber,
+          grantType: entry.grantType,
+          vestingDate: entry.orderDate,
+          vestedShares: entry.sharesSold,
+          stockPrice: entry.salePrice,
+          exercisePrice: entry.exercisePrice,
+        }),
+    );
+
+    const report = await generateReport(issuedShares, soldShares, () => Promise.resolve(1));
+
+    expect(report.shareBalancesByGrant["131168"][0].remainingShares).toBe(0);
+    expect(report.shareBalancesByGrant["131168"][1].remainingShares).toBe(0);
+    expect(report.shareBalancesByGrant["131168"][2].remainingShares).toBe(0);
+    expect(report.shareBalancesByGrant["131168"][3].remainingShares).toBe(0);
+  })
 }); 

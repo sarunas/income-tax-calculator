@@ -41,19 +41,22 @@ export async function generateReport(
   const shareBalancesByGrant = groupBy(shareBalances, (item) => item.vesting.grantNumber);
 
   const filteredIssuedShares = sortedIssuedShares.filter(excludeOptions);
-  const vestedSharesWithTax: VestedShareWithTax[] = await Promise.all(filteredIssuedShares.map(async share => {
+  const vestedSharesWithTax: VestedShareWithTax[] = [];
+  for (const share of filteredIssuedShares) {
     const date = formatDate(share.vestingDate, "yyyy-MM-dd");
     const exchangeRate = await fetchExchangeRate(date, "USD");
-    return {
+
+    vestedSharesWithTax.push({
       vesting: share,
       exchangeRate: exchangeRate,
       cost: round((share.vestedShares * share.stockPrice) / exchangeRate),
       incomeAmount: round((share.vestedShares * (share.stockPrice - share.exercisePrice)) / exchangeRate),
-    };
-  }));
+    });
+  }
 
   const sortedSoldShares = sortBy(soldShares, ["orderDate"]);
-  const shareSalesWithTax: ShareSaleWithTax[] = await Promise.all(sortedSoldShares.map(async share => {
+  const shareSalesWithTax: ShareSaleWithTax[] = []; 
+  for (const share of sortedSoldShares) {
     // Calculate sale amount and fees
     const date = formatDate(share.orderDate, "yyyy-MM-dd");
     const exchangeRate = await fetchExchangeRate(date, "USD");
@@ -88,15 +91,15 @@ export async function generateReport(
     // Calculate final gain
     const gain = round(amount - totalCost - totalFeesInEur);
 
-    return {
-      sale: share,
-      exchangeRate,
-      amount,
-      totalFeesInEur,
-      cost: totalCost,
-      gain
-    };
-  }));
+    shareSalesWithTax.push({
+        sale: share,
+        exchangeRate,
+        amount,
+        totalFeesInEur,
+        cost: totalCost,
+        gain
+    });
+  }
 
   // income by year
   const incomeByYear = vestedSharesWithTax.reduce((acc, share) => {
