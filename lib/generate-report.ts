@@ -70,8 +70,6 @@ export async function generateReport(
     for (const shareBalance of shareBalancesByGrant[share.grantNumber]) {
       if (shareBalance.remainingShares <= 0) continue;
 
-      if (share.)
-
       const sharesToUse = Math.min(shareBalance.remainingShares, remainingSharesToSell);
       const vestingDate = formatDate(shareBalance.vesting.vestingDate, "yyyy-MM-dd");
       const vestingExchangeRate = await fetchExchangeRate(vestingDate, "USD");
