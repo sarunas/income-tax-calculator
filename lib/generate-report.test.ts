@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import { generateReport } from "./generate-report";
 import { parseIssuedShares } from "./parse-issued-shares";
 import { parseSoldShares } from "./parse-sold-shares";
+import { parseSameDayShares } from "./parse-same-day-shares";
 
 describe(generateReport, () => {
   it("it should exclude options from income", async () => {
@@ -146,7 +147,7 @@ describe(generateReport, () => {
     const sale = report.gainByYear[2020].transactions[0];
     expect(sale.amount).toBe(600); // 5 * 120 / 1
     expect(sale.totalFeesInEur).toBe(10); // 10 / 1
-    expect(sale.cost).toBe(500); // 5 * 100 / 1
+    expect(sale.cost).toBe(510); // 5 * 100 / 1 + 10
     expect(sale.gain).toBe(90); // 600 - 10 - 500
 
     // Verify remaining balance
@@ -166,4 +167,37 @@ describe(generateReport, () => {
       "Not enough shares available for grant 1111. Attempted to sell 25 shares but only 20 were available."
     );
   });
+
+  it('should work with same day sells', async () => {
+    const soldSharesContent = `5191057 Same Day Sell 131168 8/11/2021 RSU 22/11/2024 100 215.49 $ 0.00 $ 10 $`;
+
+    const issuedShares = parseIssuedShares('');
+    const soldShares = parseSoldShares(soldSharesContent);
+    const sameDayShares = parseSameDayShares(soldSharesContent);
+
+    sameDayShares.forEach((entry) =>
+      issuedShares.push({
+        grantDate: entry.grantDate,
+        grantNumber: entry.grantNumber,
+        grantType: entry.grantType,
+        vestingDate: entry.orderDate,
+        vestedShares: entry.sharesSold,
+        stockPrice: entry.salePrice,
+        exercisePrice: entry.exercisePrice,
+      }),
+    );
+
+    const report = await generateReport(issuedShares, soldShares, () => Promise.resolve(1));
+
+    expect(report.incomeByYear).toEqual({});
+
+    expect(report.gainByYear[2024].total).toBe(21539);
+    expect(report.gainByYear[2024].transactions).toHaveLength(1);
+    
+    const sale = report.gainByYear[2024].transactions[0];
+
+    expect(sale.amount).toBe(21549);
+    expect(sale.cost).toBe(10);
+    expect(sale.gain).toBe(21539);
+  })
 }); 

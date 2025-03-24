@@ -16,9 +16,13 @@ import {
 const _FORCE_BUNDLE = [formatters, longFormatters];
 
 // Exclude options where grant date is after 2020-02-01 and vesting period is 3+ years
+function isOptionTaxExempt(share: IssuedShare): boolean {
+  return isAfter(share.grantDate, new Date("2020-02-01")) && 
+    differenceInYears(share.vestingDate, share.grantDate) >= 3;
+}
+
 function excludeOptions(share: IssuedShare): boolean {
-  return !(isAfter(share.grantDate, new Date("2020-02-01")) && 
-    differenceInYears(share.vestingDate, share.grantDate) >= 3);
+  return !isOptionTaxExempt(share);
 }
 
 export async function generateReport(
@@ -58,7 +62,7 @@ export async function generateReport(
 
     // Calculate cost basis using FIFO method
     let remainingSharesToSell = share.sharesSold;
-    let totalCost = 0;
+    let totalCost = totalFeesInEur;
 
     for (const shareBalance of shareBalancesByGrant[share.grantNumber]) {
       if (shareBalance.remainingShares <= 0) continue;
@@ -66,7 +70,8 @@ export async function generateReport(
       const sharesToUse = Math.min(shareBalance.remainingShares, remainingSharesToSell);
       const vestingDate = formatDate(shareBalance.vesting.vestingDate, "yyyy-MM-dd");
       const vestingExchangeRate = await fetchExchangeRate(vestingDate, "USD");
-      const costPerShare = round((shareBalance.vesting.stockPrice) / vestingExchangeRate);
+
+      const costPerShare = isOptionTaxExempt(shareBalance.vesting) ? 0 : round((shareBalance.vesting.stockPrice) / vestingExchangeRate);
       const cost = round(sharesToUse * costPerShare);
 
       shareBalance.remainingShares -= sharesToUse;
@@ -81,7 +86,7 @@ export async function generateReport(
     }
 
     // Calculate final gain
-    const gain = round(amount - totalFeesInEur - totalCost);
+    const gain = round(amount - totalCost);
 
     return {
       sale: share,
