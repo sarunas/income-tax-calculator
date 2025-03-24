@@ -30,8 +30,6 @@ export async function generateReport(
   soldShares: SoldShare[],
   fetchExchangeRate: (date: string, currency: string) => Promise<number>,
 ): Promise<Report> {
-  console.log("Generating report please wait...\n");
-
   // Create share balances for gain calculations from all issued shares
   const sortedIssuedShares = sortBy(issuedShares, ["vestingDate"]);
   const shareBalances: ShareBalance[] = sortedIssuedShares.map(share => ({
@@ -54,7 +52,7 @@ export async function generateReport(
     });
   }
 
-  const sortedSoldShares = sortBy(soldShares, ["orderDate"]);
+  const sortedSoldShares = sortBy(soldShares, ["orderNumber"]);
   const shareSalesWithTax: ShareSaleWithTax[] = []; 
   for (const share of sortedSoldShares) {
     // Calculate sale amount and fees
@@ -69,6 +67,10 @@ export async function generateReport(
 
     for (const shareBalance of shareBalancesByGrant[share.grantNumber]) {
       if (shareBalance.remainingShares <= 0) continue;
+
+      if (share.action === "Same Day Sell" && shareBalance.remainingShares != remainingSharesToSell) {
+        console.error("Something wrong with data, probably not all issued and sold records are present!");
+      }
 
       const sharesToUse = Math.min(shareBalance.remainingShares, remainingSharesToSell);
       const vestingDate = formatDate(shareBalance.vesting.vestingDate, "yyyy-MM-dd");
