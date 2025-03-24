@@ -1,7 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { generateReport } from "./generate-report";
-import { parseIssuedShares } from "./parse-issued-shares";
-import { parseSoldShares } from "./parse-sold-shares";
+import { processShareInputs } from "./process-shares";
 
 describe(generateReport, () => {
   it("it should exclude options from income", async () => {
@@ -10,9 +9,9 @@ describe(generateReport, () => {
 02/02/2020 2222 RSU 01/06/2020 10 100.00 $ 0.00 $
 02/02/2020 2222 RSU 01/06/2023 10 100.00 $ 0.00 $`;
 
-    const issuedShares = parseIssuedShares(issuedSharesContent);
+    const { issuedShares, soldShares } = processShareInputs(issuedSharesContent, '');
+    const report = await generateReport(issuedShares, soldShares, () => Promise.resolve(1));
 
-    const report = await generateReport(issuedShares, [], () => Promise.resolve(1));
     expect(report).toEqual({
       shareBalancesByGrant: {
         "1111": [
@@ -130,9 +129,7 @@ describe(generateReport, () => {
     const issuedSharesContent = `01/01/2020 1111 RSU 01/06/2020 10 100.00 $ 0.00 $`;
     const soldSharesContent = `123456 Sell of Stock 1111 01/01/2020 RSU 01/07/2020 5 120.00 $ 0.00 $ 10.00 $`;
 
-    const issuedShares = parseIssuedShares(issuedSharesContent);
-    const soldShares = parseSoldShares(soldSharesContent);
-
+    const { issuedShares, soldShares } = processShareInputs(issuedSharesContent, soldSharesContent);
     const report = await generateReport(issuedShares, soldShares, () => Promise.resolve(1));
 
     // Verify income calculation
@@ -159,8 +156,7 @@ describe(generateReport, () => {
 
     const soldSharesContent = `123456 Sell of Stock 1111 01/01/2020 RSU 01/07/2020 25 120.00 $ 0.00 $ 10.00 $`;
 
-    const issuedShares = parseIssuedShares(issuedSharesContent);
-    const soldShares = parseSoldShares(soldSharesContent);
+    const { issuedShares, soldShares } = processShareInputs(issuedSharesContent, soldSharesContent);
 
     await expect(generateReport(issuedShares, soldShares, () => Promise.resolve(1))).rejects.toThrow(
       "Not enough shares available for grant 1111. Attempted to sell 25 shares but only 20 were available."
@@ -170,22 +166,7 @@ describe(generateReport, () => {
   it('should work with same day sells', async () => {
     const soldSharesContent = `5191057 Same Day Sell 131168 8/11/2021 RSU 22/11/2024 100 215.49 $ 0.00 $ 10 $`;
 
-    const issuedShares = parseIssuedShares('');
-    const soldShares = parseSoldShares(soldSharesContent);
-    const sameDayShares = soldShares.filter((entry) => entry.action === "Same Day Sell");
-
-    sameDayShares.forEach((entry) =>
-      issuedShares.push({
-        grantDate: entry.grantDate,
-        grantNumber: entry.grantNumber,
-        grantType: entry.grantType,
-        vestingDate: entry.orderDate,
-        vestedShares: entry.sharesSold,
-        stockPrice: entry.salePrice,
-        exercisePrice: entry.exercisePrice,
-      }),
-    );
-
+    const { issuedShares, soldShares } = processShareInputs('', soldSharesContent);
     const report = await generateReport(issuedShares, soldShares, () => Promise.resolve(1));
 
     expect(report.incomeByYear).toEqual({});
@@ -211,22 +192,7 @@ describe(generateReport, () => {
 4761074 Sell of Restricted Stock 131168 8/11/2021 RSU 28/02/2024 10 139.21 $ 0.00 $ 10 $
 5191057 Same Day Sell 131168 8/11/2021 RSU 22/11/2024 100 215.49 $ 0.00 $ 10 $`;
 
-    const issuedShares = parseIssuedShares(issuedSharesContent);
-    const soldShares = parseSoldShares(soldSharesContent);
-    const sameDayShares = soldShares.filter((entry) => entry.action === "Same Day Sell");
-
-    sameDayShares.forEach((entry) =>
-        issuedShares.push({
-          grantDate: entry.grantDate,
-          grantNumber: entry.grantNumber,
-          grantType: entry.grantType,
-          vestingDate: entry.orderDate,
-          vestedShares: entry.sharesSold,
-          stockPrice: entry.salePrice,
-          exercisePrice: entry.exercisePrice,
-        }),
-    );
-
+    const { issuedShares, soldShares } = processShareInputs(issuedSharesContent, soldSharesContent);
     const report = await generateReport(issuedShares, soldShares, () => Promise.resolve(1));
 
     expect(report.shareBalancesByGrant["131168"][0].remainingShares).toBe(0);

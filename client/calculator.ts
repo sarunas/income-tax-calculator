@@ -1,8 +1,7 @@
 import { fetchExchangeRateCached } from "../lib/fetch-exchange-rate-cached";
 import { generateReport } from "../lib/generate-report";
-import { parseIssuedShares } from "../lib/parse-issued-shares";
-import { parseSoldShares } from "../lib/parse-sold-shares";
 import { generateTaxFillInstructionsData } from "../lib/generate-tax-fill-instructions-data";
+import { processShareInputs } from "../lib/process-shares";
 import type { YearInstructions, TaxField } from "../lib/types";
 
 // DOM Elements
@@ -67,22 +66,7 @@ function renderReport(data: YearInstructions[]): string {
 // Event listener for calculate button
 calculateButton.addEventListener("click", async () => {
   try {
-    const issuedShares = parseIssuedShares(issuedArea.value);
-    const soldShares = parseSoldShares(soldArea.value);
-    const sameDayShares = soldShares.filter((entry) => entry.action === "Same Day Sell");
-
-    sameDayShares.forEach((entry) =>
-      issuedShares.push({
-        grantDate: entry.grantDate,
-        grantNumber: entry.grantNumber,
-        grantType: entry.grantType,
-        vestingDate: entry.orderDate,
-        vestedShares: entry.sharesSold,
-        stockPrice: entry.salePrice,
-        exercisePrice: entry.exercisePrice,
-      }),
-    );
-
+    const { issuedShares, soldShares } = processShareInputs(issuedArea.value, soldArea.value);
     const report = await generateReport(issuedShares, soldShares, fetchExchangeRateCached);
     const taxInstructions = generateTaxFillInstructionsData(report, splitCheckbox.checked);
     reportElement.innerHTML = renderReport(Object.values(taxInstructions).reverse());

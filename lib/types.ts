@@ -83,4 +83,9 @@ export interface TaxInstructions {
 // Exchange rate types
 export interface ExchangeRates {
   [date: string]: number;
+}
+
+export interface ShareProcessingResult {
+  issuedShares: IssuedShare[];
+  soldShares: SoldShare[];
 } 

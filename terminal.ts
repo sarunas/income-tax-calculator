@@ -1,10 +1,9 @@
 import fs from "fs";
-import { parseIssuedShares } from "./lib/parse-issued-shares";
-import { parseSoldShares } from "./lib/parse-sold-shares";
 import { generateReport } from "./lib/generate-report";
 import { generateTaxFillInstructionsData } from "./lib/generate-tax-fill-instructions-data";
 import type { TaxInstructions } from "./lib/types";
 import { fetchExchangeRateCached } from "./lib/fetch-exchange-rate-cached";
+import { processShareInputs } from "./lib/process-shares";
 
 const outputInstructionsToConsole = (instructions: TaxInstructions): void => {
   const years = Object.keys(instructions).map(Number);
@@ -28,22 +27,7 @@ try {
   const issuedSharesTxt = fs.readFileSync("./shares-issued.txt", "utf-8");
   const soldSharesTxt = fs.readFileSync("./shares-sold.txt", "utf-8");
   
-  const issuedShares = parseIssuedShares(issuedSharesTxt);
-  const soldShares = parseSoldShares(soldSharesTxt);
-  const sameDayShares = soldShares.filter((entry) => entry.action === "Same Day Sell");
-  
-  sameDayShares.forEach((entry) =>
-    issuedShares.push({
-      grantDate: entry.grantDate,
-      grantNumber: entry.grantNumber,
-      grantType: entry.grantType,
-      vestingDate: entry.orderDate,
-      vestedShares: entry.sharesSold,
-      stockPrice: entry.salePrice,
-      exercisePrice: entry.exercisePrice,
-    }),
-  );
-
+  const { issuedShares, soldShares } = processShareInputs(issuedSharesTxt, soldSharesTxt);
   const shouldSplit = process.argv.includes("split-gain");
 
   generateReport(issuedShares, soldShares, fetchExchangeRateCached)
