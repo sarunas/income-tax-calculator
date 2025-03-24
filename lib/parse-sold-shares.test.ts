@@ -11,6 +11,7 @@ describe("parseSoldShares", () => {
     expect(result).toHaveLength(2);
     expect(result[0]).toEqual({
       orderNumber: "2729432",
+      action: "Sell of Stock",
       grantNumber: "ESPP13783",
       grantDate: new Date("2019-02-28T00:00:00.000Z"),
       grantType: "ESPP",
@@ -30,6 +31,7 @@ describe("parseSoldShares", () => {
     expect(result).toHaveLength(1);
     expect(result[0]).toEqual({
       orderNumber: "2365869",
+      action: "Sell of Restricted Stock",
       grantNumber: "5535",
       grantDate: new Date("2016-06-14T00:00:00.000Z"),
       grantType: "RSU",

@@ -1,7 +1,6 @@
 import { fetchExchangeRateCached } from "../lib/fetch-exchange-rate-cached";
 import { generateReport } from "../lib/generate-report";
 import { parseIssuedShares } from "../lib/parse-issued-shares";
-import { parseSameDayShares } from "../lib/parse-same-day-shares";
 import { parseSoldShares } from "../lib/parse-sold-shares";
 import { generateTaxFillInstructionsData } from "../lib/generate-tax-fill-instructions-data";
 import type { YearInstructions, TaxField } from "../lib/types";
@@ -70,7 +69,7 @@ calculateButton.addEventListener("click", async () => {
   try {
     const issuedShares = parseIssuedShares(issuedArea.value);
     const soldShares = parseSoldShares(soldArea.value);
-    const sameDayShares = parseSameDayShares(soldArea.value);
+    const sameDayShares = soldShares.filter((entry) => entry.action === "Same Day Sell");
 
     sameDayShares.forEach((entry) =>
       issuedShares.push({

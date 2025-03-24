@@ -11,6 +11,7 @@ export interface IssuedShare {
 
 export interface SoldShare {
   orderNumber: string;
+  action: 'Sell of Restricted Stock' | 'Sell of Stock' | 'Same Day Sell';
   grantNumber: string;
   grantDate: Date;
   grantType: string;

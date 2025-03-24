@@ -2,7 +2,6 @@ import { describe, expect, it } from "vitest";
 import { generateReport } from "./generate-report";
 import { parseIssuedShares } from "./parse-issued-shares";
 import { parseSoldShares } from "./parse-sold-shares";
-import { parseSameDayShares } from "./parse-same-day-shares";
 
 describe(generateReport, () => {
   it("it should exclude options from income", async () => {
@@ -173,7 +172,7 @@ describe(generateReport, () => {
 
     const issuedShares = parseIssuedShares('');
     const soldShares = parseSoldShares(soldSharesContent);
-    const sameDayShares = parseSameDayShares(soldSharesContent);
+    const sameDayShares = soldShares.filter((entry) => entry.action === "Same Day Sell");
 
     sameDayShares.forEach((entry) =>
       issuedShares.push({
@@ -214,7 +213,7 @@ describe(generateReport, () => {
 
     const issuedShares = parseIssuedShares(issuedSharesContent);
     const soldShares = parseSoldShares(soldSharesContent);
-    const sameDayShares = parseSameDayShares(soldSharesContent);
+    const sameDayShares = soldShares.filter((entry) => entry.action === "Same Day Sell");
 
     sameDayShares.forEach((entry) =>
         issuedShares.push({

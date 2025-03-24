@@ -1,6 +1,5 @@
 import fs from "fs";
 import { parseIssuedShares } from "./lib/parse-issued-shares";
-import { parseSameDayShares } from "./lib/parse-same-day-shares";
 import { parseSoldShares } from "./lib/parse-sold-shares";
 import { generateReport } from "./lib/generate-report";
 import { generateTaxFillInstructionsData } from "./lib/generate-tax-fill-instructions-data";
@@ -26,12 +25,12 @@ const outputInstructionsToConsole = (instructions: TaxInstructions): void => {
 };
 
 try {
-  const soldSharesTxt = fs.readFileSync("./shares-sold.txt", "utf-8");
   const issuedSharesTxt = fs.readFileSync("./shares-issued.txt", "utf-8");
+  const soldSharesTxt = fs.readFileSync("./shares-sold.txt", "utf-8");
   
-  const soldShares = parseSoldShares(soldSharesTxt);
-  const sameDayShares = parseSameDayShares(soldSharesTxt);
   const issuedShares = parseIssuedShares(issuedSharesTxt);
+  const soldShares = parseSoldShares(soldSharesTxt);
+  const sameDayShares = soldShares.filter((entry) => entry.action === "Same Day Sell");
   
   sameDayShares.forEach((entry) =>
     issuedShares.push({

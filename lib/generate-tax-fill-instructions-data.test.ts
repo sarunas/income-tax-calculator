@@ -43,6 +43,7 @@ describe("generateTaxFillInstructionsData", () => {
             {
               sale: {
                 orderNumber: "123",
+                action: "Sell of Restricted Stock",
                 grantNumber: "GRANT1",
                 grantDate: new Date("2020-01-01"),
                 grantType: "ESPP",
@@ -111,6 +112,7 @@ describe("generateTaxFillInstructionsData", () => {
             {
               sale: {
                 orderNumber: "123",
+                action: "Sell of Restricted Stock",
                 grantNumber: "GRANT1",
                 grantDate: new Date("2020-01-01"),
                 grantType: "ESPP",
@@ -174,6 +176,7 @@ describe("generateTaxFillInstructionsData", () => {
             {
               sale: {
                 orderNumber: "123",
+                action: "Sell of Restricted Stock",
                 grantNumber: "GRANT1",
                 grantDate: new Date("2020-01-01"),
                 grantType: "ESPP",
