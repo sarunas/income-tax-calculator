@@ -62,7 +62,7 @@ export async function generateReport(
 
     // Calculate cost basis using FIFO method
     let remainingSharesToSell = share.sharesSold;
-    let totalCost = totalFeesInEur;
+    let totalCost = 0;
 
     for (const shareBalance of shareBalancesByGrant[share.grantNumber]) {
       if (shareBalance.remainingShares <= 0) continue;
@@ -86,7 +86,7 @@ export async function generateReport(
     }
 
     // Calculate final gain
-    const gain = round(amount - totalCost);
+    const gain = round(amount - totalCost - totalFeesInEur);
 
     return {
       sale: share,

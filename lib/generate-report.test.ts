@@ -147,7 +147,7 @@ describe(generateReport, () => {
     const sale = report.gainByYear[2020].transactions[0];
     expect(sale.amount).toBe(600); // 5 * 120 / 1
     expect(sale.totalFeesInEur).toBe(10); // 10 / 1
-    expect(sale.cost).toBe(510); // 5 * 100 / 1 + 10
+    expect(sale.cost).toBe(500); // 5 * 100 / 1 
     expect(sale.gain).toBe(90); // 600 - 10 - 500
 
     // Verify remaining balance
@@ -197,7 +197,7 @@ describe(generateReport, () => {
     const sale = report.gainByYear[2024].transactions[0];
 
     expect(sale.amount).toBe(21549);
-    expect(sale.cost).toBe(10);
+    expect(sale.cost).toBe(0);
     expect(sale.gain).toBe(21539);
   })
 }); 
