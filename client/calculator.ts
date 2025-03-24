@@ -68,16 +68,6 @@ function renderReport(data: YearInstructions[]): string {
 // Event listener for calculate button
 calculateButton.addEventListener("click", async () => {
   try {
-    if (!issuedArea.value.trim()) {
-      reportElement.innerHTML = renderError('Please enter issued shares data');
-      return;
-    }
-
-    if (!soldArea.value.trim()) {
-      reportElement.innerHTML = renderError('Please enter sold shares data');
-      return;
-    }
-
     const issuedShares = parseIssuedShares(issuedArea.value);
     const soldShares = parseSoldShares(soldArea.value);
     const sameDayShares = parseSameDayShares(soldArea.value);
