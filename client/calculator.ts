@@ -18,7 +18,7 @@ if (!issuedArea || !soldArea || !calculateButton || !splitCheckbox || !reportEle
 }
 
 // Format number with 2 decimal places
-const formatNumber = (value: number | undefined) => value?.toFixed(2) ?? '0.00';
+const formatNumber = (value: number | undefined) => value ? Number(value).toFixed(2) : '0.00';
 
 // Render error message
 function renderError(message: string): string {
