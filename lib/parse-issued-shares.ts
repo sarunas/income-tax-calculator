@@ -2,14 +2,22 @@ import { trim, uniqBy } from "lodash-es";
 import { parseDate } from "./parse-date";
 import type { IssuedShare } from "./types";
 
+const LINE_REGEX = /^(\d{1,2}\/\d{1,2}\/\d{4})\s+([A-Z0-9]+)\s+([A-Z]+)\s+(\d{1,2}\/\d{1,2}\/\d{4})\s+(\d+)\s+([\d.]+)\s+\$\s+([\d.]+)\s+\$$/;
+
 export function parseIssuedShares(content: string): IssuedShare[] {
   const result: IssuedShare[] = [];
   const lines = trim(content)
     .split(/[\n\r]+/)
     .filter((line) => line);
   lines.forEach((line) => {
-    const [grantDate, grantNumber, grantType, vestingDate, vestedShares, stockPrice, _1, exercisePrice, _2] =
-      line.split(" ");
+    const match = line.match(LINE_REGEX);
+
+    if (!match) {
+      throw new Error(`Invalid line: ${line}`);
+    }
+
+    const [_, grantDate, grantNumber, grantType, vestingDate, vestedShares, stockPrice, exercisePrice] = match;
+
     result.push({
       grantDate: parseDate(grantDate),
       grantNumber,

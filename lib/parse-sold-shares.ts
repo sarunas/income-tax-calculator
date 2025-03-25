@@ -17,20 +17,22 @@ export function parseSoldShares(content: string): SoldShare[] {
     const match = line.match(LINE_REGEX);
 
     if (!match) {
-      return;
+      throw new Error(`Invalid line: ${line}`);
     }
 
+    const [_, orderNumber, action, grantNumber, grantDate, grantType, orderDate, sharesSold, salePrice, exercisePrice, totalFees] = match;
+
     result.push({
-      orderNumber: match[1],
-      action: match[2] as 'Sell of Restricted Stock' | 'Sell of Stock' | 'Same Day Sell',
-      grantNumber: match[3],
-      grantDate: parseDate(match[4]),
-      grantType: match[5],
-      orderDate: parseDate(match[6]),
-      sharesSold: parseInt(match[7], 10),
-      salePrice: parseFloat(match[8]),
-      exercisePrice: parseFloat(match[9]),
-      totalFees: parseFloat(match[10]),
+      orderNumber,
+      action: action as 'Sell of Restricted Stock' | 'Sell of Stock' | 'Same Day Sell',
+      grantNumber,
+      grantDate: parseDate(grantDate),
+      grantType,
+      orderDate: parseDate(orderDate),
+      sharesSold: parseInt(sharesSold, 10),
+      salePrice: parseFloat(salePrice),
+      exercisePrice: parseFloat(exercisePrice),
+      totalFees: parseFloat(totalFees),
     });
   });
   return uniqBy(result, ({ orderNumber }) => {
