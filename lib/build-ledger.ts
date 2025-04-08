@@ -1,15 +1,4 @@
-import { Report, VestedShareConsumption } from "./types";
-
-export interface LedgerEvent {
-  date: Date;
-  type: 'VEST' | 'SALE';
-  sharesChanged: number;
-  remainingAfter: number;
-  saleOrderNumber?: string;
-  consumedVestings?: VestedShareConsumption[];
-}
-
-export type LedgerByGrant = Record<string, LedgerEvent[]>;
+import { Report, LedgerByGrant, LedgerEvent } from "./types";
 
 export function buildLedger(report: Report): LedgerByGrant {
   const ledgerByGrant: LedgerByGrant = {};

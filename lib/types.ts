@@ -98,19 +98,13 @@ export interface ShareProcessingResult {
 } 
 
 // Ledger
-export type LedgerEventType = 'VEST' | 'SALE';
-
 export interface LedgerEvent {
-  type: LedgerEventType;
   date: Date;
+  type: 'VEST' | 'SALE';
   sharesChanged: number;
   remainingAfter: number;
   saleOrderNumber?: string;
+  consumedVestings?: VestedShareConsumption[];
 }
 
-export interface LedgerEntry {
-  vesting: IssuedShare;
-  events: LedgerEvent[];
-}
-
-export type LedgerByGrant = Record<string, LedgerEntry[]>;
+export type LedgerByGrant = Record<string, LedgerEvent[]>;
