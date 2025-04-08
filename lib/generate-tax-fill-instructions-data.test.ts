@@ -58,6 +58,7 @@ describe("generateTaxFillInstructionsData", () => {
               totalFeesInEur: 10,
               cost: 500,
               gain: 490,
+              consumedVestings: []
             },
           ],
         },
@@ -127,6 +128,7 @@ describe("generateTaxFillInstructionsData", () => {
               totalFeesInEur: 10,
               cost: 500,
               gain: 490,
+              consumedVestings: []
             },
           ],
         },
@@ -191,6 +193,7 @@ describe("generateTaxFillInstructionsData", () => {
               totalFeesInEur: 10,
               cost: 500,
               gain: 490,
+              consumedVestings: []
             },
           ],
         },

@@ -30,6 +30,12 @@ export interface VestedShareWithTax {
   incomeAmount: number;
 }
 
+export interface VestedShareConsumption {
+  vesting: IssuedShare;
+  amount: number;
+  remainingShares: number;
+}
+
 export interface ShareSaleWithTax {
   sale: SoldShare;
   exchangeRate: number;
@@ -37,6 +43,7 @@ export interface ShareSaleWithTax {
   totalFeesInEur: number;
   cost: number;
   gain: number;
+  consumedVestings: VestedShareConsumption[];
 }
 
 // Shared types
@@ -89,3 +96,21 @@ export interface ShareProcessingResult {
   issuedShares: IssuedShare[];
   soldShares: SoldShare[];
 } 
+
+// Ledger
+export type LedgerEventType = 'VEST' | 'SALE';
+
+export interface LedgerEvent {
+  type: LedgerEventType;
+  date: Date;
+  sharesChanged: number;
+  remainingAfter: number;
+  saleOrderNumber?: string;
+}
+
+export interface LedgerEntry {
+  vesting: IssuedShare;
+  events: LedgerEvent[];
+}
+
+export type LedgerByGrant = Record<string, LedgerEntry[]>;

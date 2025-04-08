@@ -9,7 +9,8 @@ import {
   VestedShareWithTax, 
   YearlyIncome, 
   YearlyGain,
-  ShareBalance
+  ShareBalance,
+  VestedShareConsumption
 } from "./types";
 
 // Force date-fns formatters to be included in the bundle for Parcel
@@ -65,6 +66,7 @@ export async function generateReport(
     let remainingSharesToSell = share.sharesSold;
     let totalCost = 0;
 
+    const consumedVestings: VestedShareConsumption[] = [];
     for (const shareBalance of shareBalancesByGrant[share.grantNumber]) {
       if (shareBalance.remainingShares <= 0) continue;
 
@@ -83,6 +85,12 @@ export async function generateReport(
       remainingSharesToSell -= sharesToUse;
       totalCost += cost;
 
+      consumedVestings.push({
+        vesting: shareBalance.vesting,
+        amount: sharesToUse,
+        remainingShares: shareBalance.remainingShares,
+      });
+
       if (remainingSharesToSell <= 0) break;
     }
 
@@ -99,7 +107,8 @@ export async function generateReport(
         amount,
         totalFeesInEur,
         cost: totalCost,
-        gain
+        gain,
+        consumedVestings
     });
   }
 
