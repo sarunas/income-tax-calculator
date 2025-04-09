@@ -7,6 +7,7 @@ export interface IssuedShare {
   exercisePrice: number;
   grantNumber: string;
   grantType: string;
+  orderNumber?: string; // Same Day Sell order number
 }
 
 export interface SoldShare {

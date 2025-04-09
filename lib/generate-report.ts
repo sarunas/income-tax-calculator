@@ -68,11 +68,17 @@ export async function generateReport(
 
     const consumedVestings: VestedShareConsumption[] = [];
     for (const shareBalance of shareBalancesByGrant[share.grantNumber]) {
-      if (shareBalance.remainingShares <= 0) continue;
+      // Handle Same Day Sell - Use balance only with same order
+      if ((shareBalance.vesting.orderNumber || share.action === "Same Day Sell") && shareBalance.vesting.orderNumber !== share.orderNumber) {
+        continue;
+      }
 
+      // This should not happen, just leaving as precaution
       if (share.action === "Same Day Sell" && shareBalance.remainingShares != remainingSharesToSell) {
         console.error("Something wrong with data, probably not all issued and sold records are present!");
       }
+
+      if (shareBalance.remainingShares <= 0) continue;
 
       const sharesToUse = Math.min(shareBalance.remainingShares, remainingSharesToSell);
       const vestingDate = formatDate(shareBalance.vesting.vestingDate, "yyyy-MM-dd");

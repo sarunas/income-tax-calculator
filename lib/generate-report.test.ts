@@ -201,4 +201,42 @@ describe(generateReport, () => {
     expect(report.shareBalancesByGrant["131168"][3].remainingShares).toBe(0);
     expect(report.shareBalancesByGrant["131168"][4].remainingShares).toBe(0);
   });
+
+  it('should make use same day sell balance only with same day sell', async () => {
+    const issuedSharesContent = `8/11/2021 131168 RSU 8/2/2022 10 118.47 $ 0.00 $
+8/11/2021 131168 RSU 8/5/2022 10 71.95 $ 0.00 $
+8/11/2021 131168 RSU 8/8/2022 11 72.48 $ 0.00 $
+8/11/2021 131168 RSU 8/11/2022 10 69.71 $ 0.00 $`;
+
+    const soldSharesContent = `5191057 Same Day Sell 131168 8/11/2021 RSU 22/11/2024 100 215.49 $ 0.00 $ 10 $`;
+
+    const { issuedShares, soldShares } = processShareInputs(issuedSharesContent, soldSharesContent);
+    const report = await generateReport(issuedShares, soldShares, () => Promise.resolve(1));
+
+    expect(report.shareBalancesByGrant["131168"][0].remainingShares).toBe(10);
+    expect(report.shareBalancesByGrant["131168"][1].remainingShares).toBe(10);
+    expect(report.shareBalancesByGrant["131168"][2].remainingShares).toBe(11);
+    expect(report.shareBalancesByGrant["131168"][3].remainingShares).toBe(10);
+    expect(report.shareBalancesByGrant["131168"][4].remainingShares).toBe(0);
+  });
+
+  it('should make use same day sell balance only with same day sell (different order)', async () => {
+    const issuedSharesContent = `8/11/2021 131168 RSU 8/2/2022 10 118.47 $ 0.00 $
+8/11/2021 131168 RSU 8/5/2022 10 71.95 $ 0.00 $
+8/11/2021 131168 RSU 8/8/2022 11 72.48 $ 0.00 $
+8/11/2021 131168 RSU 8/11/2022 10 69.71 $ 0.00 $`;
+
+    const soldSharesContent = `4761074 Same Day Sell 131168 8/11/2021 RSU 22/11/2024 100 215.49 $ 0.00 $ 10 $
+5191057 Sell of Restricted Stock 131168 8/11/2021 RSU 28/11/2024 10 139.21 $ 0.00 $ 10 $`;
+
+    const { issuedShares, soldShares } = processShareInputs(issuedSharesContent, soldSharesContent);
+    const report = await generateReport(issuedShares, soldShares, () => Promise.resolve(1));
+
+    expect(report.shareBalancesByGrant["131168"][0].remainingShares).toBe(0);
+    expect(report.shareBalancesByGrant["131168"][1].remainingShares).toBe(10);
+    expect(report.shareBalancesByGrant["131168"][2].remainingShares).toBe(11);
+    expect(report.shareBalancesByGrant["131168"][3].remainingShares).toBe(10);
+    expect(report.shareBalancesByGrant["131168"][4].remainingShares).toBe(0);
+  });
+
 }); 

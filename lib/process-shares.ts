@@ -15,6 +15,7 @@ export function processShares(issuedShares: IssuedShare[], soldShares: SoldShare
       vestedShares: entry.sharesSold,
       stockPrice: entry.salePrice,
       exercisePrice: entry.exercisePrice,
+      orderNumber: entry.orderNumber,
     }),
   );
 
