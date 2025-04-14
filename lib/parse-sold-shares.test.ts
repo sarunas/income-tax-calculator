@@ -60,4 +60,24 @@ describe("parseSoldShares", () => {
     const result = parseSoldShares(content);
     expect(result).toHaveLength(1);
   });
+
+  it("should parse grant number with letters in the end", () => {
+    const content = `2729432 Sell of Stock 13783B 28/02/2019 ESPP 13/03/2019 10 108.44 $ 92.86 $ 8.29 $`;
+
+    const result = parseSoldShares(content);
+
+    expect(result).toHaveLength(1);
+    expect(result[0]).toEqual({
+      orderNumber: "2729432",
+      action: "Sell of Stock",
+      grantNumber: "13783B",
+      grantDate: new Date("2019-02-28T00:00:00.000Z"),
+      grantType: "ESPP",
+      orderDate: new Date("2019-03-13T00:00:00.000Z"),
+      sharesSold: 10,
+      salePrice: 108.44,
+      exercisePrice: 92.86,
+      totalFees: 8.29,
+    });
+  });
 }); 

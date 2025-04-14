@@ -2,7 +2,7 @@ import { trim, uniqBy } from "lodash-es";
 import { parseDate } from "./parse-date";
 import type { SoldShare } from "./types";
 
-const LINE_REGEX = /^(\d+)\s+(Sell of (?:Restricted )?Stock|Same Day Sell)\s+([A-Z]*\d+)\s+(\d{1,2}\/\d{1,2}\/\d{4})\s+([A-Z]+)\s+(\d{1,2}\/\d{1,2}\/\d{4})\s+(\d+)\s+([\d.]+) \$\s+([\d.]+) \$\s+([\d.]+) \$$/;
+const LINE_REGEX = /^(\d+)\s+(Sell of (?:Restricted )?Stock|Same Day Sell)\s+([A-Z0-9]+)\s+(\d{1,2}\/\d{1,2}\/\d{4})\s+([A-Z]+)\s+(\d{1,2}\/\d{1,2}\/\d{4})\s+(\d+)\s+([\d.]+) \$\s+([\d.]+) \$\s+([\d.]+) \$$/;
 
 export function parseSoldShares(content: string): SoldShare[] {
   const result: SoldShare[] = [];
